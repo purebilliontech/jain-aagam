@@ -5,7 +5,7 @@ import React from 'react'
 const AgamEbooks = () => {
     return (
         <>
-            <section className='mt-32 max-w-7xl w-full mx-auto p-5'>
+            <section className='mt-32 mb-20 max-w-7xl w-full mx-auto p-5'>
                 <SectionTitle title='Agam Ebooks' subtitle='EXPLORE' />
                 <div className=" flex justify-center mt-24 gap-10">
                     <div className="bg-secondary w-52 h-72"></div>
