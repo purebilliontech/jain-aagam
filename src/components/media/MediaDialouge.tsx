@@ -6,7 +6,7 @@ import type { MediaDTO } from "@/schema/media";
 import Image from "next/image";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { toast } from "../ui/use-toast";
+import { toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -68,14 +68,13 @@ const MediaDialog = ({
       // Create FormData and upload it with the new image
       const formData = new FormData();
       formData.append("file", selectedFile!);
-      formData.append("mediaId", media.mediaId);
-      formData.append("mediaAlt", media.mediaAlt);
-      formData.append("mediaDescription", media.mediaDescription);
-      formData.append("mediaTitle", media.mediaTitle);
+      formData.append("mediaId", media.id);
+      formData.append("mediaAlt", media.alt);
+      formData.append("mediaTitle", media.title);
 
       // Use a separate endpoint for replacing media files
       const response = await axios.post(
-        `/api/media/upload/replace/${media.mediaId}`,
+        `/api/media/upload/replace/${media.id}`,
         formData,
       );
 

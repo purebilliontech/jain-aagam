@@ -1,7 +1,7 @@
 import type { MediaDTO } from "@/schema/media";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { toast } from "../ui/use-toast";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Edit, SearchIcon } from "lucide-react";
 import { UploadIcon } from "lucide-react";

@@ -1,8 +1,8 @@
 "use client";
 
-import { jwtVerify } from "jose";
+import { jwtDecrypt } from "jose";
 import Cookies from "js-cookie";
-import { COOKIE_NAME, JWT_SECRET } from "@/utils/constants";
+import { COOKIE_NAME } from "@/utils/constants";
 import type { UserPayloadData } from "./auth";
 
 // Define user type here to avoid circular dependency
@@ -31,12 +31,9 @@ export function getTokenFromCookie(): string | null {
  * @param token The JWT token to verify
  * @returns The payload if valid, null otherwise
  */
-export async function verifyToken(token: string): Promise<any> {
+export async function decodeToken(token: string): Promise<any> {
   try {
-    const { payload } = await jwtVerify(
-      token,
-      new TextEncoder().encode(JWT_SECRET)
-    );
+    const { payload } = await jwtDecrypt(token, JWT_SECRET);
     return payload;
   } catch (error) {
     return null;
