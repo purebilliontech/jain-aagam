@@ -3,7 +3,7 @@ import { forwardRef, type ComponentProps, type FC } from "react";
 
 /** Components created by shadcn */
 import { Button } from "../ui/button";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 export const PrimaryButton: FC<ComponentProps<typeof Button>> = forwardRef(
   ({ variant = "default", children, className, ...extProps }, ref) => {

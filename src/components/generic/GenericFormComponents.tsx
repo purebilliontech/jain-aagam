@@ -12,7 +12,7 @@ import { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form";
 // Utility imports
 import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
-import { handlePhoneNumberChange, isValidPhoneNumber } from "@/utils/form";
+// import { handlePhoneNumberChange, isValidPhoneNumber } from "@/utils/form";
 
 // Icon imports
 import { Eye, EyeOff, Info, CalendarIcon } from "lucide-react";
@@ -39,9 +39,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import DocumentUpload from "../ui/document-upload";
+// import DocumentUpload from "../ui/document-upload";
 import { Calendar } from "../ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+// import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { format } from "date-fns";
 
 // Type definitions
@@ -289,40 +289,40 @@ export function GenericSelectClosure({
 }
 
 // Generic Form Number Input Component
-export function GenericFormNumberInput<
-  T extends FieldValues,
-  B extends FieldPath<T>,
->({
-  field,
-  inputEle,
-  disabled,
-}: GenericFormFieldCBArg<T, B>): ReactElement {
-  // Create our custom handlers for phone number input
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handlePhoneNumberChange(e, field.onChange);
-  };
+// export function GenericFormNumberInput<
+//   T extends FieldValues,
+//   B extends FieldPath<T>,
+// >({
+//   field,
+//   inputEle,
+//   disabled,
+// }: GenericFormFieldCBArg<T, B>): ReactElement {
+//   // Create our custom handlers for phone number input
+//   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+//     handlePhoneNumberChange(e, field.onChange);
+//   };
 
-  const handleBlur = () => {
-    const value = field.value;
-    if (!isValidPhoneNumber(value)) {
-      console.error("Invalid phone number format");
-    }
-  };
+//   const handleBlur = () => {
+//     const value = field.value;
+//     if (!isValidPhoneNumber(value)) {
+//       console.error("Invalid phone number format");
+//     }
+//   };
 
-  if (!inputEle) {
-    inputEle = <Input />;
-  }
+//   if (!inputEle) {
+//     inputEle = <Input />;
+//   }
 
-  // We need to properly type the props for cloneElement
-  const inputProps: any = {
-    ...field,
-    disabled,
-    onChange: handleInputChange,
-    onBlur: handleBlur,
-  };
+//   // We need to properly type the props for cloneElement
+//   const inputProps: any = {
+//     ...field,
+//     disabled,
+//     onChange: handleInputChange,
+//     onBlur: handleBlur,
+//   };
 
-  return cloneElement(inputEle, inputProps);
-}
+//   return cloneElement(inputEle, inputProps);
+// }
 
 export function GenericCheckBoxClosure({
   checkValue,
@@ -446,71 +446,71 @@ interface GenericFileUploadOptions {
 }
 
 // GenericFileUpload
-export function GenericFileUpload({
-  formLabel,
-  containerClassName = "",
-  buttonClassName = "",
-  fileListClassName = "",
-  fileItemClassName = "",
-  multiple = true,
-  accept = "image/*,.pdf,.doc,.docx",
-}: GenericFileUploadOptions) {
-  return function FileUploadComponent<
-    T extends FieldValues,
-    B extends FieldPath<T>,
-  >({ field, disabled }: GenericFormFieldCBArg<T, B>): ReactElement {
-    return (
-      <div>
-        <DocumentUpload
-          name={field.name}
-          label={formLabel}
-          multiple={multiple}
-          initialFiles={field.value}
-          onChange={(files) => field.onChange(files)}
-          containerClassName={containerClassName}
-          buttonClassName={buttonClassName}
-          fileListClassName={fileListClassName}
-          fileItemClassName={fileItemClassName}
-          disabled={disabled}
-          accept={accept}
-        />
-      </div>
-    );
-  };
-}
+// export function GenericFileUpload({
+//   formLabel,
+//   containerClassName = "",
+//   buttonClassName = "",
+//   fileListClassName = "",
+//   fileItemClassName = "",
+//   multiple = true,
+//   accept = "image/*,.pdf,.doc,.docx",
+// }: GenericFileUploadOptions) {
+//   return function FileUploadComponent<
+//     T extends FieldValues,
+//     B extends FieldPath<T>,
+//   >({ field, disabled }: GenericFormFieldCBArg<T, B>): ReactElement {
+//     return (
+//       <div>
+//         <DocumentUpload
+//           name={field.name}
+//           label={formLabel}
+//           multiple={multiple}
+//           initialFiles={field.value}
+//           onChange={(files) => field.onChange(files)}
+//           containerClassName={containerClassName}
+//           buttonClassName={buttonClassName}
+//           fileListClassName={fileListClassName}
+//           fileItemClassName={fileItemClassName}
+//           disabled={disabled}
+//           accept={accept}
+//         />
+//       </div>
+//     );
+//   };
+// }
 
 // Generic Date Picker
-export function GenericDatePicker<
-  T extends FieldValues,
-  B extends FieldPath<T>,
->({ field, disabled }: GenericFormFieldCBArg<T, B>): ReactElement {
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            "w-full justify-start text-left font-normal",
-            !field.value && "text-muted-foreground"
-          )}
-          disabled={disabled}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {field.value ? format(new Date(field.value), "PPP") : <span>Select date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={field.value ? new Date(field.value) : undefined}
-          onSelect={(date) => field.onChange(date)}
-          initialFocus
-          disabled={disabled}
-        />
-      </PopoverContent>
-    </Popover>
-  );
-}
+// export function GenericDatePicker<
+//   T extends FieldValues,
+//   B extends FieldPath<T>,
+// >({ field, disabled }: GenericFormFieldCBArg<T, B>): ReactElement {
+//   return (
+//     <Popover>
+//       <PopoverTrigger asChild>
+//         <Button
+//           variant="outline"
+//           className={cn(
+//             "w-full justify-start text-left font-normal",
+//             !field.value && "text-muted-foreground"
+//           )}
+//           disabled={disabled}
+//         >
+//           <CalendarIcon className="mr-2 h-4 w-4" />
+//           {field.value ? format(new Date(field.value), "PPP") : <span>Select date</span>}
+//         </Button>
+//       </PopoverTrigger>
+//       <PopoverContent className="w-auto p-0" align="start">
+//         <Calendar
+//           mode="single"
+//           selected={field.value ? new Date(field.value) : undefined}
+//           onSelect={(date) => field.onChange(date)}
+//           initialFocus
+//           disabled={disabled}
+//         />
+//       </PopoverContent>
+//     </Popover>
+//   );
+// }
 
 export interface MultiSelectOption {
   label: string;

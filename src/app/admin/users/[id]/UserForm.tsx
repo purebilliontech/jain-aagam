@@ -82,7 +82,7 @@ const UserForm = ({ user }: { user: UserDTO | null }) => {
                             />
                         )}
                     />
-
+                    {/* 
 
                     <Button onClick={() => {
                         console.log(form.formState.errors)
@@ -104,7 +104,7 @@ const UserForm = ({ user }: { user: UserDTO | null }) => {
                             : showOTP
                                 ? "Login"
                                 : "Request OTP"}
-                    </Button>
+                    </Button> */}
                 </form>
             </Form>
 
