@@ -30,7 +30,6 @@ import {
 import { DataTablePagination } from "../dataTable/tablePagination";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { exportTableToCSV } from "../../lib/export";
 import { Download, RotateCw } from "lucide-react";
 import { DataTableViewOptions } from "./dataTableViewOptions";
 import { usePagination } from "@/hooks/usePagination";
@@ -111,7 +110,7 @@ export function DataTable<T>({
             <div className="relative w-full max-w-md">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg className="w-4 h-4 text-slate-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                 </svg>
               </div>
               <Input
@@ -123,39 +122,9 @@ export function DataTable<T>({
             </div>
           </div>
         )}
-        
+
         {showTopButtons && (
           <div className="flex ml-auto gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-800"
-              onClick={() => {
-                startTransition(() => {
-                  exportTableToCSV(
-                    table
-                      .getPrePaginationRowModel()
-                      .rows.map((row) => row.original),
-                    {
-                      onlySelected: false,
-                    },
-                  );
-                });
-              }}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <RotateCw
-                  className="size-3.5 animate-spin"
-                  aria-hidden="true"
-                />
-              ) : (
-                <>
-                  <Download className="size-3.5 mr-1.5" aria-hidden="true" />
-                  Export
-                </>
-              )}
-            </Button>
             <DataTableViewOptions table={table} />
           </div>
         )}
@@ -172,9 +141,9 @@ export function DataTable<T>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -206,7 +175,7 @@ export function DataTable<T>({
                 >
                   <div className="flex flex-col items-center justify-center gap-2">
                     <svg className="w-8 h-8 text-slate-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8.5 11.5V11m7 0v.5m-8-4c0-4 1.773-5 3.5-5s3.5 1 3.5 5m-7 0h7m-7 7c0 1 .6 3 3.5 3s3.5-2 3.5-3m-7-3v3m7-3v3m-8-8c0-5 2-6 4.5-6s4.5 1 4.5 6v2c0 5-2 6-4.5 6s-4.5-1-4.5-6v-2Z"/>
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8.5 11.5V11m7 0v.5m-8-4c0-4 1.773-5 3.5-5s3.5 1 3.5 5m-7 0h7m-7 7c0 1 .6 3 3.5 3s3.5-2 3.5-3m-7-3v3m7-3v3m-8-8c0-5 2-6 4.5-6s4.5 1 4.5 6v2c0 5-2 6-4.5 6s-4.5-1-4.5-6v-2Z" />
                     </svg>
                     <p>No results found</p>
                   </div>

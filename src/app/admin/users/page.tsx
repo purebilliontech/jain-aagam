@@ -1,9 +1,14 @@
-import React from 'react'
+import UsersDataTable from './UsersDataTable'
 
-const page = () => {
-    return (
-        <div>page</div>
-    )
+export const metadata = {
+  title: 'User Management',
+  description: 'Manage users of the application',
 }
 
-export default page
+export default function UsersPage() {
+  return (
+    <div className="container mx-auto p-6">
+      <UsersDataTable />
+    </div>
+  )
+}
