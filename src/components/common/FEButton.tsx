@@ -1,9 +1,9 @@
 import * as React from "react";
 
-export interface FEButtonProps extends React.ComponentProps<"button"> { }
+export interface FEButtonProps extends React.ComponentPropsWithoutRef<"button"> { }
 
 const FEButton = React.forwardRef<HTMLButtonElement, FEButtonProps>(
-    ({ className, ...props }, ref) => {
+    function FEButton({ className, ...props }, ref) {
         return (
             <button
                 ref={ref}
@@ -15,5 +15,3 @@ const FEButton = React.forwardRef<HTMLButtonElement, FEButtonProps>(
 );
 
 export default FEButton;
-
-

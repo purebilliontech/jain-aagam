@@ -1,6 +1,5 @@
 "use client";
 
-import SectionTitle from "@/components/common/SectionTitle";
 import WhatAreAgams from "./(sections)/WhatAreAgams";
 import Agams from "./(sections)/Agams";
 import AgamEbooks from "./(sections)/AgamEbooks";

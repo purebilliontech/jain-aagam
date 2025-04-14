@@ -7,14 +7,17 @@ const AgamEbooks = () => {
         <>
             <section className='mt-32 mb-20 max-w-7xl w-full mx-auto p-5'>
                 <SectionTitle title='Agam Ebooks' subtitle='EXPLORE' />
-                <div className=" flex justify-center mt-24 gap-10">
-                    <div className="bg-secondary w-52 h-72"></div>
-                    <div className="bg-secondary w-52 h-72"></div>
-                    <div className="bg-secondary w-52 h-72"></div>
-                    <div className="bg-secondary w-52 h-72"></div>
+                
+                {/* Responsive grid layout */}
+                <div className="mt-24 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-10">
+                    <div className="bg-secondary w-40 h-56 sm:w-44 sm:h-64 md:w-48 md:h-68 lg:w-52 lg:h-72"></div>
+                    <div className="bg-secondary w-40 h-56 sm:w-44 sm:h-64 md:w-48 md:h-68 lg:w-52 lg:h-72"></div>
+                    <div className="bg-secondary w-40 h-56 sm:w-44 sm:h-64 md:w-48 md:h-68 lg:w-52 lg:h-72"></div>
+                    <div className="bg-secondary w-40 h-56 sm:w-44 sm:h-64 md:w-48 md:h-68 lg:w-52 lg:h-72"></div>
                 </div>
+                
                 <div className="flex justify-center">
-                    <FEButton className='text-center mx-auto mt-20'>EXPLORE ALL</FEButton>
+                    <FEButton className='text-center mx-auto mt-12 sm:mt-16 md:mt-20'>EXPLORE ALL</FEButton>
                 </div>
             </section>
         </>
