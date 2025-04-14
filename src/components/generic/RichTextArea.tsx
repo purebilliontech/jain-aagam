@@ -236,7 +236,7 @@ const ImageEditor: FC<ImageEditorProps> = ({ editor, className }) => {
           max={1200}
           step={25}
           defaultValue={[editor?.getAttributes("image").width ?? 400]}
-          onValueChange={(val) =>
+          onValueChange={(val: any) =>
             editor
               ?.chain()
               .focus()
