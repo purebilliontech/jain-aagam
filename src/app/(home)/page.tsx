@@ -7,10 +7,12 @@ import EnglishAgam from "./(sections)/EnglishAgam";
 import AgamWisdom from "./(sections)/AgamWisdom";
 import JoinMission from "./(sections)/JoinMission";
 import { Timeline } from "./(sections)/Timeline";
+import TopSection from "./(sections)/TopSection";
 
 export default function Home() {
   return (
     <>
+      <TopSection />
       <WhatAreAgams />
       <Agams />
       <AgamEbooks />
