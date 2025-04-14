@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import React from 'react'
 
-const AgamSection = ({ title, content }:{ title: string, content: string }) => {
+const AgamSection = ({ title, content }: { title: string, content: string }) => {
     return (
         <div className='mt-5 p-4 md:p-0'>
-            <h3 className='text-2xl md:text-3xl font-mono font-semibold text-primary'>{title}</h3>
-            <p className='text-muted text-lg md:text-xl font-mono font-semibold'>
+            <h3 className='text-2xl md:text-3xl font-mono font-semibold text-primary-ui'>{title}</h3>
+            <p className='text-muted-ui text-lg md:text-xl font-mono font-semibold'>
                 {content}
             </p>
         </div>

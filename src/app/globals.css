@@ -44,6 +44,25 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   
+
+  
+  
+  --color-background-ui: #FFFFFF;
+  --color-foreground-ui: #8E8777;
+  --color-card-ui: #F6F7F2;
+  --color-card-foreground-ui: #8E8777;
+  --color-popover-ui: #F6F7F2;
+  --color-popover-foreground-ui: #8E8777;
+  --color-primary-ui: #C6AF8B;
+  --color-primary-foreground-ui: #8E8777;
+  --color-secondary-ui: #BFB6A5;
+  --color-secondary-foreground-ui: #8E8777;
+  --color-muted-ui: #F6F7F2;
+  --color-muted-foreground-ui: #8E8777;
+  --color-accent-ui: #E78C39;
+  --color-accent-foreground-ui: #8E8777;
+
+
 }
 
 /* :root {
@@ -115,6 +134,24 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  
+  --background-ui: #FFFFFF;
+  --foreground-ui: #8E8777;
+  --card-ui: #F6F7F2;
+  --card-foreground-ui: #8E8777;
+  --popover-ui: #F6F7F2;
+  --popover-foreground-ui: #8E8777;
+  --primary-ui: #C6AF8B;
+  --primary-foreground-ui: #8E8777;
+  --secondary-ui: #BFB6A5;
+  --secondary-foreground-ui: #8E8777;
+  --muted-ui: #F6F7F2;
+  --muted-foreground-ui: #8E8777;
+  --accent-ui: #E78C39;
+  --accent-foreground-ui: #8E8777;
+
+
 }
 
 
