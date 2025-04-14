@@ -1,6 +1,6 @@
 "use client";
 
-import { jwtDecrypt } from "jose";
+import { decodeJwt } from "jose";
 import Cookies from "js-cookie";
 import { COOKIE_NAME } from "@/utils/constants";
 import type { UserPayloadData } from "./auth";
@@ -27,27 +27,15 @@ export function getTokenFromCookie(): string | null {
 }
 
 /**
- * Verify JWT token (client-side)
- * @param token The JWT token to verify
- * @returns The payload if valid, null otherwise
- */
-export async function decodeToken(token: string): Promise<any> {
-  try {
-    const { payload } = await jwtDecrypt(token, JWT_SECRET);
-    return payload;
-  } catch (error) {
-    return null;
-  }
-}
-
-/**
  * Get current user from token in cookie (client-side)
  * @returns The current user or null if not authenticated
  */
 export async function getCurrentUser(): Promise<UserPayloadData | null> {
   const token = getTokenFromCookie();
   if (!token) return null;
+  const { payload } = decodeJwt(token);
+  console.log(payload);
+  const payloadData = payload as UserPayloadData;
 
-  const payload = await verifyToken(token);
-  return payload;
+  return payloadData;
 }

@@ -13,7 +13,7 @@ export const PrimaryButton: FC<ComponentProps<typeof Button>> = forwardRef(
       <Button
         ref={ref}
         variant={variant}
-        className={cn("bg-buttonBlue", className)}
+        className={cn("bg-primary", className)}
         {...extProps}
       >
         {children}

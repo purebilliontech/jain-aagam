@@ -5,9 +5,14 @@ import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form'
 import { Form, FormField } from '@/components/ui/form';
-import { GenericFormField, GenericFormInput, GenericFormPassword, GenericSelectClosure } from '@/components/generic';
+import { GenericFormField, GenericFormInput, GenericFormPassword, GenericSelectClosure, PrimaryButton } from '@/components/generic';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from 'sonner';
+import { createUser, updateUserById } from './actions';
+import { useRouter } from 'next/navigation';
 
 const UserForm = ({ user }: { user: UserDTO | null }) => {
+    const router = useRouter();
 
     type FormType<T> = T extends null ? CreateUser : UpdateUser;
 
@@ -17,72 +22,105 @@ const UserForm = ({ user }: { user: UserDTO | null }) => {
             name: user?.name || '',
             email: user?.email || '',
             role: user?.role || '',
+            password: '',
         }
     });
 
-    const onSubmit = (data: FormType<typeof user>) => {
+    const onSubmit = async (data: FormType<typeof user>) => {
         console.log(data);
+
+        try {
+            if (user) {
+                const updatedUser = await updateUserById(user.id, data);
+                if (updatedUser) {
+                    toast.success("User Updated Successfully");
+                } else {
+                    toast.error("Failed to Update User");
+                }
+            } else {
+                const newUser = await createUser(data as CreateUser);
+                if (newUser) {
+                    toast.success("User Created Successfully");
+                    router.replace(`/admin/users/${newUser.id}`);
+                } else {
+                    toast.error("Failed to Create User");
+                }
+            }
+        } catch (error) {
+            toast.error("Failed to Create User")
+            console.error(error);
+        }
+
+
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
 
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <Card className="container max-w-3xl mx-auto">
+                    <CardHeader>
+                        <CardTitle className="text-center">
+                            {user ? "Modify User" : "Add User"}
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="mt-5 flex flex-col gap-6">
 
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <GenericFormField
-                                formLabel="Name"
-                                field={field}
-                                cb={GenericFormInput}
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <GenericFormField
+                                    formLabel="Name"
+                                    field={field}
+                                    cb={GenericFormInput}
+                                />
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <GenericFormField
+                                    formLabel="Email"
+                                    field={field}
+                                    cb={GenericFormInput}
+                                />
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="role"
+                            render={({ field }) => (
+                                <GenericFormField
+                                    formLabel="Role"
+                                    field={field}
+                                    cb={GenericSelectClosure({
+                                        options: [
+                                            { value: "user", display: "User" },
+                                            { value: "admin", display: "Admin" },
+                                        ],
+                                    })}
+                                />
+                            )}
+                        />
+                        {
+                            !user &&
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <GenericFormField
+                                        formLabel="Password"
+                                        field={field}
+                                        cb={GenericFormPassword}
+                                    />
+                                )}
                             />
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <GenericFormField
-                                formLabel="Email"
-                                field={field}
-                                cb={GenericFormInput}
-                            />
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="role"
-                        render={({ field }) => (
-                            <GenericFormField
-                                formLabel="Role"
-                                field={field}
-                                cb={GenericSelectClosure({
-                                    options: [
-                                        { value: "user", display: "User" },
-                                        { value: "admin", display: "Admin" },
-                                    ],
-                                })}
-                            />
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <GenericFormField
-                                formLabel="Password"
-                                field={field}
-                                cb={GenericFormPassword}
-                            />
-                        )}
-                    />
-                    {/* 
+                        }
+                        {/* 
 
                     <Button onClick={() => {
                         console.log(form.formState.errors)
@@ -105,10 +143,23 @@ const UserForm = ({ user }: { user: UserDTO | null }) => {
                                 ? "Login"
                                 : "Request OTP"}
                     </Button> */}
-                </form>
-            </Form>
 
-        </div>
+                    </CardContent>
+                    <CardFooter className="mt-5 justify-end">
+                        <PrimaryButton
+                            type="submit"
+                            className="max-md:w-full md:w-4/12"
+                        >
+                            {user ? (
+                                "Modify"
+                            ) : (
+                                "Add"
+                            )}
+                        </PrimaryButton>
+                    </CardFooter>
+                </Card>
+            </form>
+        </Form>
     )
 }
 
