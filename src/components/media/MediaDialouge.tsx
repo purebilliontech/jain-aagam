@@ -1,14 +1,21 @@
+"use client";
+
 import { useState, useRef } from "react";
 import type { SetStateAction } from "react";
 import type { Dispatch } from "react";
 import { Button } from "../ui/button";
-import type { MediaDTO } from "@/schema/media";
+import { MediaFormSchema, type MediaDTO, type MediaForm } from "@/schema/media";
 import Image from "next/image";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { changeMedia, deleteMediaById, updateMediaMetadata } from "@/app/admin/media/actions";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormField } from "../ui/form";
+import { GenericFormField, GenericFormInput } from "../generic";
 
 const MediaDialog = ({
   media,
@@ -23,7 +30,7 @@ const MediaDialog = ({
   handleNext: () => void;
   handlePrev: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSave?: (data: any) => void;
+  onSave?: (data: MediaDTO) => void;
   canDelete?: boolean;
 }) => {
   const [isCopid, setIsCopid] = useState(false);
@@ -32,15 +39,24 @@ const MediaDialog = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const form = useForm<MediaForm>({
+    resolver: zodResolver(MediaFormSchema),
+    defaultValues: {
+      title: media.title || "",
+      alt: media.alt || "",
+      cta: media.cta,
+    },
+  })
+
   const router = useRouter();
 
   const deleteMedia = async () => {
     try {
-      await axios.delete(`/api/media/${media.mediaId}`);
+      await deleteMediaById(media.id);
       router.refresh();
     } catch (error) {
       console.error(error);
-      toast({ title: "Failed to Delete Media" });
+      toast("Failed to Delete Media");
     }
   };
 
@@ -68,85 +84,56 @@ const MediaDialog = ({
       // Create FormData and upload it with the new image
       const formData = new FormData();
       formData.append("file", selectedFile!);
-      formData.append("mediaId", media.id);
-      formData.append("mediaAlt", media.alt);
-      formData.append("mediaTitle", media.title);
 
-      // Use a separate endpoint for replacing media files
-      const response = await axios.post(
-        `/api/media/upload/replace/${media.id}`,
-        formData,
-      );
+      const response = await changeMedia(media.id, formData);
 
-      if (onSave) {
-        onSave(response.data.data);
+      if (!response.success) {
+        toast("Failed to replace image");
+        return;
       }
 
-      toast({
-        title: "Image and details updated successfully",
-      });
+      if (onSave) {
+        onSave(response.media!);
+      }
+
+      toast("Image and details updated successfully");
 
       setSelectedMedia(null);
+
     } catch (error) {
       console.error("Error replacing image:", error);
-      toast({
-        title: "Failed to replace image",
-        variant: "destructive",
-      });
+      toast("Failed to replace image");
     } finally {
       setLoading(false);
     }
   };
-
   // Function to update only metadata
-  const handleSaveMetadataOnly = async () => {
+  const handleSaveMetadataOnly = async (data: MediaForm) => {
     setLoading(true);
     try {
-      // Create a stringified JSON payload explicitly
-      const payload = {
-        mediaAlt: media.mediaAlt || "",
-        mediaDescription: media.mediaDescription || "",
-        mediaMetaData: {},
-        mediaTitle: media.mediaTitle || "",
-        cta: media.cta || "",
-      };
+      // Call the server action to update media metadata
+      const response = await updateMediaMetadata(media.id, data);
 
-      // Set explicit content-type header to ensure proper parsing on server
-      const response = await axios.patch(
-        `/api/media/${media.mediaId}`,
-        payload,
-      );
-
-      if (onSave) {
-        onSave(response.data.data);
+      if (!response.success) {
+        toast("Failed to update media details");
+        return;
       }
 
-      toast({
-        title: "Media details updated successfully",
-      });
+      if (onSave) {
+        onSave(response.media!);
+      }
+
+      toast("Media details updated successfully",);
 
       setSelectedMedia(null);
     } catch (error) {
       console.error("PATCH error:", error);
-      toast({
-        title: "Failed to update media details",
-        variant: "destructive",
-      });
+      toast("Failed to update media details");
     } finally {
       setLoading(false);
     }
   };
 
-  // Main save function that dispatches to the appropriate handler
-  const handleSave = () => {
-    if (selectedFile) {
-      // If there's a new image, call the image replacement function
-      handleSaveWithImageReplacement();
-    } else {
-      // Otherwise just update metadata
-      handleSaveMetadataOnly();
-    }
-  };
 
   return (
     <>
@@ -154,7 +141,7 @@ const MediaDialog = ({
         onClick={() => {
           setSelectedMedia(null);
         }}
-        className="fixed left-0 top-0 z-50 h-full w-full bg-primaryBlue bg-opacity-25"
+        className="fixed left-0 top-0 z-50 h-full w-full bg-primary/25"
       >
         <div
           onClick={(e) => {
@@ -165,35 +152,43 @@ const MediaDialog = ({
           <div className="flex flex-1">
             <div className="h-full w-3/5 rounded-md bg-white p-10">
               <div className="relative h-full w-full">
-                {media.mediaType === "image" ? (
+                {media.type === "image" ? (
                   <>
                     {newImagePreview ? (
                       <div className="relative h-full w-full">
                         <Image
                           src={newImagePreview}
-                          alt={media.mediaAlt}
+                          alt={media.alt}
                           fill
                           className="object-contain object-center transition-all group-hover:scale-110"
                         />
                         <div className="absolute left-2 top-2 flex gap-2">
                           <Button
-                            variant="destructive"
+                            variant="secondary"
                             size="sm"
                             onClick={handleRemoveNewImage}
                           >
                             Cancel
+                          </Button>
+
+                          <Button
+                            variant="default"
+                            size="sm"
+                            onClick={handleSaveWithImageReplacement}
+                          >
+                            Save
                           </Button>
                         </div>
                       </div>
                     ) : (
                       <>
                         <Image
-                          src={media.mediaUrl}
-                          alt={media.mediaAlt}
+                          src={media.url}
+                          alt={media.alt}
                           fill
                           className="object-contain object-center transition-all group-hover:scale-110"
                         />
-                        <div className="bg-black absolute bottom-0 left-0 right-0 bg-opacity-50 p-2 text-center">
+                        <div className=" absolute bottom-0 left-0 right-0 p-2 text-center">
                           <input
                             ref={fileInputRef}
                             type="file"
@@ -206,7 +201,7 @@ const MediaDialog = ({
                             size="sm"
                             onClick={() => fileInputRef.current?.click()}
                           >
-                            Replace Image
+                            Change Image
                           </Button>
                         </div>
                       </>
@@ -214,7 +209,7 @@ const MediaDialog = ({
                   </>
                 ) : (
                   <video
-                    src={media.mediaUrl}
+                    src={media.url}
                     controls
                     muted
                     className="absolute top-[50%] my-auto h-fit -translate-y-[50%] object-center"
@@ -237,66 +232,53 @@ const MediaDialog = ({
                   Next
                 </span>
               </div>
+              <Form {...form}>
+                <form className="flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <GenericFormField
+                        formLabel="Title"
+                        field={field}
+                        cb={GenericFormInput}
+                      />
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="alt"
+                    render={({ field }) => (
+                      <GenericFormField
+                        formLabel="Alt Text"
+                        field={field}
+                        cb={GenericFormInput}
+                      />
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="cta"
+                    render={({ field }) => (
+                      <GenericFormField
+                        formLabel="CTA"
+                        field={field}
+                        cb={GenericFormInput}
+                      />
+                    )}
+                  />
+                </form>
+              </Form>
 
-              <Label className="">Title</Label>
-              <Input
-                value={media.mediaTitle}
-                className="outline-none"
-                onChange={(e) => {
-                  setSelectedMedia({
-                    ...media,
-                    mediaTitle: e.target.value,
-                  });
-                }}
-              />
-              <br />
-              <Label className="">Alt Text</Label>
-              <Input
-                value={media.mediaAlt}
-                className="outline-none"
-                onChange={(e) => {
-                  setSelectedMedia({
-                    ...media,
-                    mediaAlt: e.target.value,
-                  });
-                }}
-              />
-              <br />
-              <Label className="">Description</Label>
-              <Input
-                value={media.mediaDescription}
-                className="outline-none"
-                onChange={(e) => {
-                  setSelectedMedia({
-                    ...media,
-                    mediaDescription: e.target.value,
-                  });
-                }}
-              />
-              <br />
-              <Label className="">CTA</Label>
-              <Input
-                value={media.cta ?? ""}
-                className="outline-none"
-                onChange={(e) => {
-                  setSelectedMedia({
-                    ...media,
-                    cta: e.target.value,
-                  });
-                }}
-              />
-              <br />
-              <Label className="">Url</Label>
+              <Label className="mt-5 mb-2">Url</Label>
               <Input
                 contentEditable={false}
                 onClick={() => {
                   navigator.clipboard
-                    .writeText(media.mediaUrl)
+                    .writeText(media.url)
                     .then(() => {
                       setIsCopid(true);
-                      toast({
-                        title: "Url Copied to Clipboard",
-                      });
+                      toast("Url Copied to Clipboard");
                       setTimeout(() => {
                         setIsCopid(false);
                       }, 2000);
@@ -305,7 +287,7 @@ const MediaDialog = ({
                       console.error("Failed to copy URL: ", err);
                     });
                 }}
-                value={media.mediaUrl}
+                value={media.url}
                 className="cursor-pointer !outline-0"
               />
               <p
@@ -313,18 +295,6 @@ const MediaDialog = ({
               >
                 Url Copied to Clipboard!
               </p>
-              {/* <Label className="">Image Meta Data</Label>
-                            <Input
-                                value={JSON.stringify(media.mediaMetaData)}
-                                className="outline-none "
-                                onChange={(e) => {
-                                    setSelectedMedia({
-                                        ...media,
-                                        mediaDescription: e.target.value,
-                                    });
-                                }}
-                            /> */}
-
               <p>
                 Created On:{" "}
                 <span>{media.createdAt.toString().slice(0, 10)}</span>
@@ -356,13 +326,10 @@ const MediaDialog = ({
               <Button
                 disabled={loading}
                 onClick={() => {
-                  handleSave();
+                  form.handleSubmit(handleSaveMetadataOnly)();
                 }}
-                className={
-                  selectedFile ? "bg-primaryBlue hover:bg-blue-700" : ""
-                }
               >
-                {selectedFile ? "Save & Replace Image" : "Save Changes"}
+                Save Changes
               </Button>
             </div>
           </div>

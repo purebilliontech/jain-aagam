@@ -103,37 +103,29 @@ const SelectMediaModal = ({
 
   const handleNext = () => {
     const currentIndex = mediaList.findIndex(
-      (m) => m.mediaId === selectedMedia?.mediaId,
+      (m) => m.id === selectedMedia?.id,
     );
     if (currentIndex !== -1 && currentIndex < mediaList.length - 1) {
       setSelectedMedia(mediaList[currentIndex + 1]);
     } else {
-      toast({
-        title: "No more media items",
-        duration: 2000,
-        variant: "default",
-      });
+      toast("No more media items");
     }
   };
 
   const handlePrev = () => {
     const currentIndex = mediaList.findIndex(
-      (m) => m.mediaId === selectedMedia?.mediaId,
+      (m) => m.id === selectedMedia?.id,
     );
     if (currentIndex > 0) {
       setSelectedMedia(mediaList[currentIndex - 1]);
     } else {
-      toast({
-        title: "No more media items",
-        duration: 2000,
-        variant: "default",
-      });
+      toast("No more media items");
     }
   };
 
   const replaceMedia = (media: MediaDTO) => {
     setMediaList((prevMediaList) =>
-      prevMediaList.map((m) => (m.mediaId === media.mediaId ? media : m)),
+      prevMediaList.map((m) => (m.id === media.id ? media : m)),
     );
   };
 
@@ -181,7 +173,7 @@ const SelectMediaModal = ({
           onClose();
         }
       }}
-      className="fixed left-0 top-0 z-40 h-full w-full bg-primaryBlue bg-opacity-30"
+      className="fixed left-0 top-0 z-40 h-full w-full bg-primary/30"
     >
       <div
         onClick={(e) => {
@@ -206,7 +198,7 @@ const SelectMediaModal = ({
             Close
           </Button>
         </div>
-        <div className="mt-10 flex justify-between gap-5 rounded-md bg-primaryBlue bg-opacity-5 p-2 max-md:flex-col-reverse max-md:items-center">
+        <div className="mt-10 flex justify-between gap-5 rounded-md bg-primary/5 p-2 max-md:flex-col-reverse max-md:items-center">
           <div>
             <Button
               disabled={loading}
@@ -264,7 +256,7 @@ const SelectMediaModal = ({
 
         <div className="mt-10 flex flex-wrap">
           {mediaList.map((media) => (
-            <div className="h-72 w-1/4 p-1" key={media.mediaId}>
+            <div className="h-72 w-1/4 p-1" key={media.id}>
               <div className="h-full w-full border p-2">
                 <div
                   onClick={() => {
@@ -274,19 +266,19 @@ const SelectMediaModal = ({
                   className="relative h-full w-full cursor-pointer overflow-hidden"
                 >
                   <div className="group relative h-full w-full overflow-hidden">
-                    {media.mediaType === "image" ? (
+                    {media.type === "image" ? (
                       <Image
-                        src={media.mediaUrl}
-                        alt={media.mediaAlt}
+                        src={media.url}
+                        alt={media.alt}
                         fill
                         className="object-cover transition-all group-hover:scale-110"
                       />
                     ) : (
-                      <video src={media.mediaUrl} className="h-full w-full" />
+                      <video src={media.url} className="h-full w-full" />
                     )}
-                    <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-5 bg-primaryBlue bg-opacity-0 p-5 transition-opacity group-hover:bg-opacity-50">
+                    <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-5 bg-primary/0 p-5 transition-opacity group-hover:bg-primary/50">
                       <p className="text-center text-white opacity-0 shadow group-hover:opacity-100">
-                        {media.mediaTitle}
+                        {media.title}
                       </p>
                       <div
                         onClick={(e) => {

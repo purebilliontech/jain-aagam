@@ -4,13 +4,13 @@ import React, { useState, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/dataTable/dataTable";
 import { UserDTO } from "@/schema/user";
-import { getUsers } from "./[id]/actions";
 import { usePagination } from "@/hooks/usePagination";
 import { Pencil, Trash2, UserRound, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/dataTable/columnHeader";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import { getUsers } from "./actions";
 
 interface CustomFilterProps {
     globalFilter: string;

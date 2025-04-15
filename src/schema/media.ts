@@ -11,7 +11,7 @@ export const MediaSchema = genericSchema.extend({
     url: z.string().url(),
     alt: z.string(),
     title: z.string(),
-    cta: z.string()
+    cta: z.string().nullable(),
 }) satisfies z.Schema<MediaModel>;
 export type Media = z.infer<typeof MediaSchema>;
 
@@ -22,7 +22,10 @@ export type MediaDTO = z.infer<typeof MediaDTOSchema>;
 export const CreateMediaSchema = MediaDTOSchema.omit(GenericOmit);
 export type CreateMedia = z.infer<typeof CreateMediaSchema>;
 
-
 /** Schema to be used for creating a new Media */
-export const MediaFormSchema = MediaDTOSchema.omit(GenericOmit);
+export const MediaFormSchema = MediaDTOSchema.pick({
+    title: true,
+    alt: true,
+    cta: true,
+});
 export type MediaForm = z.infer<typeof MediaFormSchema>;

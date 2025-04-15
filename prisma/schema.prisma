@@ -49,7 +49,7 @@ model Media {
     type      String   @default("image")
     alt       String
     title     String
-    cta       String
+    cta       String?
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
     Blog      Blog[]

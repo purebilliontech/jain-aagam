@@ -39,7 +39,7 @@ export function DataTablePagination<TData>({
         </span>{" "}
         of <span className="font-medium text-slate-700">{table.getFilteredRowModel().rows.length}</span> results
       </div>
-      
+
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <label className="text-sm text-slate-500">Rows</label>
@@ -61,7 +61,7 @@ export function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div>
-        
+
         <div className="flex items-center gap-1">
           <Button
             variant="outline"
@@ -81,13 +81,13 @@ export function DataTablePagination<TData>({
           >
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
-          
+
           <span className="px-3 text-sm text-slate-600">
             <span className="font-medium">{table.getState().pagination.pageIndex + 1}</span>
             <span className="mx-1">/</span>
             <span>{table.getPageCount() || 1}</span>
           </span>
-          
+
           <Button
             variant="outline"
             size="icon"
@@ -128,15 +128,15 @@ export function TablePagination({
   onPageChange,
 }: TablePaginationProps) {
   const [pageInputValue, setPageInputValue] = useState(currentPage.toString());
-  
+
   // Calculate total pages
   const totalPages = Math.ceil(totalCount / pageSize);
-  
+
   // Update input when page changes externally
   useEffect(() => {
     setPageInputValue(currentPage.toString());
   }, [currentPage]);
-  
+
   // Generate page numbers to display
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -168,25 +168,25 @@ export function TablePagination({
   };
 
   const pageNumbers = getPageNumbers();
-  
+
   const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPageInputValue(e.target.value);
   };
-  
+
   const handlePageInputSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const pageNumber = parseInt(pageInputValue);
     if (isNaN(pageNumber) || pageNumber < 1 || pageNumber > totalPages) {
       // Reset to current page if invalid
       setPageInputValue(currentPage.toString());
       return;
     }
-    
+
     onPageChange(pageNumber);
   };
-  
+
   if (totalPages <= 1) return null;
 
   return (
@@ -219,7 +219,7 @@ export function TablePagination({
       >
         <ChevronLeftIcon className="h-4 w-4" />
       </Button>
-      
+
       {pageNumbers.map((pageNumber, index) => (
         pageNumber === '...' ? (
           <span key={`ellipsis-${index}`} className="px-3 text-sm text-slate-600">...</span>
@@ -227,7 +227,7 @@ export function TablePagination({
           <Button
             key={`page-${pageNumber}`}
             variant={currentPage === pageNumber ? "default" : "outline"}
-            className={`h-8 w-8 ${currentPage === pageNumber ? 'bg-primaryBlue text-white' : 'border-slate-200 text-slate-600'}`}
+            className={`h-8 w-8 ${currentPage === pageNumber ? 'bg-primary text-white' : 'border-slate-200 text-slate-600'}`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -239,7 +239,7 @@ export function TablePagination({
           </Button>
         )
       ))}
-      
+
       <Button
         variant="outline"
         size="icon"
@@ -268,7 +268,7 @@ export function TablePagination({
       >
         <ChevronsRight className="h-4 w-4" />
       </Button>
-      
+
       {/* Page number input */}
       <div className="ml-2 flex items-center">
         <span className="text-sm text-slate-500 mr-2">Go to:</span>
@@ -285,11 +285,11 @@ export function TablePagination({
           className="h-8 w-14 rounded-md border border-slate-200 px-2 text-sm"
           aria-label="Go to page"
         />
-        <Button 
+        <Button
           type="button"
           onClick={handlePageInputSubmit}
-          size="sm" 
-          variant="outline" 
+          size="sm"
+          variant="outline"
           className="ml-1 h-8 border-slate-200 text-xs"
         >
           Go

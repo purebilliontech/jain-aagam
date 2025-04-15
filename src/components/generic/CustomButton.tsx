@@ -70,7 +70,7 @@ export const RemoveButton: FC<ComponentProps<typeof Button>> = forwardRef(
         ref={ref}
         variant={variant}
         className={cn(
-          "border border-buttonRed text-buttonRed hover:bg-buttonRed hover:text-white",
+          "border border-red-500 text-red-500 hover:bg-red-500 hover:text-white",
           className,
         )}
         {...extProps}
