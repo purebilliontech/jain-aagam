@@ -1,286 +1,273 @@
 import React from "react";
 import PanchMahavrats from "../(home)/(sections)/PanchMahavrats";
+import Image from "next/image";
+import SectionTitle from "@/components/common/SectionTitle";
+import { Timeline } from "../(home)/(sections)/Timeline";
+import { EbooksTimeline } from "../(home)/(sections)/EbooksTimeline";
 
 function Ebooks() {
   return (
     <>
-      <div className="flex flex-col md:flex-row bg-amber-50  mx-auto ">
+      <div className="flex flex-col md:flex-row bg-amber-50 mx-auto">
         <div className="w-full md:w-1/3">
-          <img
-            src="/BhagwanMahavir.png"
+          <Image
+            src="/static/bhagwan-mahavir.png"
             alt="Bhagwan Mahavir"
             className="rounded border-2 border-gray-300"
+            width={450}
+            height={100}
           />
         </div>
         <div className="w-full md:w-2/3 flex flex-col justify-center pl-0 md:pl-8 mt-4 md:mt-0">
-          <h1 className="text-2xl md:text-4xl font-light text-amber-600 mb-4">
+          <h1 className="text-4xl md:text-8xl font-sans font-bold text-primary-ui mb-4 text-center md:text-left">
             BHAGWAN
             <br />
             MAHAVIR
           </h1>
-          <div className="text-blue-500 underline mt-4">
-            ← BANNER - TO BE DESIGNED→
-          </div>
         </div>
       </div>
       <div className="flex flex-col w-full max-w-7xl mx-auto bg-white">
-        {/* Header Section */}
-
         {/* Main Content Section */}
-        <div className="px-4 md:px-16 py-8">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center mb-2">
-              <div className="h-px bg-gray-300 w-1/4"></div>
-              <div className="px-4 text-sm text-gray-400 uppercase">
-                THE 24TH TIRTHANKARA
-              </div>
-              <div className="h-px bg-gray-300 w-1/4"></div>
-            </div>
-            <h2 className="text-xl md:text-2xl text-amber-600 font-serif">
-              Bhagwan Mahavir
-            </h2>
-            <div className="flex items-center justify-center mt-2">
-              <div className="h-px bg-gray-300 w-1/3"></div>
-            </div>
-          </div>
-
-          <div className="text-gray-600 text-sm leading-relaxed mb-12">
-            <p className="mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultricies gravida. Risus commodo viverra
-              maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua. Quis ipsum suspendisse ultricies
-              gravida. Risus commodo viverra maecenas accumsan lacus vel
-              facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua. Quis ipsum suspendisse ultricies gravida. Risus commodo
-              viverra maecenas accumsan lacus vel facilisis.
-            </p>
-          </div>
+        <div className="px-4 md:px-16 py-20">
+          <SectionTitle
+            title="Bhagwan Mahavir"
+            subtitle="THE 24TH TIRTHANKAR"
+          />
+          <p className="mt-14 text-primary-foreground-ui text-lg font-sans font-normal">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
+            ipsum suspendisse ultricies gravida. Risus commodo viverra maecenas
+            accumsan lacus vel facilisis. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Quis ipsum suspendisse ultricies
+            gravida. Risus commodo viverra maecenas accumsan lacus vel
+            facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Quis ipsum suspendisse ultricies gravida. Risus commodo viverra
+            maecenas accumsan lacus vel facilisis.
+          </p>
         </div>
+      </div>
+      <div className="w-full relative flex flex-col items-center justify-center self-center h-96 md:h-[400px]">
+        <Image
+          src={"/static/ebooks-sutra-bg.png"}
+          layout="fill"
+          objectFit="cover"
+          alt="Shree Uttaradhyayan Sutra background image"
+          className="z-0"
+        />
+        <div className="absolute flex flex-col items-center justify-center z-10 bg-[#F6F7F2D4] w-[85%] h-[85%] self-center rounded-4xl p-4 md:p-8">
+          <h2 className="text-[#E68C3A] text-2xl md:text-4xl font-normal font-mono text-center">
+            ॥ ઉપવાસના વિચારોના મૂળતત્વ ॥
+          </h2>
+          <p className="text-justify w-full md:w-[60%] text-typography mt-8">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
+            ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
+            accumsan lacus vel facilisis.Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tem
+          </p>
+          <p className="text-xl md:text-2xl font-sans font-semibold text-typography mt-11">
+            Shree Uttaradhyayan Sutra
+          </p>
+        </div>
+      </div>
+      <EbooksTimeline
+        data={[
+          {
+            title: "Knowing the self",
+            subtitle: "THE DETACHED PRINCE",
+            content: (
+              <>
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque illo aliquid, molestias perferendis deserunt sequi,
+                  quam et nesciunt laborum dicta vel nemo, asperiores dolore
+                  accusantium eveniet. Corrupti omnis recusandae nulla?
+                </p>
+                <p className="mt-6">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo,
+                  eum! Consectetur dignissimos ducimus, suscipit, unde odio sunt
+                  iusto eius quas cumque maiores sequi voluptate distinctio eum.
+                  Accusamus veritatis aut exercitationem.
+                </p>
+              </>
+            ),
+            alignment: "right",
+          },
+          {
+            title: "Renunciation",
+            subtitle: "THE MEDITATIVE EXPERIENCE",
+            content: (
+              <>
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque illo aliquid, molestias perferendis deserunt sequi,
+                  quam et nesciunt laborum dicta vel nemo, asperiores dolore
+                  accusantium eveniet. Corrupti omnis recusandae nulla?
+                </p>
+                <p className="mt-6">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque illo aliquid, molestias perferendis deserunt sequi,
+                  quam et nesciunt laborum dicta vel nemo, asperiores dolore
+                  accusantium eveniet. Corrupti omnis recusandae nulla?
+                </p>
+              </>
+            ),
+            alignment: "left",
+            image: "/static/meditation-image.jpg", // You might need a placeholder image
+          },
+          {
+            title: "Omniscience",
+            subtitle: "THE INFINITE WISDOM",
+            content: (
+              <>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  dui quam, semper facilisis et lacus in, lobortis sodales
+                  dolor. Aenean in dignissime tellus, at vestibulum enim. Etiam
+                  gravida eget nunc in faucibus.
+                </p>
+                <p>
+                  Nulla facilisi. Vestibulum elementum, orci vel suscipit
+                  tempor, eros diam scelerisque ex, vel bibendum tortor risus
+                  vitae nisl. Nam eget faucibus orci.
+                </p>
+              </>
+            ),
+            alignment: "right",
+          },
+          {
+            title: "Nirvan",
+            subtitle: "THE EVERLASTING PEACE",
+            content: (
+              <>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  dui quam, semper facilisis et lacus in, lobortis sodales
+                  dolor. Aenean in dignissime tellus, at vestibulum enim. Etiam
+                  gravida eget nunc in faucibus.
+                </p>
+                <p className="mt-6">
+                  Nulla facilisi. Vestibulum elementum, orci vel suscipit
+                  tempor, eros diam scelerisque ex, vel bibendum tortor risus
+                  vitae nisl. Nam eget faucibus orci.
+                </p>
+              </>
+            ),
+            alignment: "left",
+          },
+        ]}
+      />
 
-        {/* Bottom Quote Section */}
-        <div className="bg-amber-100 bg-opacity-50 p-8 relative">
-          <div className="absolute inset-0 flex items-center justify-center opacity-10">
-            <div className="text-6xl md:text-9xl text-amber-500">ॐ</div>
-          </div>
-          <div className="max-w-2xl mx-auto text-center relative z-10">
-            <h3 className="text-lg md:text-xl text-amber-600 font-serif mb-4">
-              || ઉવસગ્ગહરં પાસં ||
-            </h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultricies gravida. Risus commodo viverra
-              maecenas accumsan lacus vel facilisis Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod.
-            </p>
-            <p className="text-sm text-gray-700">Shreee Uvasaggaharam Sutra</p>
-          </div>
+      {/* Trailer Video Section */}
+      <div className="w-full bg-primary-ui h-[80vh] flex flex-col items-center justify-center mb-20">
+        <h1 className="text-center px-4">
+          TRAILER VIDEO BANNER OF AB DUNIYA JANEGI SUPER SCIENTIST KO
+        </h1>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionTitle title="INSPIRATION" subtitle="Short Films & Dramas" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-10 sm:mt-16 md:mt-20">
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+          <div className="h-48 rounded-lg bg-secondary-ui"></div>
+        </div>
+      </div>
+      <div className="w-full relative flex flex-col items-center justify-center self-center h-96 md:h-[400px] mt-24">
+        <Image
+          src={"/static/ebooks-sutra-bg.png"}
+          layout="fill"
+          objectFit="cover"
+          alt="Shree Uttaradhyayan Sutra background image"
+          className="z-0"
+        />
+        <div className="absolute flex flex-col items-center justify-center z-10 bg-[#F6F7F2D4] w-[85%] h-[85%] self-center rounded-4xl p-4 md:p-8">
+          <h2 className="text-[#E68C3A] text-2xl md:text-4xl font-normal font-mono text-center">
+            ॥ ઉપવાસના વિચારોના મૂળતત્વ ॥
+          </h2>
+          <p className="text-justify w-full md:w-[60%] text-typography mt-8">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
+            ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
+            accumsan lacus vel facilisis.Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tem
+          </p>
+          <p className="text-xl md:text-2xl font-sans font-semibold text-typography mt-11">
+            Shree Uttaradhyayan Sutra
+          </p>
         </div>
       </div>
       <PanchMahavrats />
-      <div className="w-full relative py-12 md:py-16">
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src="/static/agams-bg.png"
-            alt="Traditional Food Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
 
-        {/* Content Container */}
-        <div className="container mx-auto px-4 relative z-10">
-          {/* Quote Card */}
-          <div className="max-w-4xl mx-auto bg-amber-50 bg-opacity-90 rounded-2xl p-8 md:p-10 shadow-md">
-            {/* Gujarati Quote */}
-            <h2 className="text-center text-amber-800 text-xl md:text-2xl font-medium mb-4">
-              ॥ ઉપવાસના વિચારોના મૂળતત્વ ॥
-            </h2>
-
-            {/* Quote Text */}
-            <p className="text-center text-gray-700 text-sm md:text-base mb-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-              accumsan
-            </p>
-
-            {/* Quote Attribution */}
-            <p className="text-right text-amber-700 text-sm italic font-medium">
-              Shree Uttamchandraji Suru
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16 bg-white">
-        {/* Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <h3 className="text-xs uppercase tracking-wider text-gray-500">
-            THE UNIVERSAL MANTRA
-          </h3>
-          <h2 className="text-xl md:text-2xl font-serif text-amber-700 mt-2">
-            Navkar Mahamantra
+      <div className="w-full relative flex flex-col items-center justify-center self-center h-96 md:h-[400px]">
+        <Image
+          src={"/static/ebooks-sutra-bg.png"}
+          layout="fill"
+          objectFit="cover"
+          alt="Shree Uttaradhyayan Sutra background image"
+          className="z-0"
+        />
+        <div className="absolute flex flex-col items-center justify-center z-10 bg-[#F6F7F2D4] w-[85%] h-[85%] self-center rounded-4xl p-4 md:p-8">
+          <h2 className="text-[#E68C3A] text-2xl md:text-4xl font-normal font-mono text-center">
+            ॥ ઉપવાસના વિચારોના મૂળતત્વ ॥
           </h2>
-        </div>
-
-        {/* Content Layout */}
-        <div className="flex flex-col lg:flex-row gap-8 mb-16">
-          {/* Left Column - Mantra Text */}
-          <div className="lg:w-1/2 text-center lg:text-right">
-            <div className="space-y-1 text-gray-700">
-              <p>Namo Arihanatanam</p>
-              <p>Namo Siddhanam</p>
-              <p>Namo Ayariyanam</p>
-              <p>Namo Uvajjhayanam</p>
-              <p>Namo Loe Savva Sahunam</p>
-              <p>Eso Panch Namokkaro</p>
-              <p>Savva Pava Panasano</p>
-              <p>Mangalam Cha Savva Singha</p>
-              <p>Padhamam Havai Mangalam</p>
-            </div>
-          </div>
-
-          {/* Right Column - Quote Box */}
-          <div className="lg:w-1/2 flex items-start justify-start lg:justify-end">
-            <div className="bg-amber-100 p-6 md:p-8 w-full max-w-xs aspect-square flex items-center justify-center text-center">
-              <p className="text-amber-800 text-sm md:text-base uppercase tracking-wide font-medium">
-                EVERY LINE
-                <br />
-                WITH
-                <br />
-                MEANING
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Description Paragraphs */}
-        <div className="mb-16 max-w-4xl mx-auto">
-          <p className="text-gray-700 mb-6 text-sm md:text-base">
+          <p className="text-justify w-full md:w-[60%] text-typography mt-8">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
             ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-            accumsan lacus vel facilisis. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua. Quis ipsum suspendisse ultrices
-            gravida. Risus commodo viverra maecenas accumsan lacus vel
-            facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            accumsan lacus vel facilisis.Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tem
           </p>
-          <p className="text-gray-700 text-sm md:text-base">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-            ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-            accumsan lacus vel facilisis. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua.
+          <p className="text-xl md:text-2xl font-sans font-semibold text-typography mt-11">
+            Shree Uttaradhyayan Sutra
           </p>
         </div>
-
-        {/* Video Section */}
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-amber-100 p-4 md:p-6 rounded-md flex items-center justify-center h-48 md:h-64">
-            <p className="text-amber-800 uppercase tracking-wide font-medium">
-              NAVKAR MANTRA VIDEO
-            </p>
-          </div>
-        </div>
       </div>
-      <div className="w-full relative py-12 md:py-16">
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src="/static/agams-bg.png"
-            alt="Traditional Food Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
 
-        {/* Content Container */}
-        <div className="container mx-auto px-4 relative z-10">
-          {/* Quote Card */}
-          <div className="max-w-4xl mx-auto bg-amber-50 bg-opacity-90 rounded-2xl p-8 md:p-10 shadow-md">
-            {/* Gujarati Quote */}
-            <h2 className="text-center text-amber-800 text-xl md:text-2xl font-medium mb-4">
-              ॥ ઉપવાસના વિચારોના મૂળતત્વ ॥
-            </h2>
-
-            {/* Quote Text */}
-            <p className="text-center text-gray-700 text-sm md:text-base mb-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-              accumsan
-            </p>
-
-            {/* Quote Attribution */}
-            <p className="text-right text-amber-700 text-sm italic font-medium">
-              Shree Uttamchandraji Suru
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16 bg-white">
+      <div className="max-w-7xl mx-auto bg-white py-26">
         {/* Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <h3 className="text-xs uppercase tracking-wider text-gray-500">
-            INDIA'S MILESTONES
-          </h3>
-          <div className="flex items-center justify-center gap-4 mt-2">
-            <div className="h-px bg-amber-300 w-16 md:w-24"></div>
-            <h2 className="text-xl md:text-2xl font-serif text-amber-700">
-              Indian Independence
-            </h2>
-            <div className="h-px bg-amber-300 w-16 md:w-24"></div>
-          </div>
-        </div>
+        <SectionTitle title="Indian Independence" subtitle="WORLD INFLUENCE" />
 
-        {/* Top Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          {/* Large Left Box */}
-          <div className="md:col-span-1 bg-amber-100 aspect-square md:aspect-auto md:row-span-2 flex items-center justify-center p-6 text-center">
-            <p className="text-amber-800 uppercase tracking-wide text-sm font-medium">
-              MAHATMA GANDHI
-              <br />
-              FATHER OF NATION
+        {/* Top Flex Section */}
+        <div className="flex flex-wrap gap-4 mb-8 mt-20">
+          {/* Large left box - spans 2 rows and 2 columns */}
+          <div className="flex-1 bg-foreground-ui p-6 flex items-center justify-center rounded-lg h-96">
+            <p className="text-center text-white font-medium">
+              GANDHIJI & BHAGWAN ANUVR PHOTO
             </p>
           </div>
 
-          {/* Top Right Boxes */}
-          <div className="grid grid-cols-2 md:col-span-2 gap-4">
-            <div className="bg-amber-100 aspect-square flex items-center justify-center p-4 text-center">
-              <p className="text-amber-800 uppercase tracking-wide text-sm font-medium">
-                NETAJÍ
-                <br />
-                SUBHASH
-                <br />
-                CHANDRA
+          <div className="flex flex-col gap-6">
+            {/* Top right box */}
+            <div className="flex-1 bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-40">
+              <p className="text-center text-white font-medium">
+                DELHI MUSEUM PHOTOS
               </p>
             </div>
-            <div className="bg-amber-100 aspect-square flex items-center justify-center p-4 text-center">
-              <p className="text-amber-800 uppercase tracking-wide text-sm font-medium">
-                SARDAR
-                <br />
-                PATEL
-              </p>
+            {/* Bottom middle box */}
+            <div className="flex-1 bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-40">
+              <p className="text-center text-white">EMPTY</p>
             </div>
-            <div className="col-span-2 bg-amber-100 aspect-video md:aspect-square flex items-center justify-center p-4 text-center">
-              <p className="text-amber-800 uppercase tracking-wide text-sm font-medium">
-                JAWAHARLAL
-                <br />
-                NEHRU
-              </p>
-            </div>
+          </div>
+
+          {/* Far right box - spans 2 rows */}
+          <div className="bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-96 w-full md:w-80">
+            <p className="text-center text-white font-medium">
+              GANDHIJI&apos;S HANDWRITINGS
+            </p>
           </div>
         </div>
 
-        {/* Middle Text Section */}
-        <div className="mb-8 md:mb-12">
-          <p className="text-gray-700 text-sm md:text-base">
+        {/* Lorem Ipsum Text */}
+        <div className="mb-8">
+          <p className="text-xs text-gray-500">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
             ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
@@ -290,45 +277,33 @@ function Ebooks() {
             gravida. Risus commodo viverra maecenas accumsan lacus vel
             facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
+            maecenas accumsan lacus vel facilisis.
           </p>
         </div>
 
-        {/* Bottom Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-amber-100 aspect-square md:aspect-auto flex items-center justify-center p-6 text-center">
-            <p className="text-amber-800 uppercase tracking-wide text-sm font-medium">
-              LAL BAHADUR
-              <br />
-              SHASTRI
-              <br />
-              FREEDOM
-              <br />
-              FIGHTER
+        {/* Bottom Flex Section */}
+        <div className="flex flex-wrap gap-10 mb-8 justify-center">
+          <div className="bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-96 w-full md:w-auto">
+            <p className="text-center text-white font-medium">
+              GANDHIJI & BICHARJI SWAMI PAINTING
             </p>
           </div>
-          <div className="bg-amber-100 aspect-square md:aspect-auto flex items-center justify-center p-6 text-center">
-            <p className="text-amber-800 uppercase tracking-wide text-sm font-medium">
-              LAL BAHADUR
-              <br />
-              SHASTRI PEACE
-              <br />
-              AWARD
-              <br />
-              2021
+          <div className="bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-96 w-full md:w-auto">
+            <p className="text-center text-white font-medium">
+              GANDHIJI & CHIVALU MARRJI MAHASATIH PHOTO
             </p>
           </div>
-          <div className="bg-amber-100 aspect-square md:aspect-auto flex items-center justify-center p-6 text-center">
-            <p className="text-amber-800 uppercase tracking-wide text-sm font-medium">
-              JAIN SCHOOL
-              <br />
-              GURUKUL SCHOLARSHIP
+          <div className="bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-96 w-full md:w-auto">
+            <p className="text-center text-white font-medium">
+              GANDHIJI & SHRIMAD RAJCHANDRAJI
             </p>
           </div>
         </div>
 
-        {/* Bottom Text Section */}
+        {/* Bottom Lorem Ipsum Text */}
         <div>
-          <p className="text-gray-700 text-sm md:text-base">
+          <p className="text-xs text-gray-500">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
             ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
@@ -338,6 +313,33 @@ function Ebooks() {
             gravida. Risus commodo viverra maecenas accumsan lacus vel
             facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
+            maecenas accumsan lacus vel facilisis.
+          </p>
+        </div>
+      </div>
+
+      <div className="w-full relative flex flex-col items-center justify-center self-center h-96 md:h-[400px]">
+        <Image
+          src={"/static/ebooks-sutra-bg.png"}
+          layout="fill"
+          objectFit="cover"
+          alt="Shree Uttaradhyayan Sutra background image"
+          className="z-0"
+        />
+        <div className="absolute flex flex-col items-center justify-center z-10 bg-[#F6F7F2D4] w-[85%] h-[85%] self-center rounded-4xl p-4 md:p-8">
+          <h2 className="text-[#E68C3A] text-2xl md:text-4xl font-normal font-mono text-center">
+            ॥ ઉપવાસના વિચારોના મૂળતત્વ ॥
+          </h2>
+          <p className="text-justify w-full md:w-[60%] text-typography mt-8">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
+            ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
+            accumsan lacus vel facilisis.Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tem
+          </p>
+          <p className="text-xl md:text-2xl font-sans font-semibold text-typography mt-11">
+            Shree Uttaradhyayan Sutra
           </p>
         </div>
       </div>

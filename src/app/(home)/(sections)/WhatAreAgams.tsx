@@ -11,11 +11,11 @@ const WhatAreAgams = () => {
                     <div className="md:w-1/2">
                         <Image src={'/static/placeholder.png'} width={500} height={500} alt='Image for presentation' />
                     </div>
-                    <div className="md:w-1/2">
+                    <div className="md:w-1/2 text-[#8E8777]">
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga libero molestias aperiam inventore dolorem ad deserunt sequi maiores, natus corporis tempore ea ducimus sit cumque. Exercitationem laudantium itaque velit nam maxime explicabo reiciendis, nesciunt beatae animi? Architecto autem dicta, maiores nihil, repudiandae ratione quaerat deserunt nesciunt nisi quam minima corporis!</p>
                     </div>
                 </div>
-                <Image src={'/static/tree.png'} width={2000} height={1000} alt='Image for presentation' className='mx-auto mt-20' />
+                <Image src={'/static/tree.png'} width={2000} height={1000} alt='Image for presentation' className='mx-auto mt-20 mb-20' />
             </section>
         </>
     )
