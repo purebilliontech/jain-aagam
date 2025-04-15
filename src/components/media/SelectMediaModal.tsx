@@ -8,6 +8,7 @@ import { UploadIcon } from "lucide-react";
 import MediaDialog from "./MediaDialouge";
 import Image from "next/image";
 import { TablePagination } from "@/components/dataTable/tablePagination";
+import { getMedia, uploadMedia } from "@/app/admin/media/actions";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -34,38 +35,22 @@ const SelectMediaModal = ({
 
   const [search, setSearch] = useState<string>("");
 
-  const fetchMedia = async (pageNumber = 1) => {
+
+  const fetchMedia = async (pageNumber = 0) => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/media`, {
-        params: {
-          type: "all",
-          limit: ITEMS_PER_PAGE,
-          offset: (pageNumber - 1) * ITEMS_PER_PAGE,
-          query: search,
-        },
-      });
-
-      const data = response.data.data;
-      setMediaList(data);
-      setPage(pageNumber);
+      const { success, mediaList, totalCount, currentPage } = await getMedia(pageNumber, search as string);
+      if (!success) {
+        toast("Failed to fetch media");
+        return;
+      }
+      setMediaList(mediaList);
+      setPage(currentPage);
+      setTotalCount(totalCount);
     } catch (error) {
       console.error("Failed to fetch media", error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchMediaCount = async () => {
-    try {
-      const response = await axios.get(`/api/media/count`, {
-        params: {
-          query: search,
-        },
-      });
-      setTotalCount(response.data.data.count);
-    } catch (error) {
-      console.error("Failed to fetch media count", error);
     }
   };
 
@@ -75,31 +60,28 @@ const SelectMediaModal = ({
     setLoading(true);
     const file = event.target.files?.[0];
     if (!file) {
+      setLoading(false);
       return;
     }
 
     const formData = new FormData();
     formData.append("file", file, file.name);
-    formData.append("path", `${Date.now()}_${file.name}`);
-    formData.append("type", file.type);
 
     try {
-      const response = await axios.post("/api/media", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      const uploadedMedia: MediaDTO = response.data.data;
-      setMediaList((prevMediaList) => [uploadedMedia, ...prevMediaList]);
-      setSelectedMedia(uploadedMedia);
-      fetchMediaCount();
-      setLoading(false);
+      const uploadedMedia = await uploadMedia(formData, "file", file.name, file.type);
+      if (uploadedMedia.success && uploadedMedia.media) {
+        setMediaList((prevMediaList) => [uploadedMedia.media, ...prevMediaList]);
+        setSelectedMedia(uploadedMedia.media);
+      } else {
+        console.error("Failed to upload media", uploadedMedia.message);
+      }
     } catch (error) {
-      setLoading(false);
       console.error("Failed to upload media", error);
+    } finally {
+      setLoading(false);
     }
   };
+
 
   const handleNext = () => {
     const currentIndex = mediaList.findIndex(
@@ -141,8 +123,7 @@ const SelectMediaModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      fetchMedia(1);
-      fetchMediaCount();
+      fetchMedia(0);
     }
   }, [isOpen]);
 
@@ -183,9 +164,8 @@ const SelectMediaModal = ({
       >
         <div className="flex justify-between gap-5">
           <p>
-            <p>
-              The maximum allowable file size for uploads is 10 MB. For optimal performance and faster loading times, it is recommended that the file size be around <strong> 1 MB</strong>.
-            </p></p>
+            The maximum allowable file size for uploads is 10 MB. For optimal performance and faster loading times, it is recommended that the file size be around <strong> 1 MB</strong>.
+          </p>
 
           <Button
             onClick={() => {
@@ -228,7 +208,6 @@ const SelectMediaModal = ({
                 if (e.key === 'Enter') {
                   e.preventDefault();
                   fetchMedia(1);
-                  fetchMediaCount();
                 }
               }}
               placeholder="Search"
@@ -236,7 +215,6 @@ const SelectMediaModal = ({
             />
             <Button type="button" onClick={() => {
               fetchMedia(1);
-              fetchMediaCount();
             }}>
               <SearchIcon size={18} />
             </Button>

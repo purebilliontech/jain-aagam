@@ -8,7 +8,6 @@ import Image from "next/image";
 import { toast } from "sonner";
 import MediaDialog from "@/components/media/MediaDialouge";
 import { TablePagination } from "@/components/dataTable/tablePagination";
-import useUrlState from "@/hooks/useUrlState";
 import { deleteMediaById, getMedia, uploadMedia } from './actions';
 
 
@@ -24,7 +23,7 @@ const MediaPage = (isSelect: boolean = false) => {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
-  const [search, setSearch] = useUrlState<string>("search", "");
+  const [search, setSearch] = useState<string>("");
 
   const handleMultipleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,

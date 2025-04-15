@@ -15,7 +15,7 @@ import { ClassValue } from "clsx";
 // import { handlePhoneNumberChange, isValidPhoneNumber } from "@/utils/form";
 
 // Icon imports
-import { Eye, EyeOff, Info, CalendarIcon } from "lucide-react";
+import { Eye, EyeOff, Info, CalendarIcon, Edit } from "lucide-react";
 
 // UI Component imports
 import { Button } from "../ui/button";
@@ -43,6 +43,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Calendar } from "../ui/calendar";
 // import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { format } from "date-fns";
+import type { MediaDTO } from "@/schema/media";
+import Image from "next/image";
+import SelectMediaModal from "../media/SelectMediaModal";
+import MediaDialog from "../media/MediaDialouge";
 
 // Type definitions
 type hookFormField<T extends FieldValues, B extends FieldPath<T>> = {
@@ -187,7 +191,9 @@ export function GenericFormNumericInput<
     const number = e.target.valueAsNumber;
 
     // Call the original onChange if it exists
+    // @ts-ignore
     if (inputEle.props && typeof inputEle.props.onChange === 'function') {
+      // @ts-ignore
       inputEle.props.onChange(e);
     }
 
@@ -219,6 +225,7 @@ export function GenericFormPassword<
     ...field,
     disabled,
     type: showPassword ? "text" : "password",
+    // @ts-ignore
     className: cn(inputEle.props?.className || "", "pr-14"),
   };
 
@@ -434,6 +441,89 @@ export function GenericRadioGroup<
     </RadioGroup>
   );
 }
+
+
+export function GenericFormImageInput<
+  T extends FieldValues,
+  B extends FieldPath<T>,
+>({ field }: GenericFormFieldCBArg<T, B>): ReactElement {
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openSelect, setOpenSelect] = useState(false);
+
+  const [media, setMedia] = useState<MediaDTO | null>(field.value);
+
+  return (
+    <div>
+      <div className="flex justify-center gap-5 rounded-md border border-dashed p-2">
+        {field.value && (
+          <div className="mx-auto">
+            <div
+              onClick={() => {
+                setOpenSelect(true);
+                setOpenEdit(false);
+              }}
+              className="flex cursor-pointer items-center justify-end gap-2 pb-2 text-primaryBlue"
+            >
+              <Edit size={12} />
+              <p className="text-sm">Replace</p>
+            </div>
+            {(field.value as MediaDTO).type === "image" ? (
+              <Image
+                className="cursor-pointer"
+                onClick={() => {
+                  setOpenSelect(false);
+                  setMedia(field.value);
+                  setOpenEdit(true);
+                }}
+                width={150}
+                height={150}
+                alt={field.value?.alt}
+                src={field.value?.url}
+              />
+            ) : (
+              <video
+                src={field.value?.url}
+                muted
+                className="max-h-40 max-w-40 cursor-pointer"
+                onClick={() => {
+                  setOpenSelect(false);
+                  setOpenEdit(true);
+                }}
+              />
+            )}
+          </div>
+        )}
+        {(!field.value || openSelect) && (
+          <div className="">
+            <SelectMediaModal
+              openSelect={openSelect}
+              handleSelectedMedia={(media) => {
+                field.onChange(media);
+                setOpenSelect(false);
+              }}
+              onClose={() => {
+                setOpenSelect(false);
+              }}
+            />
+          </div>
+        )}
+        {media && openEdit && (
+          <MediaDialog
+            media={media}
+            setSelectedMedia={setMedia}
+            handleNext={() => { }}
+            handlePrev={() => { }}
+            onSave={(data) => {
+              field.onChange(data);
+              setOpenEdit(false);
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
 
 interface GenericFileUploadOptions {
   formLabel: string;
