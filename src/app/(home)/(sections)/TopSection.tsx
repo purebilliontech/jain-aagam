@@ -1,15 +1,24 @@
-import React from 'react'
+import React from "react";
 
 const TopSection = () => {
-    return (
-        <section className='min-h-screen flex flex-col items-center justify-center bg-[#e9e2d2] mx-auto' >
-            <div className='flex flex-col items-start justify-cente ' >
+  return (
+    <section className="min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-around bg-[#e9e2d2] mx-auto p-4">
+      <div className="text-center md:text-left ">
+        <h2 className="text-[#C6AF8B] font-sans text-5xl md:text-8xl font-semibold">
+          JAIN
+        </h2>
+        <h2 className="text-[#C6AF8B] font-sans text-5xl md:text-8xl font-semibold">
+          AAGAM
+        </h2>
+        <h3 className="text-[#C6AF8B] font-mono text-2xl md:text-4xl font-medium leading-normal mt-6">
+          The holy scriptures of Jainism
+        </h3>
+      </div>
+      <div>
+        {/* Additional content can be added here */}
+      </div>
+    </section>
+  );
+};
 
-                <h2 className="text-6xl text-primary font-semibold text-center">JAIN AAGAM</h2>
-                <h3 className='text-primary' ><em>The holy scriptures of Jainism</em></h3>
-            </div>
-        </section>
-    )
-}
-
-export default TopSection
+export default TopSection;
