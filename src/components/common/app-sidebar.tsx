@@ -5,13 +5,9 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
   HomeIcon,
-  TruckIcon,
   UserIcon,
-  ShoppingBagIcon,
-  UsersIcon,
   SettingsIcon,
   LogOutIcon,
-  BarChartIcon
 } from "lucide-react"
 
 import { useAuth } from "@/context/auth-context"
@@ -24,7 +20,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail
+  SidebarRail,
 } from "@/components/ui/sidebar"
 
 
@@ -33,6 +29,7 @@ interface NavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   permission?: string | string[];
+  subItems?: NavItem[];
 }
 
 export const navItems: NavItem[] = [
@@ -57,17 +54,28 @@ export const navItems: NavItem[] = [
     title: "Blog",
     href: "/admin/blog",
     icon: UserIcon,
-    permission: ""
+    permission: "",
+    subItems: [
+      {
+        title: "All Blogs",
+        href: "/admin/blogs",
+        icon: UserIcon,
+        permission: ""
+      },
+      {
+        title: "Categories",
+        href: "/admin/blog/category",
+        icon: UserIcon,
+        permission: ""
+      }
+    ]
   }
 ];
-
-
 
 export function AppSidebar({ className, ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user, hasPermission, hasAnyPermission } = useAuth()
   const pathname = usePathname()
   const isAdminPath = pathname.startsWith("/admin")
-
 
   // Filter menu items based on user permissions
   const filteredNavItems = navItems.filter((item) => {
@@ -88,21 +96,58 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
         </div>
       </SidebarHeader>
 
+
+      <SidebarMenu>
+        <Collapsible defaultOpen className="group/collapsible">
+          <SidebarMenuItem>
+            <CollapsibleTrigger asChild>
+              <SidebarMenuButton />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                <SidebarMenuSubItem />
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          </SidebarMenuItem>
+        </Collapsible>
+      </SidebarMenu>
+
+
       <SidebarContent>
         <SidebarMenu>
           {filteredNavItems.map((item) => (
-            <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === item.href || pathname.startsWith(`${item.href}/`)}
-                tooltip={item.title}
-              >
-                <Link href={item.href} className="flex items-center gap-2">
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            <React.Fragment key={item.href}>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === item.href || pathname.startsWith(`${item.href}/`)}
+                  tooltip={item.title}
+                >
+                  <div className="flex items-center gap-2 cursor-pointer">
+                    <item.icon className="h-5 w-5" />
+                    <span>{item.title}</span>
+                  </div>
+                </SidebarMenuButton>
+                {item.subItems && (
+                  <SidebarMenu>
+                    {item.subItems.map((subItem) => (
+                      <SidebarMenuItem key={subItem.href}>
+                        <SidebarMenuButton
+                          asChild
+                          isActive={pathname === subItem.href || pathname.startsWith(`${subItem.href}/`)}
+                          tooltip={subItem.title}
+                        >
+                          <Link href={subItem.href} className="flex items-center gap-2 pl-6">
+                            <subItem.icon className="h-5 w-5" />
+                            <span>{subItem.title}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                )}
+              </SidebarMenuItem>
+            </React.Fragment>
           ))}
         </SidebarMenu>
       </SidebarContent>

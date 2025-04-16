@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 /* @import "tw-animate-css"; */
 
 @custom-variant dark (&:is(.dark *)); 
@@ -43,10 +44,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  
 
-  
-  
   --color-background-ui: #FFFFFF;
   --color-foreground-ui: #8E8777;
   --color-card-ui: #F6F7F2;
@@ -61,7 +59,6 @@
   --color-muted-foreground-ui: #8E8777;
   --color-accent-ui: #E78C39;
   --color-accent-foreground-ui: #8E8777;
-
 
 }
 
@@ -100,7 +97,6 @@
   --sidebar-ring: oklch(0.707 0.022 261.325);
 } */
 
-
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -135,7 +131,6 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  
   --background-ui: #FFFFFF;
   --foreground-ui: #8E8777;
   --card-ui: #F6F7F2;
@@ -151,9 +146,7 @@
   --accent-ui: #E78C39;
   --accent-foreground-ui: #8E8777;
 
-
 }
-
 
 /* 
 .dark {
@@ -198,4 +191,16 @@
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
   }
+}
+
+.dark {
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
 }
