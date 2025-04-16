@@ -1,6 +1,8 @@
 import type { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { dateDTOSchema, genericDTOSchema, GenericOmit, genericSchema } from "./generic";
+import { BlogCategoryDTOSchema } from "./blogCategory";
+import { MediaDTOSchema } from "./media";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type BlogModel = Prisma.BlogGetPayload<{}>;
@@ -29,10 +31,29 @@ export const BlogDTOSchema =
 
 export type BlogDTO = z.infer<typeof BlogDTOSchema>;
 
-// for creating blog
-export const CreateBlogSchema = BlogSchema.omit(GenericOmit);
-export type CreateBlog = z.infer<typeof CreateBlogSchema>;
+export const BlogWithCategorySchema = BlogDTOSchema.extend({
+    category: BlogCategoryDTOSchema,
+});
+export type BlogWithCategory = z.infer<typeof BlogWithCategorySchema>;
 
-// for updating blog
-export const UpdateBlogSchema = BlogSchema.omit(GenericOmit).partial();
-export type UpdateBlog = z.infer<typeof UpdateBlogSchema>;
+// for admin table
+export const BlogDataTableRowSchema = BlogWithCategorySchema.omit({
+    contentJson: true,
+})
+export type BlogDataTableRow = z.infer<typeof BlogDataTableRowSchema>;
+
+// for frontend list
+export const BlogWithCategoryAndBannerSchema = BlogWithCategorySchema.extend({
+    banner: MediaDTOSchema
+}).omit({
+    contentJson: true,
+});
+export type BlogWithCategoryAndBanner = z.infer<typeof BlogWithCategoryAndBannerSchema>;
+
+// for blog detail page
+export const BlogDetailSchema = BlogDTOSchema.extend({
+    banner: MediaDTOSchema,
+    category: BlogCategoryDTOSchema,
+});
+export type BlogDetail = z.infer<typeof BlogDetailSchema>;
+
