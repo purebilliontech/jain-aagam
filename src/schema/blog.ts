@@ -4,6 +4,26 @@ import { dateDTOSchema, genericDTOSchema, GenericOmit, genericSchema } from "./g
 import { BlogCategoryDTOSchema } from "./blogCategory";
 import { MediaDTOSchema } from "./media";
 
+
+export type Content = {
+    attrs: {
+        id: string;
+        level: number;
+        alt: string;
+        width: number;
+        height: string;
+        src: string;
+    };
+    type: string;
+    content: [
+        {
+            text: string;
+            type: string;
+        },
+    ];
+};
+
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type BlogModel = Prisma.BlogGetPayload<{}>;
 
@@ -57,3 +77,17 @@ export const BlogDetailSchema = BlogDTOSchema.extend({
 });
 export type BlogDetail = z.infer<typeof BlogDetailSchema>;
 
+export const BlogFormSchema = BlogDetailSchema.pick({
+    title: true,
+    synopsis: true,
+    contentJson: true,
+    authorName: true,
+    readingTimeSeconds: true,
+    slug: true,
+    tags: true,
+    categoryId: true,
+    banner: true,
+    published: true,
+})
+
+export type BlogForm = z.infer<typeof BlogFormSchema>;
