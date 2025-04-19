@@ -1,18 +1,23 @@
 "use server";
 
-import { z } from "zod";
 import { db } from "@/lib/db";
-import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
 import {
     BlogCategoryDTOSchema,
     BlogCategoryForm,
     BlogCategoryFormSchema
 } from "@/schema/blogCategory";
+import { authorizeUser } from "@/lib/auth";
 
 
 export const getCategoryById = async (id: string) => {
     try {
+
+        const user = await authorizeUser(["view:blog-category"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
+
         if (id === "new") return { success: true, data: null };
 
         const category = await db.blogCategory.findUnique({
@@ -33,6 +38,12 @@ export const getCategoryById = async (id: string) => {
 
 export const createCategory = async (data: BlogCategoryForm) => {
     try {
+
+        const user = await authorizeUser(["modify:blog-category"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
+
         // Validate form data
         const validatedData = BlogCategoryFormSchema.parse(data);
 
@@ -55,6 +66,10 @@ export const updateCategoryById = async (
     data: BlogCategoryForm
 ) => {
     try {
+        const user = await authorizeUser(["modify:blog-category"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         // Validate form data
         const validatedData = BlogCategoryFormSchema.parse(data);
 

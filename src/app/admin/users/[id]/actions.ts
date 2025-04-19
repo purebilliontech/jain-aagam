@@ -1,54 +1,125 @@
 "use server";
 
 import { handleServerActionError } from "@/helpers/error";
+import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { UserDTOSchema, type CreateUser, type UpdateUser, type UserDTO } from "@/schema/user";
-import { Prisma } from "@prisma/client";
+import { permissionDTOSchema } from "@/schema/permissions";
+import { UserDTOSchema, UserWithPermissionSchema, type CreateUser, type UpdateUser, type UserDTO, type UserWithPermission } from "@/schema/user";
+import { hashData } from "@/utils/crypto";
 
-export const getUserById = async (id: string): Promise<UserDTO | null> => {
+export const getUserById = async (id: string) => {
     try {
+        const authuser = await authorizeUser(["view:user"]);
+        if (!authuser.success) {
+            return { success: false, data: null, message: authuser.message };
+        }
+
         if (id === "new") {
-            return null;
+            return { success: true, data: null };
         }
         const user = await db.users.findUnique({
             where: {
                 id,
             },
+            include: {
+                permissions: true
+            }
         });
-        return UserDTOSchema.parse(user);
+
+        return {
+            success: true,
+            data: UserWithPermissionSchema.parse(user)
+        }
     } catch (error) {
         handleServerActionError(error);
-        return null;
+        return {
+            success: false,
+            data: null
+        };
     }
 }
 
-export const createUser = async (data: CreateUser): Promise<UserDTO | null> => {
+export const createUser = async (data: CreateUser) => {
     try {
+        const authuser = await authorizeUser(["modify:user"]);
+        if (!authuser.success) {
+            return { success: false, data: null, message: authuser.message };
+        }
+        const hashedPassword = await hashData(data.password);
         const newUser = await db.users.create({
-            data,
+            data: {
+                name: data.name,
+                email: data.email,
+                password: hashedPassword,
+                lastLogin: new Date(),
+                permissions: {
+                    create: data.permissions.map(permission => ({
+                        permissionName: permission
+                    })) || []
+                }
+            },
+            include: {
+                permissions: true
+            }
         });
-        return UserDTOSchema.parse(newUser);
+        return {
+            success: true,
+            data: UserWithPermissionSchema.parse(newUser)
+        }
     } catch (error) {
         handleServerActionError(error);
-        return null;
+        return {
+            success: false,
+            data: null
+        };
     }
 }
 
-export const updateUserById = async (id: string, data: UpdateUser): Promise<UserDTO | null> => {
+export const updateUserById = async (id: string, data: UpdateUser) => {
     try {
+        const authuser = await authorizeUser(["modify:user"]);
+        if (!authuser.success) {
+            return { success: false, data: null, message: authuser.message };
+        }
+        // Update user basic info
         const updatedUser = await db.users.update({
             where: { id },
-            data,
+            data: {
+                name: data.name,
+                email: data.email,
+                permissions: {
+                    deleteMany: {},
+                    createMany: {
+                        data: data.permissions.map(permission => ({
+                            permissionName: permission
+                        }))
+                    }
+                }
+            },
+            include: {
+                permissions: true
+            }
         });
-        return UserDTOSchema.parse(updatedUser);
+
+        return {
+            success: true,
+            data: UserWithPermissionSchema.parse(updatedUser)
+        };
     } catch (error) {
         handleServerActionError(error);
-        return null;
+        return {
+            success: false,
+            data: null
+        };
     }
 }
 
-export const deleteUser = async (id: string): Promise<boolean> => {
+export const deleteUser = async (id: string) => {
     try {
+        const authuser = await authorizeUser(["modify:user"]);
+        if (!authuser.success) {
+            return { success: false, data: null, message: authuser.message };
+        }
         // First delete user permissions
         await db.userPermissions.deleteMany({
             where: {
@@ -63,9 +134,38 @@ export const deleteUser = async (id: string): Promise<boolean> => {
             }
         });
 
-        return true;
+        return {
+            success: true,
+            data: null
+        };
     } catch (error) {
         handleServerActionError(error);
-        return false;
+        return {
+            success: false,
+            data: null
+        };
+    }
+}
+
+export const getAllPermissions = async () => {
+    try {
+        const permissions = await db.permissions.findMany({
+            orderBy: {
+                name: 'asc'
+            }
+        });
+
+        const validatedPermissions = permissions.map((p) => permissionDTOSchema.parse(p));
+
+        return {
+            success: true,
+            data: validatedPermissions
+        };
+    } catch (error) {
+        handleServerActionError(error);
+        return {
+            success: false,
+            data: []
+        };
     }
 }

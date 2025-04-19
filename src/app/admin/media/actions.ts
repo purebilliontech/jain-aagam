@@ -2,6 +2,7 @@
 
 import { handleServerActionError } from "@/helpers/error";
 import { uploadFileToSupabase } from "@/helpers/supabase";
+import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { MediaDTOSchema, type MediaDTO } from "@/schema/media";
 import slugify from "slugify";
@@ -10,6 +11,10 @@ import slugify from "slugify";
 const ITEMS_PER_PAGE = 20;
 export const getMedia = async (page = 0, query = "") => {
     try {
+        const user = await authorizeUser(["view:media"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         const offset = (page) * ITEMS_PER_PAGE;
 
         const whereQuery: {
@@ -39,39 +44,54 @@ export const getMedia = async (page = 0, query = "") => {
 
         return {
             success: true,
-            mediaList,
-            totalCount,
-            currentPage: page,
-            totalPages: Math.ceil(totalCount / ITEMS_PER_PAGE),
+            data: {
+                mediaList,
+                meta: {
+                    totalCount,
+                    currentPage: page,
+                    totalPages: Math.ceil(totalCount / ITEMS_PER_PAGE),
+                }
+            }
         };
     } catch (error) {
         handleServerActionError(error);
         return {
             success: false,
-            mediaList: [],
-            totalCount: 0,
-            currentPage: page,
-            totalPages: 0,
+            data: {
+                mediaList: [],
+                meta: {
+                    totalCount: 0,
+                    currentPage: page,
+                    totalPages: 0,
+                }
+            }
         };
     }
 };
 
 export const deleteMediaById = async (mediaId: string) => {
     try {
+        const user = await authorizeUser(["view:media"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         await db.media.delete({
             where: { id: mediaId },
         });
-        return { success: true, message: "Media deleted successfully" };
+        return { success: true, data: { message: "Media deleted successfully" } };
     } catch (error) {
         handleServerActionError(error);
-        return { success: false, message: "Failed to delete media" };
+        return { success: false, data: null };
     }
 }
 
 
 export const uploadMedia = async (formData: FormData, fileKey: string = "file", fileName: string, type: string) => {
     try {
-
+        const user = await authorizeUser(["view:media"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         const file = formData.getAll(fileKey)[0] as File;
 
         if (!file) {
@@ -100,16 +120,19 @@ export const uploadMedia = async (formData: FormData, fileKey: string = "file", 
 
         const media = MediaDTOSchema.parse(newMedia);
 
-        return { success: true, media };
+        return { success: true, data: media };
     } catch (error) {
         handleServerActionError(error);
-        return { success: false, message: "Failed to upload media" };
+        return { success: false, data: null };
     }
 };
 
 export const changeMedia = async (id: string, formData: FormData, fileKey: string = "file") => {
     try {
-
+        const user = await authorizeUser(["view:media"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         const file = formData.getAll(fileKey)[0] as File;
 
         if (!file) {
@@ -139,16 +162,20 @@ export const changeMedia = async (id: string, formData: FormData, fileKey: strin
 
         const media = MediaDTOSchema.parse(newMedia);
 
-        return { success: true, media };
+        return { success: true, data: media };
     } catch (error) {
         handleServerActionError(error);
-        return { success: false, message: "Failed to upload media" };
+        return { success: false, data: null };
     }
 };
 
 
 export const updateMediaMetadata = async (mediaId: string, data: Partial<MediaDTO>) => {
     try {
+        const user = await authorizeUser(["view:media"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         const updatedMedia = await db.media.update({
             where: { id: mediaId },
             data: {
@@ -159,10 +186,10 @@ export const updateMediaMetadata = async (mediaId: string, data: Partial<MediaDT
         });
         const media = MediaDTOSchema.parse(updatedMedia);
 
-        return { success: true, media };
+        return { success: true, data: media };
     } catch (error) {
         handleServerActionError(error);
-        return { success: false, message: "Failed to update media metadata" };
+        return { success: false, data: null };
     }
 }
 

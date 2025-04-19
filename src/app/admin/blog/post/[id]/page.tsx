@@ -3,10 +3,24 @@ import { getBlogPostById, getCategoriesList } from './actions';
 import { notFound } from 'next/navigation';
 import { BlogFormSchema } from '@/schema/blog';
 import BlogForm from './BlogForm';
+import { authorizeUser } from '@/lib/auth';
+import NoPermission from '@/components/common/NoPermission';
 
-const BlogIndexPage = async ({ params }: { params: { id: string } }) => {
+const BlogIndexPage = async ({ params }: {
+    params: Promise<{
+        id: string;
+    }>;
+}) => {
 
-    const { id } = params;
+    const user = await authorizeUser(["view:blog"]);
+
+    if (!user.success) {
+        return (
+            <NoPermission message={user.message} />
+        );
+    }
+
+    const { id } = await params;
 
     const { success, data: blog } = await getBlogPostById(id);
 

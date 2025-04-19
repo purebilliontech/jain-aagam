@@ -7,12 +7,7 @@ import type { UserPayloadData } from "@/lib/auth";
 export type AuthUser = {
   id: string;
   name: string;
-  phone: string;
-  email: string | null;
-  roleId: string;
-  isSeller: boolean;
-  buyerId: string | null;
-  sellerId: string | null;
+  email: string;
   permissions: string[];
 };
 
@@ -40,17 +35,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setIsLoading(true);
       const userData = await getCurrentUser();
-      console.log(userData);
       if (userData) {
         setUser({
           id: userData.id,
           name: userData.name,
-          phone: userData.phone,
           email: userData.email,
-          roleId: userData.roleId,
-          isSeller: userData.isSeller,
-          buyerId: userData.buyerId,
-          sellerId: userData.sellerId,
           permissions: userData.permissions || [],
         });
       } else {

@@ -11,9 +11,8 @@ datasource db {
 model Users {
     id          String            @id @default(cuid())
     name        String
-    email       String
+    email       String            @unique
     password    String
-    role        String            @default("user")
     lastLogin   DateTime          @default(now())
     createdAt   DateTime          @default(now()) @map("created_at")
     updatedAt   DateTime          @default(now()) @updatedAt @map("updated_at")

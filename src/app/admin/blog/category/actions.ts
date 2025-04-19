@@ -1,20 +1,13 @@
 "use server";
 
-import { z } from "zod";
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
 import {
   BlogCategoryDTOSchema,
 } from "@/schema/blogCategory";
-
-type GetCategoriesParams = {
-  page?: number;
-  pageSize?: number;
-  search?: string;
-  sortBy?: string;
-  sortDirection?: "asc" | "desc";
-};
+import type { PaginatedReqParams } from "@/schema/common";
+import { authorizeUser } from "@/lib/auth";
 
 export const getCategories = async ({
   page = 1,
@@ -22,8 +15,14 @@ export const getCategories = async ({
   search = "",
   sortBy = "createdAt",
   sortDirection = "desc",
-}: GetCategoriesParams) => {
+}: PaginatedReqParams) => {
   try {
+
+    const user = await authorizeUser(["view:blog-category"]);
+    if (!user.success) {
+      return { success: false, data: null, message: user.message };
+    }
+
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 
@@ -89,6 +88,10 @@ export const getCategories = async ({
 
 export const deleteCategoryById = async (id: string) => {
   try {
+    const user = await authorizeUser(["modify:blog-category"]);
+    if (!user.success) {
+      return { success: false, data: null, message: user.message };
+    }
     await db.blogCategory.delete({
       where: { id },
     });

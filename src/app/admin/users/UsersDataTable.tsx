@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/dataTable/dataTable";
 import { UserDTO } from "@/schema/user";
@@ -38,7 +38,7 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
                 </div>
                 <Input
                     className="pl-10 text-sm rounded-lg bg-white border-slate-200 focus-visible:ring-slate-300"
-                    placeholder="Search users by name, email or role..."
+                    placeholder="Search users by name or email ..."
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                 />
@@ -70,9 +70,9 @@ export default function UsersDataTable() {
                 sortBy,
                 sortDirection,
             });
-
-            setUsers(result.users);
-            setTotalRows(result.meta.totalCount);
+            console.log(result);
+            setUsers(result.data.users);
+            setTotalRows(result.data.meta.totalCount);
         } catch (error) {
             console.error("Failed to fetch users:", error);
         } finally {
@@ -81,7 +81,7 @@ export default function UsersDataTable() {
     }, [pagination.pageIndex, pagination.pageSize, searchTerm, sortBy, sortDirection]);
 
     // Update data when pagination or filters change
-    React.useEffect(() => {
+    useEffect(() => {
         void fetchData();
     }, [fetchData]);
 
@@ -115,16 +115,6 @@ export default function UsersDataTable() {
         {
             accessorKey: "email",
             header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
-        },
-        {
-            accessorKey: "role",
-            header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
-            cell: ({ row }) => (
-                <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-slate-400" />
-                    <span className="capitalize">{row.getValue("role")}</span>
-                </div>
-            ),
         },
         {
             accessorKey: "lastLogin",
@@ -178,6 +168,7 @@ export default function UsersDataTable() {
                 pagination={pagination}
                 onPaginationChange={onPaginationChange}
                 totalRows={totalRows}
+                loading={loading}
             />
         </div>
     );

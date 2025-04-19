@@ -1,15 +1,11 @@
+"use server";
+
 import { handleServerActionError } from "@/helpers/error";
+import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import type { PaginatedReqParams } from "@/schema/common";
 import { UserDTOSchema } from "@/schema/user";
 import type { Prisma } from "@prisma/client";
-
-type GetUsersParams = {
-    page: number;
-    pageSize: number;
-    search?: string;
-    sortBy?: string;
-    sortDirection?: 'asc' | 'desc';
-}
 
 export const getUsers = async ({
     page = 1,
@@ -17,8 +13,13 @@ export const getUsers = async ({
     search = '',
     sortBy = 'createdAt',
     sortDirection = 'desc'
-}: GetUsersParams) => {
+}: PaginatedReqParams) => {
     try {
+        const user = await authorizeUser(["view:user"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
+
         const skip = (page - 1) * pageSize;
         const take = pageSize;
 
@@ -30,7 +31,6 @@ export const getUsers = async ({
                 OR: [
                     { name: { contains: search, mode: 'insensitive' } },
                     { email: { contains: search, mode: 'insensitive' } },
-                    { role: { contains: search, mode: 'insensitive' } }
                 ]
             };
         }
@@ -56,23 +56,29 @@ export const getUsers = async ({
         const usersDTO = users.map(user => UserDTOSchema.parse(user));
 
         return {
-            users: usersDTO,
-            meta: {
-                totalCount,
-                page,
-                pageSize,
-                totalPages: Math.ceil(totalCount / pageSize)
+            success: true,
+            data: {
+                users: usersDTO,
+                meta: {
+                    totalCount,
+                    page,
+                    pageSize,
+                    totalPages: Math.ceil(totalCount / pageSize)
+                }
             }
         };
     } catch (error) {
         handleServerActionError(error);
         return {
-            users: [],
-            meta: {
-                totalCount: 0,
-                page,
-                pageSize,
-                totalPages: 0
+            success: false,
+            data: {
+                users: [],
+                meta: {
+                    totalCount: 0,
+                    page,
+                    pageSize,
+                    totalPages: 0
+                }
             }
         };
     }

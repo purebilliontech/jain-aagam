@@ -29,8 +29,6 @@ import {
 } from "../ui/table";
 import { DataTablePagination } from "../dataTable/tablePagination";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Download, RotateCw } from "lucide-react";
 import { DataTableViewOptions } from "./dataTableViewOptions";
 import { usePagination } from "@/hooks/usePagination";
 
@@ -48,6 +46,7 @@ type DataTableProps<T> = {
   getRowProps?: (row: Row<T>) => { className?: string };
   totalRows?: number;
   showTopButtons?: boolean;
+  loading?: boolean;
 };
 
 export function DataTable<T>({
@@ -60,6 +59,7 @@ export function DataTable<T>({
   getRowProps = undefined,
   totalRows = undefined,
   showTopButtons = true,
+  loading = false,
 }: DataTableProps<T>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -167,6 +167,21 @@ export function DataTable<T>({
                   ))}
                 </TableRow>
               ))
+            ) : loading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-32 text-center text-slate-500"
+                >
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <svg className="w-8 h-8 text-slate-300 animate-spin" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      {/* <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /> */}
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M4 12a8 8 0 018-8" />
+                    </svg>
+                    <p>Loading...</p>
+                  </div>
+                </TableCell>
+              </TableRow>
             ) : (
               <TableRow>
                 <TableCell

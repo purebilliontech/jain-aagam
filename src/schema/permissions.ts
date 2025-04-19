@@ -9,7 +9,11 @@ export const permissionSchema = genericSchema.extend({
     name: z.string(),
 }) satisfies z.Schema<PermissionModel>;
 
-export const permissionDTOSchema = permissionSchema.merge(genericDTOSchema);
+export const permissionDTOSchema = permissionSchema.merge(genericDTOSchema).omit({
+    id: true,
+});
+export type PermissionDTO = z.infer<typeof permissionDTOSchema>;
+
 
 
 export type UserPermissionModel = Prisma.UserPermissionsGetPayload<{}>;
@@ -19,4 +23,6 @@ export const userPermissionSchema = genericSchema.extend({
     permissionName: z.string(),
 });
 
-export const userPermissionDTOSchema = userPermissionSchema.merge(genericDTOSchema);
+export const userPermissionDTOSchema = userPermissionSchema.merge(genericDTOSchema).omit({
+    id: true,
+});

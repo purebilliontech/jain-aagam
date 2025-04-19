@@ -11,7 +11,6 @@ export const UserSchema = genericSchema.extend({
     name: z.string(),
     email: z.string().email(),
     password: z.string(),
-    role: z.string(),
     lastLogin: z.date(),
 }) satisfies z.Schema<UserModel>;
 
@@ -24,11 +23,17 @@ export const UserDTOSchema =
 export type UserDTO = z.infer<typeof UserDTOSchema>;
 
 // for creating user
-export const CreateUserSchema = UserSchema.omit({ ...GenericOmit, lastLogin: true });
+export const CreateUserSchema = UserSchema.omit({ ...GenericOmit, lastLogin: true })
+    .extend({
+        permissions: z.array(z.string()),
+    });
 export type CreateUser = z.infer<typeof CreateUserSchema>;
 
 // for updating user
-export const UpdateUserSchema = UserSchema.omit({ ...GenericOmit, lastLogin: true, password: true });;
+export const UpdateUserSchema = UserSchema.omit({ ...GenericOmit, lastLogin: true, password: true })
+    .extend({
+        permissions: z.array(z.string()),
+    });
 export type UpdateUser = z.infer<typeof UpdateUserSchema>;
 
 export const UserWithPermissionSchema = UserDTOSchema.extend({

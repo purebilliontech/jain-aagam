@@ -26,6 +26,23 @@ export function getTokenFromCookie(): string | null {
   return Cookies.get(COOKIE_NAME) || null;
 }
 
+
+/**
+ * Verify JWT token (client-side)
+ * @param token The JWT token to verify
+ * @returns The payload if valid, null otherwise
+ */
+export async function decodeToken(token: string): Promise<any> {
+  try {
+    const payload = decodeJwt(token);
+    return payload;
+  } catch (error) {
+    console.error("Token verification error:", error);
+    return null;
+  }
+}
+
+
 /**
  * Get current user from token in cookie (client-side)
  * @returns The current user or null if not authenticated
@@ -33,9 +50,7 @@ export function getTokenFromCookie(): string | null {
 export async function getCurrentUser(): Promise<UserPayloadData | null> {
   const token = getTokenFromCookie();
   if (!token) return null;
-  const { payload } = decodeJwt(token);
-  console.log(payload);
-  const payloadData = payload as UserPayloadData;
 
-  return payloadData;
+  const payload = await decodeToken(token);
+  return payload;
 }

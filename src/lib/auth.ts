@@ -1,19 +1,14 @@
+"use server"
 import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 import { cookies } from "next/headers";
-import { User } from "@prisma/client";
-import type { UserWithRolePermission } from "@/schema/user";
-import { COOKIE_NAME, JWT_EXPIRY, JWT_SECRET } from "@/utils/constants";
+import type { UserWithPermission } from "@/schema/user";
+import { COOKIE_NAME, JWT_EXPIRY } from "@/utils/constants";
 
 
 export interface UserPayloadData {
   id: string;
   name: string;
-  phone: string;
-  email: string | null;
-  roleId: string;
-  isSeller: boolean;
-  buyerId: string | null;
-  sellerId: string | null;
+  email: string;
   permissions: string[];
 };
 
@@ -24,18 +19,18 @@ export interface JwtUserPayload extends UserPayloadData, JWTPayload { };
  * @param user The user to create a token for
  * @returns The JWT token
  */
-export async function createToken(user: UserWithRolePermission): Promise<string> {
+export async function createToken(user: UserWithPermission): Promise<string> {
   const payload: JwtUserPayload = {
     id: user.id,
     name: user.name,
-    phone: user.phone,
     email: user.email,
-    roleId: user.roleId,
-    isSeller: user.isSeller,
-    buyerId: user.buyerId,
-    sellerId: user.sellerId,
-    permissions: user.role.rolePermissions.map((permission) => permission.permissionName)
+    permissions: user.permissions.map(p => p.permissionName),
   };
+
+  const JWT_SECRET = process.env.JWT_SEC as string;
+  if (!JWT_SECRET) {
+    throw new Error("JWT_SECRET is not defined");
+  }
 
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
@@ -61,13 +56,19 @@ export async function getTokenFromCookie(): Promise<string | null> {
  * @param token The JWT token to verify
  * @returns The payload if valid, null otherwise
  */
-export async function verifyToken(token: string): Promise<any> {
+export async function verifyToken(token: string): Promise<JwtUserPayload | null> {
   try {
+
+    const JWT_SECRET = process.env.JWT_SEC as string;
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET is not defined");
+    }
+
     const { payload } = await jwtVerify(
       token,
       new TextEncoder().encode(JWT_SECRET)
     );
-    return payload;
+    return payload as JwtUserPayload;
   } catch (error) {
     return null;
   }
@@ -87,4 +88,32 @@ export async function getCurrentUser(): Promise<JwtUserPayload | null> {
 
   const payload = await verifyToken(token);
   return payload;
+}
+
+
+export async function checkPermissions(permissions: string[], userPayload?: JwtUserPayload): Promise<boolean> {
+  let user: JwtUserPayload | null | undefined = userPayload;
+  if (!user) {
+    user = await getCurrentUser();
+  }
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+  const isAllowed = permissions.every(permission => user.permissions.includes(permission));
+  return isAllowed;
+}
+
+export async function authorizeUser(permissions: string[]) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return { success: false, message: "User not authenticated" };
+  }
+
+  const userPermissions = user.permissions;
+  const missingPermissions = permissions.filter(permission => !userPermissions.includes(permission));
+
+  if (missingPermissions.length > 0) {
+    return { success: false, message: `Missing permissions: ${missingPermissions.join(", ")}` };
+  }
+  return { success: true, data: user, message: "User is authorized" };
 }

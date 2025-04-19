@@ -183,6 +183,7 @@ export default function BlogDataTable() {
         pagination={pagination}
         onPaginationChange={onPaginationChange}
         totalRows={totalRows}
+        loading={loading}
       />
     </div>
   );

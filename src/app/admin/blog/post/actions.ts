@@ -1,21 +1,13 @@
 "use server";
 
-import { z } from "zod";
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
 import {
   BlogDataTableRowSchema,
-  BlogDTOSchema
 } from "@/schema/blog";
-
-type GetBlogPostsParams = {
-  page?: number;
-  pageSize?: number;
-  search?: string;
-  sortBy?: string;
-  sortDirection?: "asc" | "desc";
-};
+import type { PaginatedReqParams } from "@/schema/common";
+import { authorizeUser } from "@/lib/auth";
 
 export const getBlogPosts = async ({
   page = 1,
@@ -23,8 +15,12 @@ export const getBlogPosts = async ({
   search = "",
   sortBy = "createdAt",
   sortDirection = "desc",
-}: GetBlogPostsParams) => {
+}: PaginatedReqParams) => {
   try {
+    const user = await authorizeUser(["view:blog"]);
+    if (!user.success) {
+      return { success: false, data: null, message: user.message };
+    }
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 
@@ -97,6 +93,10 @@ export const getBlogPosts = async ({
 
 export const deleteBlogPostById = async (id: string) => {
   try {
+    const user = await authorizeUser(["modify:blog"]);
+    if (!user.success) {
+      return { success: false, data: null, message: user.message };
+    }
     await db.blog.delete({
       where: { id },
     });

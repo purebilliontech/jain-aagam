@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import './globals.css';
-import Navbar from "@/components/common/Navbar";
-
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Jain Agam",
@@ -22,6 +21,7 @@ export default function RootLayout({
       </head>
       <body
       >
+        <Toaster />
         {children}
       </body>
     </html>

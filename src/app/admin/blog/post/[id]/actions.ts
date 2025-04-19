@@ -1,13 +1,19 @@
 "use server";
 
 import { handleServerActionError } from "@/helpers/error";
+import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { BlogDetailSchema, type BlogForm } from "@/schema/blog";
 import { BlogCategoryDTOSchema } from "@/schema/blogCategory";
-import { date } from "zod";
 
 export const getBlogPostById = async (id: string) => {
     try {
+
+        const user = await authorizeUser(["modify:blog"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
+
         if (id === "new") return { success: true, data: null };
 
         const post = await db.blog.findUnique({
@@ -28,6 +34,10 @@ export const getBlogPostById = async (id: string) => {
 
 export const getCategoriesList = async () => {
     try {
+        const user = await authorizeUser(["view:blog-category"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         const categoriesList = await db.blogCategory.findMany();
         const categories = categoriesList.map(category => BlogCategoryDTOSchema.parse(category));
         return { success: true, data: categories };
@@ -39,7 +49,10 @@ export const getCategoriesList = async () => {
 
 export const createBlogPost = async (data: BlogForm) => {
     try {
-        console.log(data);
+        const user = await authorizeUser(["modify:blog"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         const newPost = await db.blog.create({
             data: {
                 title: data.title,
@@ -65,7 +78,7 @@ export const createBlogPost = async (data: BlogForm) => {
 
         return {
             success: true,
-            data: newPost,
+            data: post,
         };
     } catch (error) {
         handleServerActionError(error);
@@ -75,6 +88,10 @@ export const createBlogPost = async (data: BlogForm) => {
 
 export const updateBlogPostById = async (id: string, data: BlogForm) => {
     try {
+        const user = await authorizeUser(["modify:blog"]);
+        if (!user.success) {
+            return { success: false, data: null, message: user.message };
+        }
         const updatedPost = await db.blog.update({
             where: { id },
             data: {
