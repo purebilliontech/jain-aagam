@@ -13,10 +13,13 @@ import { useRouter } from 'next/navigation';
 import { Checkbox } from '@/components/ui/checkbox';
 import type { PermissionDTO } from '@/schema/permissions';
 import { Label } from '@/components/ui/label';
+import { useAuth } from '@/context/auth-context';
 
 const UserForm = ({ user, permissions }: { user: UserWithPermission | null, permissions: PermissionDTO[] }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+
+    const { hasPermissions } = useAuth();
 
     type FormType<T> = T extends null ? CreateUser : UpdateUser;
 
@@ -94,6 +97,7 @@ const UserForm = ({ user, permissions }: { user: UserWithPermission | null, perm
                             render={({ field }) => (
                                 <GenericFormField
                                     formLabel="Name"
+                                    disabled={!hasPermissions(["modify:user"])}
                                     field={field}
                                     cb={GenericFormInput}
                                 />
@@ -107,6 +111,7 @@ const UserForm = ({ user, permissions }: { user: UserWithPermission | null, perm
                                 <GenericFormField
                                     formLabel="Email"
                                     field={field}
+                                    disabled={!hasPermissions(["modify:user"])}
                                     cb={GenericFormInput}
                                 />
                             )}
@@ -121,6 +126,7 @@ const UserForm = ({ user, permissions }: { user: UserWithPermission | null, perm
                                     <GenericFormField
                                         formLabel="Password"
                                         field={field}
+                                        disabled={!hasPermissions(["modify:user"])}
                                         cb={GenericFormPassword}
                                     />
                                 )}
@@ -142,6 +148,7 @@ const UserForm = ({ user, permissions }: { user: UserWithPermission | null, perm
                                                     <Checkbox
                                                         id={`permission-${permission.name}`}
                                                         checked={isChecked}
+                                                        disabled={!hasPermissions(["modify:user"])}
                                                         onCheckedChange={(checked) =>
                                                             togglePermission(permission.name, checked as boolean)
                                                         }
@@ -163,17 +170,19 @@ const UserForm = ({ user, permissions }: { user: UserWithPermission | null, perm
                         </div>
                     </CardContent>
                     <CardFooter className="mt-5 justify-end">
-                        <PrimaryButton
-                            type="submit"
-                            className="max-md:w-full md:w-4/12"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? "Processing..." : user ? "Modify" : "Add"}
-                        </PrimaryButton>
+                        {hasPermissions(["modify:user"]) &&
+                            <PrimaryButton
+                                type="submit"
+                                className="max-md:w-full md:w-4/12"
+                                disabled={isLoading}
+                            >
+                                {isLoading ? "Processing..." : user ? "Modify" : "Add"}
+                            </PrimaryButton>
+                        }
                     </CardFooter>
                 </Card>
             </form>
-        </Form>
+        </Form >
     )
 }
 

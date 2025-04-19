@@ -19,7 +19,7 @@ export const getBlogPosts = async ({
   try {
     const user = await authorizeUser(["view:blog"]);
     if (!user.success) {
-      return { success: false, data: null, message: user.message };
+      throw new Error(user.message);
     }
     const skip = (page - 1) * pageSize;
     const take = pageSize;
@@ -95,7 +95,7 @@ export const deleteBlogPostById = async (id: string) => {
   try {
     const user = await authorizeUser(["modify:blog"]);
     if (!user.success) {
-      return { success: false, data: null, message: user.message };
+      throw new Error(user.message);
     }
     await db.blog.delete({
       where: { id },

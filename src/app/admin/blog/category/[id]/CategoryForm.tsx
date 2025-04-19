@@ -18,10 +18,13 @@ import {
   BlogCategoryFormSchema,
 } from "@/schema/blogCategory";
 import { createCategory, updateCategoryById } from "./actions";
+import { useAuth } from "@/context/auth-context";
 
 export default function CategoryForm({ category }: { category: BlogCategoryDTO | null }) {
   const router = useRouter();
   const isEditing = Boolean(category);
+
+  const { hasPermissions } = useAuth();
 
   const form = useForm<BlogCategoryForm>({
     resolver: zodResolver(BlogCategoryFormSchema),
@@ -72,6 +75,7 @@ export default function CategoryForm({ category }: { category: BlogCategoryDTO |
                   <GenericFormField
                     formLabel="Name"
                     field={field}
+                    disabled={!hasPermissions(["modify:blog-category"])}
                     cb={GenericFormInput}
                   />
                 )}
@@ -85,6 +89,7 @@ export default function CategoryForm({ category }: { category: BlogCategoryDTO |
                     <GenericFormField
                       formLabel="Slug"
                       itemClass="w-full"
+                      disabled={!hasPermissions(["modify:blog-category"])}
                       field={field}
                       cb={GenericFormInput}
                     />
@@ -112,23 +117,25 @@ export default function CategoryForm({ category }: { category: BlogCategoryDTO |
                     divClass="flex flex-col md:flex-row gap-2 md:gap-4 w-full md:items-center"
                     labelClass="w-2/12"
                     field={field}
+                    disabled={!hasPermissions(["modify:blog-category"])}
                     cb={GenericRadioGroup}
                   />
                 )}
               />
-
-              <div className="flex justify-end gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => router.push("/admin/blog/category")}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit">
-                  {isEditing ? "Update" : "Create"}
-                </Button>
-              </div>
+              {hasPermissions(["modify:blog-category"]) &&
+                <div className="flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => router.push("/admin/blog/category")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit">
+                    {isEditing ? "Update" : "Create"}
+                  </Button>
+                </div>
+              }
             </form>
           </Form>
         </CardContent>

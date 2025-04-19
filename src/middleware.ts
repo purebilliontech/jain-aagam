@@ -3,6 +3,7 @@ import { verifyToken } from "@/lib/auth";
 import { COOKIE_NAME } from "@/utils/constants";
 
 export async function middleware(request: NextRequest) {
+
     // Get the token from cookies
     const cookieToken = request.cookies.get(COOKIE_NAME);
 

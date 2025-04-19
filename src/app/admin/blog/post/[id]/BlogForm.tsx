@@ -26,6 +26,7 @@ import { createBlogPost, updateBlogPostById } from "./actions";
 import type { z } from "zod";
 import { getHTMLFromContentJson } from "@/utils/blog-client";
 import type { BlogCategoryDTO } from "@/schema/blogCategory";
+import { useAuth } from "@/context/auth-context";
 
 type BlogPostEditorProps = {
     blog: BlogDetail | null;
@@ -37,6 +38,8 @@ const BlogForm = ({
     categories = [],
 }: BlogPostEditorProps) => {
     const router = useRouter();
+
+    const { hasPermissions } = useAuth();
 
     const [loading, setLoading] = useState<boolean>(false);
     const form = useForm<BlogForm>({
@@ -93,21 +96,22 @@ const BlogForm = ({
                     <div className="flex justify-between">
                         <h1 className="mb-6 text-2xl font-semibold">Blog posts</h1>
                         <div className="flex gap-5">
-                            {blog && (
+                            {/* {blog && (
                                 <Link target="_blank" href={`/admin/blog/preview/${blog.slug}`}>
                                     <Button type="button" variant={"secondary"} className="px-10">
                                         Preview
                                     </Button>
                                 </Link>
-                            )}
-                            <Button
-                                type="submit"
-                                variant={loading ? "outline" : "default"}
-                                className="px-10"
-                            >
-                                {loading && <Loader2 className="animate-spin" />}
-                                {loading ? "Saving" : "Save Blog"}
-                            </Button>
+                            )} */}
+                            {hasPermissions(["modify:blog"]) &&
+                                <Button
+                                    type="submit"
+                                    variant={loading ? "outline" : "default"}
+                                    className="px-10"
+                                >
+                                    {loading && <Loader2 className="animate-spin" />}
+                                    {loading ? "Saving" : "Save Blog"}
+                                </Button>}
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

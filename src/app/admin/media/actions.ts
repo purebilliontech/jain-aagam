@@ -13,7 +13,7 @@ export const getMedia = async (page = 0, query = "") => {
     try {
         const user = await authorizeUser(["view:media"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         const offset = (page) * ITEMS_PER_PAGE;
 
@@ -73,7 +73,7 @@ export const deleteMediaById = async (mediaId: string) => {
     try {
         const user = await authorizeUser(["view:media"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         await db.media.delete({
             where: { id: mediaId },
@@ -90,7 +90,7 @@ export const uploadMedia = async (formData: FormData, fileKey: string = "file", 
     try {
         const user = await authorizeUser(["view:media"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         const file = formData.getAll(fileKey)[0] as File;
 
@@ -131,7 +131,7 @@ export const changeMedia = async (id: string, formData: FormData, fileKey: strin
     try {
         const user = await authorizeUser(["view:media"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         const file = formData.getAll(fileKey)[0] as File;
 
@@ -174,7 +174,7 @@ export const updateMediaMetadata = async (mediaId: string, data: Partial<MediaDT
     try {
         const user = await authorizeUser(["view:media"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         const updatedMedia = await db.media.update({
             where: { id: mediaId },

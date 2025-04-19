@@ -15,7 +15,7 @@ export const getCategoryById = async (id: string) => {
 
         const user = await authorizeUser(["view:blog-category"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
 
         if (id === "new") return { success: true, data: null };
@@ -41,7 +41,7 @@ export const createCategory = async (data: BlogCategoryForm) => {
 
         const user = await authorizeUser(["modify:blog-category"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
 
         // Validate form data
@@ -68,9 +68,8 @@ export const updateCategoryById = async (
     try {
         const user = await authorizeUser(["modify:blog-category"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
-        }
-        // Validate form data
+            throw new Error(user.message);
+        }        // Validate form data
         const validatedData = BlogCategoryFormSchema.parse(data);
 
         const category = await db.blogCategory.update({

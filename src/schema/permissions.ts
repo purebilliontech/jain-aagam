@@ -23,6 +23,4 @@ export const userPermissionSchema = genericSchema.extend({
     permissionName: z.string(),
 });
 
-export const userPermissionDTOSchema = userPermissionSchema.merge(genericDTOSchema).omit({
-    id: true,
-});
+export const userPermissionDTOSchema = userPermissionSchema.merge(genericDTOSchema);

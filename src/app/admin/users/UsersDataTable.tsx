@@ -11,6 +11,7 @@ import { DataTableColumnHeader } from "@/components/dataTable/columnHeader";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { getUsers } from "./actions";
+import { useAuth } from "@/context/auth-context";
 
 interface CustomFilterProps {
     globalFilter: string;
@@ -59,6 +60,8 @@ export default function UsersDataTable() {
     const [sortBy, setSortBy] = useState<string>("createdAt");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
     const { pagination, onPaginationChange } = usePagination(10, 0);
+
+    const { hasPermissions } = useAuth();
 
     const fetchData = useCallback(async () => {
         setLoading(true);
@@ -149,9 +152,11 @@ export default function UsersDataTable() {
         <div className="space-y-4">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Users</h2>
-                <Button onClick={handleAddUser} >
-                    Add User
-                </Button>
+                {hasPermissions(["modify:user"]) &&
+                    <Button onClick={handleAddUser} >
+                        Add User
+                    </Button>
+                }
             </div>
             <DataTable
                 columns={columns}

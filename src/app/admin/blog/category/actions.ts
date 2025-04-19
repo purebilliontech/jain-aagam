@@ -17,10 +17,9 @@ export const getCategories = async ({
   sortDirection = "desc",
 }: PaginatedReqParams) => {
   try {
-
     const user = await authorizeUser(["view:blog-category"]);
     if (!user.success) {
-      return { success: false, data: null, message: user.message };
+      throw new Error(user.message);
     }
 
     const skip = (page - 1) * pageSize;
@@ -90,7 +89,7 @@ export const deleteCategoryById = async (id: string) => {
   try {
     const user = await authorizeUser(["modify:blog-category"]);
     if (!user.success) {
-      return { success: false, data: null, message: user.message };
+      throw new Error(user.message);
     }
     await db.blogCategory.delete({
       where: { id },

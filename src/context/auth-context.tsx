@@ -14,7 +14,7 @@ export type AuthUser = {
 type AuthContextType = {
   user: AuthUser | null;
   isLoading: boolean;
-  hasPermission: (permission: string) => boolean;
+  hasPermissions: (permission: string[]) => boolean;
   hasAnyPermission: (permissions: string[]) => boolean;
   refresh: () => Promise<void>;
 };
@@ -22,7 +22,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isLoading: true,
-  hasPermission: () => false,
+  hasPermissions: () => false,
   hasAnyPermission: () => false,
   refresh: async () => { },
 });
@@ -57,10 +57,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     fetchUser();
   }, []);
 
-  // Check if user has a specific permission
-  const hasPermission = (permission: string): boolean => {
+  // Check if user has all specified permissions
+  const hasPermissions = (permissions: string[]): boolean => {
     if (!user) return false;
-    return user.permissions.includes(permission);
+    return permissions.every(permission => user.permissions.includes(permission));
   };
 
   // Check if user has any of the provided permissions
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider value={{
       user,
       isLoading,
-      hasPermission,
+      hasPermissions,
       hasAnyPermission,
       refresh
     }}>

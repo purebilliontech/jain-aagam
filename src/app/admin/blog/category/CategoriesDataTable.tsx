@@ -11,6 +11,8 @@ import { DataTableColumnHeader } from "@/components/dataTable/columnHeader";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { getCategories } from "./actions";
+import { toast } from "sonner";
+import { useAuth } from "@/context/auth-context";
 
 interface CustomFilterProps {
   globalFilter: string;
@@ -60,6 +62,8 @@ export default function CategoryDataTable() {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   const { pagination, onPaginationChange } = usePagination(10, 0);
 
+  const { hasPermissions } = useAuth();
+
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
@@ -71,8 +75,13 @@ export default function CategoryDataTable() {
         sortDirection,
       });
 
-      setCategories(result.data.categories);
-      setTotalRows(result.data.meta.totalCount);
+      if (!result.success) {
+        toast.error("Failed to fetch categories");
+        return;
+      }
+
+      setCategories(result.data?.categories || []);
+      setTotalRows(result.data?.meta.totalCount || 0);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
     } finally {
@@ -148,9 +157,11 @@ export default function CategoryDataTable() {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Categories</h2>
-        <Button onClick={handleAddCategory} >
-          Add Category
-        </Button>
+        {hasPermissions(['modify:blog-category']) &&
+          <Button onClick={handleAddCategory} >
+            Add Category
+          </Button>
+        }
       </div>
       <DataTable
         columns={columns}

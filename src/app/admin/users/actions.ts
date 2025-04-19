@@ -17,7 +17,7 @@ export const getUsers = async ({
     try {
         const user = await authorizeUser(["view:user"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
 
         const skip = (page - 1) * pageSize;

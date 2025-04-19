@@ -11,7 +11,7 @@ export const getUserById = async (id: string) => {
     try {
         const authuser = await authorizeUser(["view:user"]);
         if (!authuser.success) {
-            return { success: false, data: null, message: authuser.message };
+            throw new Error(authuser.message);
         }
 
         if (id === "new") {
@@ -41,9 +41,9 @@ export const getUserById = async (id: string) => {
 
 export const createUser = async (data: CreateUser) => {
     try {
-        const authuser = await authorizeUser(["modify:user"]);
-        if (!authuser.success) {
-            return { success: false, data: null, message: authuser.message };
+        const user = await authorizeUser(["modify:user"]);
+        if (!user.success) {
+            throw new Error(user.message);
         }
         const hashedPassword = await hashData(data.password);
         const newUser = await db.users.create({
@@ -77,9 +77,9 @@ export const createUser = async (data: CreateUser) => {
 
 export const updateUserById = async (id: string, data: UpdateUser) => {
     try {
-        const authuser = await authorizeUser(["modify:user"]);
-        if (!authuser.success) {
-            return { success: false, data: null, message: authuser.message };
+        const user = await authorizeUser(["modify:user"]);
+        if (!user.success) {
+            throw new Error(user.message);
         }
         // Update user basic info
         const updatedUser = await db.users.update({
@@ -88,7 +88,9 @@ export const updateUserById = async (id: string, data: UpdateUser) => {
                 name: data.name,
                 email: data.email,
                 permissions: {
-                    deleteMany: {},
+                    deleteMany: {
+                        userId: id
+                    },
                     createMany: {
                         data: data.permissions.map(permission => ({
                             permissionName: permission
@@ -116,9 +118,9 @@ export const updateUserById = async (id: string, data: UpdateUser) => {
 
 export const deleteUser = async (id: string) => {
     try {
-        const authuser = await authorizeUser(["modify:user"]);
-        if (!authuser.success) {
-            return { success: false, data: null, message: authuser.message };
+        const user = await authorizeUser(["modify:user"]);
+        if (!user.success) {
+            throw new Error(user.message);
         }
         // First delete user permissions
         await db.userPermissions.deleteMany({
@@ -149,6 +151,12 @@ export const deleteUser = async (id: string) => {
 
 export const getAllPermissions = async () => {
     try {
+
+        const user = await authorizeUser(["view:user"]);
+        if (!user.success) {
+            throw new Error(user.message);
+        }
+
         const permissions = await db.permissions.findMany({
             orderBy: {
                 name: 'asc'

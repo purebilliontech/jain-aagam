@@ -11,7 +11,7 @@ export const getBlogPostById = async (id: string) => {
 
         const user = await authorizeUser(["modify:blog"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
 
         if (id === "new") return { success: true, data: null };
@@ -36,7 +36,7 @@ export const getCategoriesList = async () => {
     try {
         const user = await authorizeUser(["view:blog-category"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         const categoriesList = await db.blogCategory.findMany();
         const categories = categoriesList.map(category => BlogCategoryDTOSchema.parse(category));
@@ -51,7 +51,7 @@ export const createBlogPost = async (data: BlogForm) => {
     try {
         const user = await authorizeUser(["modify:blog"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         const newPost = await db.blog.create({
             data: {
@@ -90,7 +90,7 @@ export const updateBlogPostById = async (id: string, data: BlogForm) => {
     try {
         const user = await authorizeUser(["modify:blog"]);
         if (!user.success) {
-            return { success: false, data: null, message: user.message };
+            throw new Error(user.message);
         }
         const updatedPost = await db.blog.update({
             where: { id },
