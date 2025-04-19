@@ -5,7 +5,7 @@ const JoinMission = () => {
     return (
         <>
 
-            <section className='max-w-7xl mx-auto p-5 py-20'>
+            <section className='max-w-7xl mx-auto p-5 py-40'>
                 <h2 className='text-primary-ui text-center font-montserrat font-semibold text-4xl'>TO JOIN THE JAIN AAGAM MISSION, <br /> CONTACT:</h2>
                 <div className="flex justify-center">
 

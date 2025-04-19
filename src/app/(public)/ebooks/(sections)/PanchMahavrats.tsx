@@ -47,7 +47,7 @@ const PanchMahavrats = () => {
       <div className="text-center mb-40">
         <SectionTitle title="Panch Mahavrats" subtitle="THE FIVE GREAT VOWS" />
 
-        <p className="max-w-3xl mx-auto mt-9 text-primary-foreground-ui text-sm md:text-base">
+        <p className="mx-auto mt-9 text-justify  text-primary-foreground-ui text-2xl ">
           The Panch Mahavrats are the five great vows that form the foundation
           of Jain ethical practice. These principles guide individuals towards a
           life of non-violence, truthfulness, non-stealing, celibacy, and
@@ -57,35 +57,30 @@ const PanchMahavrats = () => {
 
       {/* Cards Grid */}
       <div
-        className={`grid gap-10 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${
-          principles.length === 3 ? "justify-center" : ""
-        }`}
+        className="flex flex-wrap gap-16 md:gap-12 justify-center items-center"
       >
         {principles.map((principle, index) => (
-          <div key={index} className="relative w-80 mb-16">
+          <div key={index} className="relative mb-16 mt-20 flex-1 min-w-[300px] max-w-[400px]">
             {/* Card with curved top cutout */}
-            <div className="relative bg-amber-50 rounded-3xl h-[28rem] w-full overflow-hidden">
-              {/* Circular cutout at top */}
-              {/* <div className="absolute top-0 left-0 w-full h-16 bg-white"></div>
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-16 bg-amber-50 rounded-t-full"></div> */}
+            <div className="relative bg-[#e9e2d2] rounded-3xl w-full overflow-hidden">
 
               {/* Card Content */}
-              <div className="pt-24 px-8 pb-10 mt-0 text-center">
-                <h3 className="text-2xl font-serif text-amber-800 font-medium mt-2">
+              <div className="pt-44 px-14 pb-16 mt-0 text-center">
+                <h3 className="text-4xl font-mono text-typography font-semibold mt-2">
                   {principle.name}
                 </h3>
-                <p className="text-amber-600 italic text-base mt-1">
+                <p className="text-foreground-ui font-semibold font-mono italic text-2xl mt-1">
                   {principle.sanskrit}
                 </p>
-                <p className="text-gray-600 text-base mt-4 leading-relaxed">
+                <p className="text-typography text-xl font-sans text-justify mt-4 leading-tight">
                   {principle.description}
                 </p>
               </div>
             </div>
 
             {/* Circular Image */}
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-md">
+            <div className="absolute w-3/4 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="rounded-full overflow-hidden border-6 border-white shadow-md">
                 <Image
                   src={principle.image}
                   alt={principle.name}
