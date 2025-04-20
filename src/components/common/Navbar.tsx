@@ -35,10 +35,10 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="w-screen">
+            <nav className="w-full">
                 <div className="flex max-w-7xl mx-auto flex-col justify-between overflow-x-hidden md:flex-row">
 
-                    <div className="flex h-20 items-center  p-5 max-md:border-b">
+                    <div className="flex h-20 items-center justify-between p-5 max-md:border-b">
                         <Link href={'/'}>
                             <p className="font-semibold font-sans text-xl">JAIN AGAM</p>
                         </Link>
@@ -55,12 +55,12 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div
-                        className={`links  ${toggle ? "translate-x-0" : "max-md:translate-x-[100vw]"} absolute right-0 z-50 flex flex-col items-center gap-10 bg-white
+                        className={`links  ${toggle ? "translate-x-0 " : "max-md:translate-x-[100vw] max-md:hidden"} absolute right-0 z-50 flex flex-col items-center gap-10 bg-white
                     p-5 transition-all duration-500 ease-in-out max-md:top-20 max-md:h-[90vh] max-md:w-2/3 max-md:border-l md:relative md:flex-row overflow-x-hidden`}
                     >
 
                         {navLinks.map((link) => (
-                            <Link key={link.title} href={link.href}>
+                            <Link key={link.title} href={link.href} onClick={() => { setToggle(false) }}>
                                 <p
                                     className={`font-medium ${pathname === link.href ? "text-primary-ui" : "text-heading"
                                         } hover:text-primary-ui`}

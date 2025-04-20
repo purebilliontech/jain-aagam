@@ -28,7 +28,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start 10%", "end 50%"],
+        offset: ["start 20%", "end 50%"],
     });
 
     const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
@@ -45,8 +45,9 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                         key={index}
                         className="flex flex-col md:flex-row justify-end pt-16 md:pt-40 md:gap-10"
                     >
+
                         {/* Mobile Title Section (Visible only on mobile) */}
-                        <div className="md:hidden mb-4 w-full">
+                        <div className="hidden mb-4 w-full">
                             <h3 className="text-2xl font-bold text-[#E9E2D2] dark:text-[#E9E2D2]">
                                 {item.title}
                             </h3>
@@ -56,8 +57,8 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                         </div>
 
                         {/* Timeline Left Side - Date & Circle */}
-                        <div className="sticky flex flex-row md:flex-row z-40 items-center self-start max-w-xs lg:max-w-sm md:w-full">
-                            <div className="hidden md:flex flex-col items-end">
+                        <div className="sticky flex flex-row max-md:gap-4 z-40 items-center self-start max-w-xs lg:max-w-sm md:w-full">
+                            <div className="flex flex-col items-end">
                                 <h3 className="font-mono text-xl md:pl-20 md:text-5xl font-bold text-[#E9E2D2] dark:text-[#E9E2D2]">
                                     {item.title}
                                 </h3>
@@ -73,6 +74,8 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                         <div className="relative pl-6 md:pl-10 w-full">
                             <div className="text-[#E9E2D2] dark:text-[#E9E2D2]">{item.content}</div>
                         </div>
+
+
                     </div>
                 ))}
 
@@ -81,7 +84,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                     style={{
                         height: height + "px",
                     }}
-                    className="absolute left-4 md:left-[300px] top-0 overflow-hidden w-[3px] md:w-[7px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-200 dark:via-neutral-700 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+                    className="absolute left-36 md:left-[300px] top-0 overflow-hidden w-[3px] md:w-[7px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-200 dark:via-neutral-700 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
                 >
                     <motion.div
                         style={{

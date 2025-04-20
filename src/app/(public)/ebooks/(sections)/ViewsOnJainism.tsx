@@ -7,7 +7,7 @@ const ViewsOnJainism = () => {
         <section className='max-w-7xl mx-auto p-5 my-20'>
             <SectionTitle title='Views on Jainism' subtitle='WORLD THINKERS & SCIENTISTS' />
             <div className="">
-                <div className="flex mt-16 gap-10">
+                <div className="flex flex-col md:flex-row mt-16 gap-10">
                     <div className="md:w-1/5">
                         <Image src={'/static/placeholder.png'} width={500} height={500} alt='Image for presentation' />
                     </div>
@@ -19,7 +19,7 @@ const ViewsOnJainism = () => {
                     </div>
                 </div>
 
-                <div className="flex px-20 my-20">
+                <div className="flex md:px-20 px-5 my-20">
                     <div className="w-5 h-5 bg-primary-ui rounded-full"></div>
                     <div className="h-1 w-full bg-primary-ui mt-[9px]"></div>
                     <div className="w-5 h-5 bg-primary-ui rounded-full"></div>
@@ -27,7 +27,7 @@ const ViewsOnJainism = () => {
             </div>
 
             <div className="">
-                <div className="flex gap-10 flex-row-reverse mt-16">
+                <div className="flex gap-10 md:flex-row-reverse flex-col mt-16">
                     <div className="md:w-1/5">
                         <Image src={'/static/placeholder.png'} width={500} height={500} alt='Image for presentation' />
                     </div>
@@ -39,7 +39,7 @@ const ViewsOnJainism = () => {
                     </div>
                 </div>
 
-                <div className="flex px-20 my-20">
+                <div className="flex md:px-20 px-5 my-20">
                     <div className="w-5 h-5 bg-primary-ui rounded-full"></div>
                     <div className="h-1 w-full bg-primary-ui mt-[9px]"></div>
                     <div className="w-5 h-5 bg-primary-ui rounded-full"></div>

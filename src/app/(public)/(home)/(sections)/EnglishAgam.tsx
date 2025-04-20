@@ -6,8 +6,9 @@ const EnglishAgam = () => {
     return (
         <section className='relative h-full px-5 py-10 md:px-10 lg:px-20 xl:px-48'>
             <Image className='-z-10 absolute top-0 left-0 inset-0 object-cover object-center' src={'/static/english-agam-bg.png'} fill alt='Agams BG' />
+
             <div className='z-50 bg-[#E9E2D2ED] p-5 md:p-10 lg:p-14 max-w-7xl mx-auto rounded-4xl flex flex-col md:flex-row gap-5 md:gap-10'>
-                <div className="w-full md:w-1/3 flex justify-center">
+                <div className="w-full pt-2 md:pt-0 md:w-1/3 flex justify-center">
                     <Image src={'/static/red-book.png'} width={300} height={600} alt='Red Book' className='mx-auto' />
                 </div>
                 <div className="w-full md:w-2/3 pt-3">

@@ -19,7 +19,7 @@ const NavkarMahamantrs = () => {
         <>
             <section className='max-w-7xl mx-auto p-5 my-20'>
                 <SectionTitle title='Navkar Mahamantras' subtitle='THE UNIVERSAL MANTRA' />
-                <div className="flex items-center mt-24">
+                <div className="flex flex-col md:flex-row max-md:gap-10 items-center md:mt-24">
                     <div className="md:w-1/3">
 
                     </div>
@@ -44,7 +44,7 @@ const NavkarMahamantrs = () => {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>
 
-                <div className="max-w-3xl bg-[#DCD3C2] flex justify-center items-center rounded-2xl mt-28 h-[50vh] mx-auto">
+                <div className="max-w-3xl bg-[#DCD3C2] flex justify-center items-center rounded-2xl md:mt-28 mt-20 h-[50vh] mx-auto">
                     <p >NAVKAR MANTRA VIDEO</p>
                 </div>
 

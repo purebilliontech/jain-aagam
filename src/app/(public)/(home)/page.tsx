@@ -18,29 +18,32 @@ export default function Home() {
       <AgamEbooks />
       <EnglishAgam />
       <AgamWisdom />
-      <Timeline data={[
-        {
-          title: "150",
-          subtitle: "Veer Samvat",
-          content: <div className="h-[30vh]"></div>,
-        },
-        {
-          title: "980",
-          subtitle: "Veer Samvat",
-          content: <div className="h-[30vh]"></div>,
-        },
-        {
-          title: "1500",
-          subtitle: "Veer Samvat",
-          content: <div className="h-[30vh]"></div>,
-        },
-        {
-          title: "2000",
-          subtitle: "Veer Samvat",
-          content: <div className="h-[30vh]"></div>,
-        },
+      <div className="overflow-x-hidden">
 
-      ]} />
+        <Timeline data={[
+          {
+            title: "150",
+            subtitle: "Veer Samvat",
+            content: <div className="h-[30vh]"></div>,
+          },
+          {
+            title: "980",
+            subtitle: "Veer Samvat",
+            content: <div className="h-[30vh]"></div>,
+          },
+          {
+            title: "1500",
+            subtitle: "Veer Samvat",
+            content: <div className="h-[30vh]"></div>,
+          },
+          {
+            title: "2000",
+            subtitle: "Veer Samvat",
+            content: <div className="h-[30vh]"></div>,
+          },
+
+        ]} />
+      </div>
       <JoinMission />
     </>
   );

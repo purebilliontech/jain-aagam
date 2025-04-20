@@ -4,7 +4,7 @@ import React from 'react'
 const IndianIndependence = () => {
     return (
         <>
-            <section className="max-w-7xl mx-auto bg-white py-26">
+            <section className="max-w-7xl p-5 mx-auto bg-white py-26">
                 <SectionTitle title="Indian Independence" subtitle="WORLD INFLUENCE" />
 
                 <div className="flex flex-wrap gap-4 mb-8 mt-20">
@@ -14,8 +14,8 @@ const IndianIndependence = () => {
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-6">
-                        <div className="flex-1 bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-40">
+                    <div className="grid md:grid-cols-1 grid-cols-2 gap-5">
+                        <div className="bg-foreground-ui p-4 flex items-center justify-center rounded-lg h-40">
                             <p className="text-center text-white font-medium">
                                 DELHI MUSEUM PHOTOS
                             </p>
