@@ -1,11 +1,13 @@
 import BlogCard from '@/components/blog/BlogCard'
+import type { BlogWithCategoryAndBanner } from '@/schema/blog'
 import { Search } from 'lucide-react'
-import React from 'react'
+import React from 'react';
+import moment from 'moment'
 
 
 const tags = ['Happiness', 'Jain Agam', 'Jainism']
 
-const BlogsListPage = () => {
+const BlogsListPage = ({ blogs }: { blogs: BlogWithCategoryAndBanner[] }) => {
     return (
         <>
             <div className="bg-[#E9E2D2] w-full h-96">
@@ -33,13 +35,16 @@ const BlogsListPage = () => {
             </div>
 
             <div className="flex flex-wrap max-w-7xl mx-auto p-5 space-y-16">
-                <BlogCard date='' tags={['Happiness', 'Wellness']} title='Title space for as long as 2 lines' />
-                <BlogCard date='' tags={['Happiness', 'Wellness']} title='Title space for as long as 2 lines' />
-                <BlogCard date='' tags={['Happiness', 'Wellness']} title='Title space for as long as 2 lines' />
-                <BlogCard date='' tags={['Happiness', 'Wellness']} title='Title space for as long as 2 lines' />
-                <BlogCard date='' tags={['Happiness', 'Wellness']} title='Title space for as long as 2 lines' />
-                <BlogCard date='' tags={['Happiness', 'Wellness']} title='Title space for as long as 2 lines' />
+                {blogs.map((blog, index) => (
+                    <BlogCard
+                        key={blog.id}
+                        tags={blog.tags}
+                        title={blog.title}
+                        date={moment(blog.publishedAt).format('LL')}
 
+                    />
+                ))
+                }
             </div>
 
 

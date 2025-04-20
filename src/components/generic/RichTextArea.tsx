@@ -269,7 +269,7 @@ const RichTextAreaForwardRef: FC<RichTextAreaProps> = forwardRef<
     const [open, setOpen] = useState<boolean>(false);
 
     const editor = useEditor({
-      immediatelyRender: true,
+      immediatelyRender: false,
       extensions: [
         OrderList.configure({
           HTMLAttributes: { class: "list-decimal mx-5" },
@@ -348,7 +348,7 @@ const RichTextAreaForwardRef: FC<RichTextAreaProps> = forwardRef<
           })
           .run();
       } else {
-        const cls = editor.getAttributes("paragraph");
+        const cls = editor?.getAttributes("paragraph");
         const classesToAdd = ["text-left", "text-center", "text-right"];
         const newClass = classesToAdd.reduce(
           (prev: string, curr) => {
@@ -378,7 +378,7 @@ const RichTextAreaForwardRef: FC<RichTextAreaProps> = forwardRef<
     };
 
     const setLink = useCallback(() => {
-      const previousUrl = editor.getAttributes("link").href;
+      const previousUrl = editor?.getAttributes("link").href;
       const url = window.prompt("URL", previousUrl);
 
       // cancelled
@@ -388,14 +388,14 @@ const RichTextAreaForwardRef: FC<RichTextAreaProps> = forwardRef<
 
       // empty
       if (url === "") {
-        editor.chain().focus().extendMarkRange("link").unsetLink().run();
+        editor?.chain().focus().extendMarkRange("link").unsetLink().run();
 
         return;
       }
 
       // update link
       editor
-        .chain()
+        ?.chain()
         .focus()
         .extendMarkRange("link")
         .setLink({ href: url })
@@ -443,7 +443,7 @@ const RichTextAreaForwardRef: FC<RichTextAreaProps> = forwardRef<
           )}
           <EditorContent
             editor={editor}
-            className="admin-blog border shopify-html max-h-[80vh] min-h-20 overflow-y-scroll flex grow flex-col"
+            className="admin-blog border blog-html max-h-[80vh] min-h-20 overflow-y-scroll flex grow flex-col"
             ref={ref}
           />
         </div>
@@ -565,8 +565,8 @@ const RichTextAreaForwardRef: FC<RichTextAreaProps> = forwardRef<
           </Button>
           <Separator orientation="vertical" className="min-h-10" />
           <Button
-            variant={editor.isActive("link") ? "outline" : "ghost"}
-            className={`${editor.isActive("link") ? "bg-accent" : "bg-transparent"} ${buttonClass}`}
+            variant={editor?.isActive("link") ? "outline" : "ghost"}
+            className={`${editor?.isActive("link") ? "bg-accent" : "bg-transparent"} ${buttonClass}`}
             type="button"
             onClick={setLink}
           >
@@ -576,8 +576,8 @@ const RichTextAreaForwardRef: FC<RichTextAreaProps> = forwardRef<
             variant={"ghost"}
             className={`${buttonClass}`}
             type="button"
-            onClick={() => editor.chain().focus().unsetLink().run()}
-            disabled={!editor.isActive("link")}
+            onClick={() => editor?.chain().focus().unsetLink().run()}
+            disabled={!editor?.isActive("link")}
           >
             <Unlink2Icon />
           </Button>

@@ -1,12 +1,15 @@
+import type { MediaDTO } from '@/schema/media'
 import Image from 'next/image'
 import React from 'react'
 
-const BlogCard = ({ title, date, tags }: { title: string, date: string, tags: string[] }) => {
+const BlogCard = ({ title, date, tags, image }: { title: string, date: string, tags: string[], image?: MediaDTO }) => {
     return (
         <>
             <div className="md:w-1/3 p-5">
                 <div className="flex flex-col overflow-hidden bg-card-ui md:rounded-4xl rounded-2xl">
-                    <Image src={'/static/placeholder.png'} className='h-52 object-cover' width={600} height={500} alt='Image for presentation' />
+                    {image ?
+                        <Image src={image.url} className='h-52 object-cover' width={600} height={500} alt={image.alt} />
+                        : <Image src={'/static/placeholder.png'} className='h-52 object-cover' width={600} height={500} alt='Image for presentation' />}
                     <div className="md:p-8 p-5">
                         <h3 className='font-mono font-semibold italic text-2xl text-typography' >
                             {title}

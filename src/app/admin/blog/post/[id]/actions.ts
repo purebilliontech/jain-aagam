@@ -5,10 +5,10 @@ import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { BlogDetailSchema, type BlogForm } from "@/schema/blog";
 import { BlogCategoryDTOSchema } from "@/schema/blogCategory";
+import { formatContentJson } from "@/utils/blog";
 
 export const getBlogPostById = async (id: string) => {
     try {
-
         const user = await authorizeUser(["modify:blog"]);
         if (!user.success) {
             throw new Error(user.message);
@@ -18,6 +18,10 @@ export const getBlogPostById = async (id: string) => {
 
         const post = await db.blog.findUnique({
             where: { id },
+            include: {
+                category: true,
+                banner: true,
+            },
         });
 
         if (!post) return { success: false, data: null };
@@ -47,17 +51,18 @@ export const getCategoriesList = async () => {
     }
 }
 
-export const createBlogPost = async (data: BlogForm) => {
+export const createBlogPost = async (data: BlogForm, contentJsonString: string) => {
     try {
         const user = await authorizeUser(["modify:blog"]);
         if (!user.success) {
             throw new Error(user.message);
         }
+
         const newPost = await db.blog.create({
             data: {
                 title: data.title,
                 synopsis: data.synopsis,
-                contentJson: data.contentJson,
+                contentJson: formatContentJson(contentJsonString),
                 authorName: data.authorName,
                 readingTimeSeconds: data.readingTimeSeconds,
                 slug: data.slug,
@@ -71,14 +76,12 @@ export const createBlogPost = async (data: BlogForm) => {
             include: {
                 category: true,
                 banner: true,
-            }
+            },
         });
-
-        const post = BlogDetailSchema.parse(newPost);
 
         return {
             success: true,
-            data: post,
+            data: newPost,
         };
     } catch (error) {
         handleServerActionError(error);
@@ -86,7 +89,7 @@ export const createBlogPost = async (data: BlogForm) => {
     }
 }
 
-export const updateBlogPostById = async (id: string, data: BlogForm) => {
+export const updateBlogPostById = async (id: string, data: BlogForm, contentJsonString: string) => {
     try {
         const user = await authorizeUser(["modify:blog"]);
         if (!user.success) {
@@ -97,7 +100,7 @@ export const updateBlogPostById = async (id: string, data: BlogForm) => {
             data: {
                 title: data.title,
                 synopsis: data.synopsis,
-                contentJson: data.contentJson,
+                contentJson: formatContentJson(contentJsonString),
                 authorName: data.authorName,
                 readingTimeSeconds: data.readingTimeSeconds,
                 slug: data.slug,

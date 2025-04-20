@@ -44,7 +44,7 @@ const MediaDialog = ({
     defaultValues: {
       title: media.title || "",
       alt: media.alt || "",
-      cta: media.cta,
+      cta: media.cta || "",
     },
   })
 
@@ -93,7 +93,7 @@ const MediaDialog = ({
       }
 
       if (onSave) {
-        onSave(response.media!);
+        onSave(response.data!);
       }
 
       toast("Image and details updated successfully");
@@ -120,7 +120,7 @@ const MediaDialog = ({
       }
 
       if (onSave) {
-        onSave(response.media!);
+        onSave(response.data!);
       }
 
       toast("Media details updated successfully",);
@@ -287,7 +287,7 @@ const MediaDialog = ({
                       console.error("Failed to copy URL: ", err);
                     });
                 }}
-                value={media.url}
+                value={media.url || ""}
                 className="cursor-pointer !outline-0"
               />
               <p

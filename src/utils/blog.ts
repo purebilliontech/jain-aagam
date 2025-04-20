@@ -84,6 +84,34 @@ const ExtendedParagraph = Paragraph.extend({
     },
 });
 
+
+export const formatContentJson = (contentJsonString: string) => {
+
+    const contentJson = JSON.parse(contentJsonString);
+
+    const contentArr = (contentJson.content as Content[]).map(
+        (content: Content) => {
+            if (content.type === "heading") {
+                return {
+                    ...content,
+                    attrs: {
+                        ...content.attrs,
+                        id: slugify(content.content[0].text, {
+                            strict: true,
+                            lower: true,
+                        }),
+                    },
+                } as Content;
+            } else {
+                return content;
+            }
+        },
+    );
+
+    const newContentJson = { ...contentJson, content: contentArr };
+    return newContentJson;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const formatBlogData = (contentJson: any) => {
     const contentArr = (contentJson.content as Content[]).map(

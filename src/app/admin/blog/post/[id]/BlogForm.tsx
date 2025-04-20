@@ -61,15 +61,16 @@ const BlogForm = ({
     const saveBlog = async (formData: BlogForm) => {
         console.log(formData);
         try {
+            const contentJsonString = JSON.stringify(formData.contentJson);
             if (blog) {
-                const result = await updateBlogPostById(blog.id, formData);
+                const result = await updateBlogPostById(blog.id, formData, contentJsonString);
                 if (result.success) {
                     toast.success("Blog Updated Successfully");
                 } else {
                     toast.error("Failed to Update Blog");
                 }
             } else {
-                const result = await createBlogPost(formData);
+                const result = await createBlogPost(formData, contentJsonString);
                 if (result.success && result.data) {
                     toast.success("Blog Created Successfully");
                     router.replace(`/admin/blog/post/${result.data.id}`);
@@ -142,6 +143,7 @@ const BlogForm = ({
                                             <RichTextArea
                                                 value={getHTMLFromContentJson(field.value)}
                                                 onChange={(content, contentJson) => {
+                                                    console.log(contentJson);
                                                     form.setValue(
                                                         "contentJson",
                                                         contentJson as any,

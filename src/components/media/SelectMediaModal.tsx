@@ -39,7 +39,7 @@ const SelectMediaModal = ({
   const fetchMedia = async (pageNumber = 0) => {
     setLoading(true);
     try {
-      const { success, mediaList, totalCount, currentPage } = await getMedia(pageNumber, search as string);
+      const { success, data: { mediaList, meta: { totalCount, currentPage } } } = await getMedia(pageNumber, search as string);
       if (!success) {
         toast("Failed to fetch media");
         return;
@@ -69,9 +69,9 @@ const SelectMediaModal = ({
 
     try {
       const uploadedMedia = await uploadMedia(formData, "file", file.name, file.type);
-      if (uploadedMedia.success && uploadedMedia.media) {
-        setMediaList((prevMediaList) => [uploadedMedia.media, ...prevMediaList]);
-        setSelectedMedia(uploadedMedia.media);
+      if (uploadedMedia.success && uploadedMedia.data) {
+        setMediaList((prevMediaList) => [uploadedMedia.data, ...prevMediaList]);
+        setSelectedMedia(uploadedMedia.data);
       } else {
         console.error("Failed to upload media", uploadedMedia.message);
       }

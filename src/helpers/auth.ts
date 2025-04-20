@@ -87,11 +87,11 @@ export async function authMiddleware(request: NextRequest) {
  */
 export async function checkPermission(permissions: string[]): Promise<boolean> {
   const user = await getCurrentUser();
-  
+
   if (!user) {
     throw new Error("User not authenticated");
   }
-  
+
   return permissions.some(permission => user.permissions.includes(permission));
 }
 
@@ -103,70 +103,11 @@ export async function checkPermission(permissions: string[]): Promise<boolean> {
  */
 export async function checkAllPermissions(permissions: string[]): Promise<boolean> {
   const user = await getCurrentUser();
-  
+
   if (!user) {
     throw new Error("User not authenticated");
   }
-  
+
   return permissions.every(permission => user.permissions.includes(permission));
 }
 
-/**
- * Check if the current user is a buyer
- * @returns A boolean indicating whether the user is a buyer
- * @throws Error if user is not authenticated
- */
-export async function isBuyer(): Promise<boolean> {
-  const user = await getCurrentUser();
-  
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
-  
-  return !user.isSeller && !!user.buyerId;
-}
-
-/**
- * Check if the current user is a seller
- * @returns A boolean indicating whether the user is a seller
- * @throws Error if user is not authenticated
- */
-export async function isSeller(): Promise<boolean> {
-  const user = await getCurrentUser();
-  
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
-  
-  return user.isSeller && !!user.sellerId;
-}
-
-/**
- * Get the current user's buyer ID if they are a buyer
- * @returns The buyer ID or null if the user is not a buyer
- * @throws Error if user is not authenticated
- */
-export async function getBuyerId(): Promise<string | null> {
-  const user = await getCurrentUser();
-  
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
-  
-  return user.buyerId;
-}
-
-/**
- * Get the current user's seller ID if they are a seller
- * @returns The seller ID or null if the user is not a seller
- * @throws Error if user is not authenticated
- */
-export async function getSellerId(): Promise<string | null> {
-  const user = await getCurrentUser();
-  
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
-  
-  return user.sellerId;
-}
