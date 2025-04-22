@@ -18,7 +18,22 @@ export const hashData = async (data: string) => {
 
 
 export async function encryptPassword(password: string): Promise<string> {
+    const secret = process.env.PASS_SEC as string;
+    if (!secret) {
+        throw new Error("Secret key is not defined");
+    }
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password + secret, salt);
     return hashedPassword;
+}
+
+
+export async function comparePassword(password: string, hashedPassword: string): Promise<boolean> {
+    const secret = process.env.PASS_SEC as string;
+    if (!secret) {
+        throw new Error("Secret key is not defined");
+    }
+
+    const isMatch = await bcrypt.compare(password + secret, hashedPassword);
+    return isMatch;
 }

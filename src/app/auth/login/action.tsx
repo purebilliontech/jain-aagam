@@ -6,24 +6,30 @@ import { db } from "@/lib/db";
 import type { Login } from "@/schema/auth";
 import { UserWithPermissionSchema } from "@/schema/user";
 import { COOKIE_MAX_AGE, COOKIE_NAME } from "@/utils/constants";
-import { hashData } from "@/utils/crypto";
+import { comparePassword, encryptPassword, hashData } from "@/utils/crypto";
+import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 
 export const login = async (data: Login) => {
     try {
-        const hashedPassword = await hashData(data.password);
-        console.log("hashedPassword", hashedPassword);
+        const pass = await encryptPassword(data.password);
+        console.log(pass);
         const user = await db.users.findUnique({
             where: {
                 email: data.email,
-                password: hashedPassword
             },
             include: {
                 permissions: true
             }
         });
-        console.log(user);
         if (!user) {
+            console.log("User not found")
+            throw new Error("Invalid email or password");
+        }
+
+        const isSame = await comparePassword(data.password, user.password);
+        if (!isSame) {
+            console.log("Password is invalid")
             throw new Error("Invalid email or password");
         }
 

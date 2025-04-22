@@ -5,7 +5,7 @@ import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { permissionDTOSchema } from "@/schema/permissions";
 import { UserDTOSchema, UserWithPermissionSchema, type CreateUser, type UpdateUser, type UserDTO, type UserWithPermission } from "@/schema/user";
-import { hashData } from "@/utils/crypto";
+import { encryptPassword, hashData } from "@/utils/crypto";
 
 export const getUserById = async (id: string) => {
     try {
@@ -45,7 +45,7 @@ export const createUser = async (data: CreateUser) => {
         if (!user.success) {
             throw new Error(user.message);
         }
-        const hashedPassword = await hashData(data.password);
+        const hashedPassword = await encryptPassword(data.password);
         const newUser = await db.users.create({
             data: {
                 name: data.name,
