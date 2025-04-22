@@ -19,6 +19,7 @@ export const hashData = async (data: string) => {
 
 export async function encryptPassword(password: string): Promise<string> {
     const secret = process.env.PASS_SEC as string;
+    console.log("secret", secret)
     if (!secret) {
         throw new Error("Secret key is not defined");
     }
@@ -30,6 +31,7 @@ export async function encryptPassword(password: string): Promise<string> {
 
 export async function comparePassword(password: string, hashedPassword: string): Promise<boolean> {
     const secret = process.env.PASS_SEC as string;
+    console.log("secret", secret)
     if (!secret) {
         throw new Error("Secret key is not defined");
     }

@@ -13,6 +13,10 @@ import { cookies } from "next/headers";
 export const login = async (data: Login) => {
     try {
         const pass = await encryptPassword(data.password);
+
+        const comparision = await comparePassword(data.password, pass);
+        console.log("Comparision", comparision)
+
         console.log(pass);
         const user = await db.users.findUnique({
             where: {
