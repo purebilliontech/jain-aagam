@@ -56,12 +56,13 @@ const VideoThumbnail = ({ videoUrl }: { videoUrl: string }) => {
       className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02]"
       onClick={openVideo}
     >
-      <div className="relative">
+      <div className="relative w-full h-48">
         <Image 
           src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`} 
           alt="Video thumbnail"
-          className="w-full h-48 object-cover transition-opacity duration-300"
-          layout="fill"
+          className="object-cover transition-opacity duration-300"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
         />
         <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-all duration-300">
           <div className="bg-primary-ui p-3 rounded-full transform transition-transform duration-300 hover:scale-110">
@@ -89,8 +90,10 @@ const FeaturedVideoThumbnail = ({ videoUrl, isLarge = false }: { videoUrl: strin
       <Image
         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
         alt="Video thumbnail" 
-        className="w-full h-full object-cover transition-all duration-300 group-hover:opacity-90"
-        layout="fill"
+        className="object-cover transition-all duration-300 group-hover:opacity-90"
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        priority={isLarge}
       />
       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
         <div className="bg-primary-ui p-4 rounded-full transform transition-transform duration-300 hover:scale-110">
@@ -184,7 +187,6 @@ function Videos() {
           ))}
         </div>
       </div>
-      
     </>
   );
 }
