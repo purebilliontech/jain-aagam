@@ -15,7 +15,7 @@ const TopSection = () => {
                     />
                 </div>
                 <div className="w-full md:w-2/3 flex flex-col justify-center pl-0 md:pl-8 mt-4 md:mt-0">
-                    <h1 className="text-4xl md:text-8xl font-sans font-bold text-primary-ui mb-4 text-center md:text-left">
+                    <h1 className="text-4xl md:text-6xl lg:8xl font-sans font-bold text-primary-ui mb-4 text-center md:text-left">
                         BHAGWAN
                         <br />
                         MAHAVIR
