@@ -14,7 +14,8 @@ export const login = async (data: Login) => {
     try {
         const pass = await encryptPassword(data.password);
 
-        const comparision = await comparePassword(data.password, pass);
+        // const comparision = await comparePassword(data.password, pass);
+        const comparision = await comparePassword(data.password, "$2b$10$oIgbccEBau1JMfgD1OJnWOb5Mj0bH5l6factfv4b2db01w.YcdcxK");
         console.log("Comparision", comparision)
 
         console.log(pass);
