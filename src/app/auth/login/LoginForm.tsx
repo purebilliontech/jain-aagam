@@ -31,9 +31,9 @@ export function LoginForm() {
 
     const onSubmit = async (data: Login) => {
         try {
-
+            console.log(data);
             const loginRes = await login(data);
-
+            console.log(loginRes);
             if (loginRes.success) {
                 toast.success("Login successful");
                 window.location.href = '/admin';

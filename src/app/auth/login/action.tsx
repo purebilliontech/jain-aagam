@@ -12,6 +12,7 @@ import { cookies } from "next/headers";
 export const login = async (data: Login) => {
     try {
         const hashedPassword = await hashData(data.password);
+        console.log("hashedPassword", hashedPassword);
         const user = await db.users.findUnique({
             where: {
                 email: data.email,
@@ -21,7 +22,7 @@ export const login = async (data: Login) => {
                 permissions: true
             }
         });
-
+        console.log(user);
         if (!user) {
             throw new Error("Invalid email or password");
         }
