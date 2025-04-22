@@ -1,3 +1,5 @@
+import bcrypt from "bcryptjs";
+
 export const hashData = async (data: string) => {
 
     const secret = process.env.PASS_SEC as string;
@@ -13,3 +15,10 @@ export const hashData = async (data: string) => {
     const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
     return hashHex;
 };
+
+
+export async function encryptPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
+}
