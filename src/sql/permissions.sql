@@ -11,6 +11,6 @@ INSERT INTO permissions (name) VALUES
 ('modify:video-tag'),
 ('view:video'),
 ('modify:video'),
-('view:video-playlist'),
-('modify:video-playlist')
+('view:playlist'),
+('modify:playlist')
 ON CONFLICT DO NOTHING;
