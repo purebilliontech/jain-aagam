@@ -25,7 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createBlogPost, updateBlogPostById } from "./actions";
 import type { z } from "zod";
 import { getHTMLFromContentJson } from "@/utils/blog-client";
-import type { BlogCategoryDTO } from "@/schema/blogCategory";
+import type { BlogCategoryDTO } from "@/schema/blogTag";
 import { useAuth } from "@/context/auth-context";
 
 type BlogPostEditorProps = {

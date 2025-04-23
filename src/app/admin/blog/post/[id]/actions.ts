@@ -4,7 +4,7 @@ import { handleServerActionError } from "@/helpers/error";
 import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { BlogDetailSchema, type BlogForm } from "@/schema/blog";
-import { BlogCategoryDTOSchema } from "@/schema/blogCategory";
+import { BlogCategoryDTOSchema } from "@/schema/blogTag";
 import { formatContentJson } from "@/utils/blog";
 
 export const getBlogPostById = async (id: string) => {

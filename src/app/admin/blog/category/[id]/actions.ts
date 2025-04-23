@@ -6,7 +6,7 @@ import {
     BlogCategoryDTOSchema,
     BlogCategoryForm,
     BlogCategoryFormSchema
-} from "@/schema/blogCategory";
+} from "@/schema/blogTag";
 import { authorizeUser } from "@/lib/auth";
 
 

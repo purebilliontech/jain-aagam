@@ -16,7 +16,7 @@ import {
   BlogCategoryDTO,
   BlogCategoryForm,
   BlogCategoryFormSchema,
-} from "@/schema/blogCategory";
+} from "@/schema/blogTag";
 import { createCategory, updateCategoryById } from "./actions";
 import { useAuth } from "@/context/auth-context";
 

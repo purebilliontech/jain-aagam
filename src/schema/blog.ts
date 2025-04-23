@@ -1,9 +1,8 @@
 import type { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { dateDTOSchema, genericDTOSchema, GenericOmit, genericSchema } from "./generic";
-import { BlogCategoryDTOSchema } from "./blogCategory";
 import { MediaDTOSchema } from "./media";
-
+import { TagsToBlogWithTagSchema } from "./blogTag";
 
 export type Content = {
     attrs: {
@@ -38,9 +37,6 @@ export const BlogSchema = genericSchema.extend({
     published: z.boolean(),
     publishedAt: z.date(),
     contentJson: z.object({}).passthrough(),
-    tags: z.array(z.string()),
-    tagsString: z.string(),
-    categoryId: z.string(),
 }) satisfies z.Schema<BlogModel>;
 
 export type Blog = z.infer<typeof BlogSchema>;
@@ -51,29 +47,29 @@ export const BlogDTOSchema =
 
 export type BlogDTO = z.infer<typeof BlogDTOSchema>;
 
-export const BlogWithCategorySchema = BlogDTOSchema.extend({
-    category: BlogCategoryDTOSchema,
+export const BlogWithTagsSchema = BlogDTOSchema.extend({
+    blogToTags: TagsToBlogWithTagSchema,
 });
-export type BlogWithCategory = z.infer<typeof BlogWithCategorySchema>;
+export type BlogWithTags = z.infer<typeof BlogWithTagsSchema>;
 
 // for admin table
-export const BlogDataTableRowSchema = BlogWithCategorySchema.omit({
+export const BlogDataTableRowSchema = BlogWithTagsSchema.omit({
     contentJson: true,
 })
 export type BlogDataTableRow = z.infer<typeof BlogDataTableRowSchema>;
 
 // for frontend list
-export const BlogWithCategoryAndBannerSchema = BlogWithCategorySchema.extend({
+export const BlogWithTagsAndBannerSchema = BlogWithTagsSchema.extend({
     banner: MediaDTOSchema
 }).omit({
     contentJson: true,
 });
-export type BlogWithCategoryAndBanner = z.infer<typeof BlogWithCategoryAndBannerSchema>;
+export type BlogWithTagsAndBanner = z.infer<typeof BlogWithTagsAndBannerSchema>;
 
 // for blog detail page
 export const BlogDetailSchema = BlogDTOSchema.extend({
     banner: MediaDTOSchema,
-    category: BlogCategoryDTOSchema,
+    blogToTags: TagsToBlogWithTagSchema,
 });
 export type BlogDetail = z.infer<typeof BlogDetailSchema>;
 
@@ -84,10 +80,10 @@ export const BlogFormSchema = BlogDetailSchema.pick({
     authorName: true,
     readingTimeSeconds: true,
     slug: true,
-    tags: true,
-    categoryId: true,
     banner: true,
     published: true,
+}).extend({
+    tags: z.array(z.string().cuid())
 })
 
 export type BlogForm = z.infer<typeof BlogFormSchema>;

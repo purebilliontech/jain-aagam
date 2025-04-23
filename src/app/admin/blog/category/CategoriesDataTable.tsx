@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/dataTable/dataTable";
-import { BlogCategoryDTO } from "@/schema/blogCategory";
+import { BlogCategoryDTO } from "@/schema/blogTag";
 import { usePagination } from "@/hooks/usePagination";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";

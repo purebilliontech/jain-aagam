@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
 import {
   BlogCategoryDTOSchema,
-} from "@/schema/blogCategory";
+} from "@/schema/blogTag";
 import type { PaginatedReqParams } from "@/schema/common";
 import { authorizeUser } from "@/lib/auth";
 
