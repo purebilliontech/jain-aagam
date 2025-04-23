@@ -13,21 +13,21 @@ import {
   GenericRadioGroup,
 } from "@/components/generic/GenericFormComponents";
 import {
-  BlogTagsDTO,
-  BlogTagsForm,
-  BlogTagsFormSchema,
-} from "@/schema/blogTag";
+  VideoTagsDTO,
+  VideoTagsForm,
+  VideoTagsFormSchema,
+} from "@/schema/videoTag";
 import { createTag, updateTagById } from "./actions";
 import { useAuth } from "@/context/auth-context";
 
-export default function TagForm({ tag }: { tag: BlogTagsDTO | null }) {
+export default function TagForm({ tag }: { tag: VideoTagsDTO | null }) {
   const router = useRouter();
   const isEditing = Boolean(tag);
 
   const { hasPermissions } = useAuth();
 
-  const form = useForm<BlogTagsForm>({
-    resolver: zodResolver(BlogTagsFormSchema),
+  const form = useForm<VideoTagsForm>({
+    resolver: zodResolver(VideoTagsFormSchema),
     defaultValues: {
       name: tag?.name || "",
       slug: tag?.slug || "",
@@ -35,7 +35,7 @@ export default function TagForm({ tag }: { tag: BlogTagsDTO | null }) {
     },
   });
 
-  const onSubmit = async (data: BlogTagsForm) => {
+  const onSubmit = async (data: VideoTagsForm) => {
     try {
       if (isEditing && tag) {
         const result = await updateTagById(tag.id, data);
@@ -48,7 +48,7 @@ export default function TagForm({ tag }: { tag: BlogTagsDTO | null }) {
         const result = await createTag(data);
         if (result.success && result.data) {
           toast.success("Tag created successfully");
-          router.replace(`/admin/blog/tag/${result.data.id}`);
+          router.replace(`/admin/video/tag/${result.data.id}`);
         } else {
           toast.error("Failed to create tag");
         }
@@ -75,7 +75,7 @@ export default function TagForm({ tag }: { tag: BlogTagsDTO | null }) {
                   <GenericFormField
                     formLabel="Name"
                     field={field}
-                    disabled={!hasPermissions(["modify:blog-tag"])}
+                    disabled={!hasPermissions(["modify:video-tag"])}
                     cb={GenericFormInput}
                   />
                 )}
@@ -89,7 +89,7 @@ export default function TagForm({ tag }: { tag: BlogTagsDTO | null }) {
                     <GenericFormField
                       formLabel="Slug"
                       itemClass="w-full"
-                      disabled={!hasPermissions(["modify:blog-tag"])}
+                      disabled={!hasPermissions(["modify:video-tag"])}
                       field={field}
                       cb={GenericFormInput}
                     />
@@ -117,17 +117,17 @@ export default function TagForm({ tag }: { tag: BlogTagsDTO | null }) {
                     divClass="flex flex-col md:flex-row gap-2 md:gap-4 w-full md:items-center"
                     labelClass="w-2/12"
                     field={field}
-                    disabled={!hasPermissions(["modify:blog-tag"])}
+                    disabled={!hasPermissions(["modify:video-tag"])}
                     cb={GenericRadioGroup}
                   />
                 )}
               />
-              {hasPermissions(["modify:blog-tag"]) &&
+              {hasPermissions(["modify:video-tag"]) &&
                 <div className="flex justify-end gap-2">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => router.push("/admin/blog/tag")}
+                    onClick={() => router.push("/admin/video/tag")}
                   >
                     Cancel
                   </Button>

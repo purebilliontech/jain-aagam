@@ -21,7 +21,7 @@ export default async function TagPage({ params }: TagPageProps) {
         return notFound();
     }
 
-    const user = await authorizeUser(["view:blog-tag"]);
+    const user = await authorizeUser(["view:video-tag"]);
 
     if (!user.success) {
         return (
