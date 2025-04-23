@@ -13,49 +13,49 @@ import {
   GenericRadioGroup,
 } from "@/components/generic/GenericFormComponents";
 import {
-  BlogCategoryDTO,
-  BlogCategoryForm,
-  BlogCategoryFormSchema,
+  BlogTagsDTO,
+  BlogTagsForm,
+  BlogTagsFormSchema,
 } from "@/schema/blogTag";
-import { createCategory, updateCategoryById } from "./actions";
+import { createTag, updateTagById } from "./actions";
 import { useAuth } from "@/context/auth-context";
 
-export default function CategoryForm({ category }: { category: BlogCategoryDTO | null }) {
+export default function TagForm({ tag }: { tag: BlogTagsDTO | null }) {
   const router = useRouter();
-  const isEditing = Boolean(category);
+  const isEditing = Boolean(tag);
 
   const { hasPermissions } = useAuth();
 
-  const form = useForm<BlogCategoryForm>({
-    resolver: zodResolver(BlogCategoryFormSchema),
+  const form = useForm<BlogTagsForm>({
+    resolver: zodResolver(BlogTagsFormSchema),
     defaultValues: {
-      name: category?.name || "",
-      slug: category?.slug || "",
-      active: category?.active ?? true,
+      name: tag?.name || "",
+      slug: tag?.slug || "",
+      active: tag?.active ?? true,
     },
   });
 
-  const onSubmit = async (data: BlogCategoryForm) => {
+  const onSubmit = async (data: BlogTagsForm) => {
     try {
-      if (isEditing && category) {
-        const result = await updateCategoryById(category.id, data);
+      if (isEditing && tag) {
+        const result = await updateTagById(tag.id, data);
         if (result.success) {
-          toast.success("Category updated successfully");
+          toast.success("Tag updated successfully");
         } else {
-          toast.error("Failed to update category");
+          toast.error("Failed to update tag");
         }
       } else {
-        const result = await createCategory(data);
+        const result = await createTag(data);
         if (result.success && result.data) {
-          toast.success("Category created successfully");
-          router.replace(`/admin/blog/category/${result.data.id}`);
+          toast.success("Tag created successfully");
+          router.replace(`/admin/blog/tag/${result.data.id}`);
         } else {
-          toast.error("Failed to create category");
+          toast.error("Failed to create tag");
         }
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("An error occurred while saving the category");
+      toast.error("An error occurred while saving the tag");
     }
   };
 
@@ -63,7 +63,7 @@ export default function CategoryForm({ category }: { category: BlogCategoryDTO |
     <div >
       <Card className="container mx-auto max-w-3xl">
         <CardHeader>
-          <CardTitle className="text-center">{isEditing ? "Edit Category" : "Create Category"}</CardTitle>
+          <CardTitle className="text-center">{isEditing ? "Edit Tag" : "Create Tag"}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -75,7 +75,7 @@ export default function CategoryForm({ category }: { category: BlogCategoryDTO |
                   <GenericFormField
                     formLabel="Name"
                     field={field}
-                    disabled={!hasPermissions(["modify:blog-category"])}
+                    disabled={!hasPermissions(["modify:blog-tag"])}
                     cb={GenericFormInput}
                   />
                 )}
@@ -89,7 +89,7 @@ export default function CategoryForm({ category }: { category: BlogCategoryDTO |
                     <GenericFormField
                       formLabel="Slug"
                       itemClass="w-full"
-                      disabled={!hasPermissions(["modify:blog-category"])}
+                      disabled={!hasPermissions(["modify:blog-tag"])}
                       field={field}
                       cb={GenericFormInput}
                     />
@@ -117,17 +117,17 @@ export default function CategoryForm({ category }: { category: BlogCategoryDTO |
                     divClass="flex flex-col md:flex-row gap-2 md:gap-4 w-full md:items-center"
                     labelClass="w-2/12"
                     field={field}
-                    disabled={!hasPermissions(["modify:blog-category"])}
+                    disabled={!hasPermissions(["modify:blog-tag"])}
                     cb={GenericRadioGroup}
                   />
                 )}
               />
-              {hasPermissions(["modify:blog-category"]) &&
+              {hasPermissions(["modify:blog-tag"]) &&
                 <div className="flex justify-end gap-2">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => router.push("/admin/blog/category")}
+                    onClick={() => router.push("/admin/blog/tag")}
                   >
                     Cancel
                   </Button>

@@ -1,6 +1,10 @@
 Dynamic / CMS changes
 
+
+Master Entry - 
+
 - Homepage Banner,
+
 - English Agam form entry
 
 - Bhagwan Mahavir page Banner.
@@ -19,3 +23,9 @@ Dynamic / CMS changes
 - Changes in blogs settings as there will not be any
 category but another M2M table for tags. 
 
+
+PK: 
+- Fix Blogs FE and BE +  Testing
+
+- English Agam form entry
+    - show on admin panel view only.

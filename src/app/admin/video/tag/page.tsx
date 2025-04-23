@@ -1,13 +1,11 @@
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
-import CategoriesDataTable from "./TagsDataTable";
+import VideoTagsDataTable from "./VideoTagsDataTable";
 import { authorizeUser } from "@/lib/auth";
 import NoPermission from "@/components/common/NoPermission";
-import TagsDataTable from "./TagsDataTable";
 
-export default async function TagsPage() {
+export default async function VideoTagsPage() {
 
-  const user = await authorizeUser(["view:blog-category"]);
+  const user = await authorizeUser(["view:video-tag"]);
 
   if (!user.success) {
     return (
@@ -18,7 +16,7 @@ export default async function TagsPage() {
   return (
     <div className="container mx-auto p-6">
       <Suspense fallback={<div>Loading...</div>}>
-        <TagsDataTable />
+        <VideoTagsDataTable />
       </Suspense>
     </div>
   );

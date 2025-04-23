@@ -65,7 +65,7 @@ model BlogTags {
     active     Boolean      @default(true)
     createdAt  DateTime     @default(now()) @map("created_at")
     updatedAt  DateTime     @default(now()) @updatedAt @map("updated_at")
-    BlogToTags TagsToBlog[]
+    blogToTags TagsToBlog[]
 
     @@map("blog_tags")
 }
@@ -133,14 +133,14 @@ model VideoTag {
     active      Boolean       @default(true)
     createdAt   DateTime      @default(now()) @map("created_at")
     updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at")
-    VideoToTags TagsToVideo[]
+    videoToTags TagsToVideo[]
 
     @@map("video_tag")
 }
 
 model TagsToVideo {
     id          String       @id @default(cuid())
-    VideoTag    VideoTag?    @relation(fields: [videoTagsId], references: [id])
+    videoTag    VideoTag?    @relation(fields: [videoTagsId], references: [id])
     videoTagsId String?      @map("video_tags_id")
     videoId     String       @map("video_id")
     video       YoutubeVideo @relation(fields: [videoId], references: [id])
@@ -154,8 +154,8 @@ model YoutubeVideo {
     name           String
     createdAt      DateTime         @default(now()) @map("created_at")
     updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
-    PlaylistVideos PlaylistVideos[]
-    TagsToVideo    TagsToVideo[]
+    playlistVideos PlaylistVideos[]
+    tagsToVideo    TagsToVideo[]
 
     @@map("youtube_videos")
 }
@@ -167,7 +167,7 @@ model Playlist {
     description    String
     createdAt      DateTime         @default(now()) @map("created_at")
     updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
-    PlaylistVideos PlaylistVideos[]
+    playlistVideos PlaylistVideos[]
 
     @@map("playlists")
 }

@@ -3,32 +3,32 @@
 import { db } from "@/lib/db";
 import { handleServerActionError } from "@/helpers/error";
 import {
-    BlogCategoryDTOSchema,
-    BlogCategoryForm,
-    BlogCategoryFormSchema
+    BlogTagsDTOSchema,
+    BlogTagsForm,
+    BlogTagsFormSchema
 } from "@/schema/blogTag";
 import { authorizeUser } from "@/lib/auth";
 
 
-export const getCategoryById = async (id: string) => {
+export const getTagById = async (id: string) => {
     try {
 
-        const user = await authorizeUser(["view:blog-category"]);
+        const user = await authorizeUser(["view:blog-tag"]);
         if (!user.success) {
             throw new Error(user.message);
         }
 
         if (id === "new") return { success: true, data: null };
 
-        const category = await db.blogCategory.findUnique({
+        const tag = await db.blogTags.findUnique({
             where: { id },
         });
 
-        if (!category) return { success: false, data: null };
+        if (!tag) return { success: false, data: null };
 
         return {
             success: true,
-            data: BlogCategoryDTOSchema.parse(category)
+            data: BlogTagsDTOSchema.parse(tag)
         };
     } catch (error) {
         handleServerActionError(error);
@@ -36,24 +36,24 @@ export const getCategoryById = async (id: string) => {
     }
 };
 
-export const createCategory = async (data: BlogCategoryForm) => {
+export const createTag = async (data: BlogTagsForm) => {
     try {
 
-        const user = await authorizeUser(["modify:blog-category"]);
+        const user = await authorizeUser(["modify:blog-tag"]);
         if (!user.success) {
             throw new Error(user.message);
         }
 
         // Validate form data
-        const validatedData = BlogCategoryFormSchema.parse(data);
+        const validatedData = BlogTagsFormSchema.parse(data);
 
-        const category = await db.blogCategory.create({
+        const tag = await db.blogTags.create({
             data: validatedData,
         });
 
         return {
             success: true,
-            data: BlogCategoryDTOSchema.parse(category)
+            data: BlogTagsDTOSchema.parse(tag)
         };
     } catch (error) {
         handleServerActionError(error);
@@ -61,25 +61,26 @@ export const createCategory = async (data: BlogCategoryForm) => {
     }
 };
 
-export const updateCategoryById = async (
+export const updateTagById = async (
     id: string,
-    data: BlogCategoryForm
+    data: BlogTagsForm
 ) => {
     try {
-        const user = await authorizeUser(["modify:blog-category"]);
+        const user = await authorizeUser(["modify:blog-tag"]);
         if (!user.success) {
             throw new Error(user.message);
-        }        // Validate form data
-        const validatedData = BlogCategoryFormSchema.parse(data);
+        }
+        // Validate form data
+        const validatedData = BlogTagsFormSchema.parse(data);
 
-        const category = await db.blogCategory.update({
+        const tag = await db.blogTags.update({
             where: { id },
             data: validatedData,
         });
 
         return {
             success: true,
-            data: BlogCategoryDTOSchema.parse(category)
+            data: BlogTagsDTOSchema.parse(tag)
         };
     } catch (error) {
         handleServerActionError(error);

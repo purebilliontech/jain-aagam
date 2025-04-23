@@ -4,8 +4,8 @@ import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
 import {
-  BlogTagsDTOSchema,
-} from "@/schema/blogTag";
+  VideoTagDTOSchema,
+} from "@/schema/videoTag";
 import type { PaginatedReqParams } from "@/schema/common";
 import { authorizeUser } from "@/lib/auth";
 
@@ -17,7 +17,7 @@ export const getTags = async ({
   sortDirection = "desc",
 }: PaginatedReqParams) => {
   try {
-    const user = await authorizeUser(["view:blog-tag"]);
+    const user = await authorizeUser(["view:video-tag"]);
     if (!user.success) {
       throw new Error(user.message);
     }
@@ -26,7 +26,7 @@ export const getTags = async ({
     const take = pageSize;
 
     // Build where conditions
-    let whereConditions: Prisma.BlogTagsWhereInput = {};
+    let whereConditions: Prisma.VideoTagWhereInput = {};
 
     if (search) {
       whereConditions = {
@@ -38,24 +38,24 @@ export const getTags = async ({
     }
 
     // Build ordering
-    const orderBy: Prisma.BlogTagsOrderByWithRelationInput = {};
-    orderBy[sortBy as keyof Prisma.BlogTagsOrderByWithRelationInput] = sortDirection;
+    const orderBy: Prisma.VideoTagOrderByWithRelationInput = {};
+    orderBy[sortBy as keyof Prisma.VideoTagOrderByWithRelationInput] = sortDirection;
 
     // Get data with pagination
     const [tags, totalCount] = await Promise.all([
-      db.blogTags.findMany({
+      db.videoTag.findMany({
         where: whereConditions,
         orderBy,
         skip,
         take,
       }),
-      db.blogTags.count({
+      db.videoTag.count({
         where: whereConditions,
       }),
     ]);
 
     // Parse to DTO
-    const tagsDTO = tags.map(tag => BlogTagsDTOSchema.parse(tag));
+    const tagsDTO = tags.map((tag: any) => VideoTagDTOSchema.parse(tag));
 
     return {
       success: true,
@@ -88,12 +88,12 @@ export const getTags = async ({
 
 export const deleteTagById = async (id: string) => {
   try {
-    const user = await authorizeUser(["modify:blog-tag"]);
+    const user = await authorizeUser(["modify:video-tag"]);
     if (!user.success) {
       throw new Error(user.message);
     }
-    const tagInUse = await db.tagsToBlog.findFirst({
-      where: { tagId: id },
+    const tagInUse = await db.tagsToVideo.findFirst({
+      where: { videoTagId: id },
     });
 
     if (tagInUse) {
@@ -104,7 +104,7 @@ export const deleteTagById = async (id: string) => {
       };
     }
 
-    await db.blogTags.delete({
+    await db.videoTag.delete({
       where: { id },
     });
 

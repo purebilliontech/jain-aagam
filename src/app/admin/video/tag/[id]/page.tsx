@@ -1,27 +1,27 @@
 import { notFound } from "next/navigation";
-import CategoryForm from "./CategoryForm";
-import { getCategoryById } from "./actions";
+import TagForm from "./TagsForm";
+import { getTagById } from "./actions";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@/components/ui/breadcrumb";
 import { authorizeUser } from "@/lib/auth";
 import NoPermission from "@/components/common/NoPermission";
 
-interface CategoryPageProps {
+interface TagPageProps {
     params: Promise<{
         id: string;
     }>;
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function TagPage({ params }: TagPageProps) {
     const { id } = await params;
 
-    const { success, data: category } = await getCategoryById(id);
+    const { success, data: tag } = await getTagById(id);
 
-    // If not creating a new category and category wasn't found
+    // If not creating a new tag and tag wasn't found
     if (id !== "new" && !success) {
         return notFound();
     }
 
-    const user = await authorizeUser(["view:blog-category"]);
+    const user = await authorizeUser(["view:blog-tag"]);
 
     if (!user.success) {
         return (
@@ -31,7 +31,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
     return (
         <div className="space-y-6">
-            <CategoryForm category={category} />
+            <TagForm tag={tag} />
         </div>
     );
 }

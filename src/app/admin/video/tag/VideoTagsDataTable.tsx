@@ -52,7 +52,7 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
   );
 };
 
-export default function TagsDataTable() {
+export default function VideoTagsDataTable() {
   const router = useRouter();
   const [tags, setTags] = useState<BlogTagsDTO[]>([]);
   const [totalRows, setTotalRows] = useState(0);
