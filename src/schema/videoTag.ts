@@ -31,8 +31,8 @@ type TagsToVideoModel = Prisma.TagsToVideoGetPayload<{}>;
 
 // for checking prisma validations
 export const TagsToVideoSchema = genericSchema.extend({
-    : z.string(),
-    tagId: z.string(),
+    videoTagsId: z.string(), // actual tag
+    videoId: z.string(), // video
 }) satisfies z.Schema<TagsToVideoModel>;
 
 export type TagsToVideo = z.infer<typeof TagsToVideoSchema>;
@@ -44,6 +44,6 @@ export const TagsToVideoDTOSchema =
 export type TagsToVideoDTO = z.infer<typeof TagsToVideoDTOSchema>;
 
 export const TagsToVideoWithTagSchema = TagsToVideoDTOSchema.extend({
-    tag: VideoTagsDTOSchema,
+    videoTag: VideoTagsDTOSchema,
 });
 export type TagsToVideoWithTag = z.infer<typeof TagsToVideoWithTagSchema>;

@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
 import {
-  VideoTagDTOSchema,
+  VideoTagsDTOSchema,
 } from "@/schema/videoTag";
 import type { PaginatedReqParams } from "@/schema/common";
 import { authorizeUser } from "@/lib/auth";
@@ -55,7 +55,7 @@ export const getTags = async ({
     ]);
 
     // Parse to DTO
-    const tagsDTO = tags.map((tag: any) => VideoTagDTOSchema.parse(tag));
+    const tagsDTO = tags.map((tag: any) => VideoTagsDTOSchema.parse(tag));
 
     return {
       success: true,
@@ -93,7 +93,7 @@ export const deleteTagById = async (id: string) => {
       throw new Error(user.message);
     }
     const tagInUse = await db.tagsToVideo.findFirst({
-      where: { videoTagId: id },
+      where: { videoTagsId: id },
     });
 
     if (tagInUse) {
