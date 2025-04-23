@@ -4,12 +4,12 @@ import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
 import {
-  BlogCategoryDTOSchema,
+  BlogTagsDTOSchema,
 } from "@/schema/blogTag";
 import type { PaginatedReqParams } from "@/schema/common";
 import { authorizeUser } from "@/lib/auth";
 
-export const getCategories = async ({
+export const getTags = async ({
   page = 1,
   pageSize = 10,
   search = "",
@@ -17,7 +17,7 @@ export const getCategories = async ({
   sortDirection = "desc",
 }: PaginatedReqParams) => {
   try {
-    const user = await authorizeUser(["view:blog-category"]);
+    const user = await authorizeUser(["view:blog-tag"]);
     if (!user.success) {
       throw new Error(user.message);
     }
@@ -26,40 +26,41 @@ export const getCategories = async ({
     const take = pageSize;
 
     // Build where conditions
-    let whereConditions: Prisma.BlogCategoryWhereInput = {};
+    let whereConditions: Prisma.BlogTagsWhereInput = {};
 
     if (search) {
       whereConditions = {
         OR: [
-          { name: { contains: search, mode: "insensitive" } }
+          { name: { contains: search, mode: "insensitive" } },
+          { slug: { contains: search, mode: "insensitive" } }
         ],
       };
     }
 
     // Build ordering
-    const orderBy: Prisma.BlogCategoryOrderByWithRelationInput = {};
-    orderBy[sortBy as keyof Prisma.BlogCategoryOrderByWithRelationInput] = sortDirection;
+    const orderBy: Prisma.BlogTagsOrderByWithRelationInput = {};
+    orderBy[sortBy as keyof Prisma.BlogTagsOrderByWithRelationInput] = sortDirection;
 
     // Get data with pagination
-    const [categories, totalCount] = await Promise.all([
-      db.blogCategory.findMany({
+    const [tags, totalCount] = await Promise.all([
+      db.blogTags.findMany({
         where: whereConditions,
         orderBy,
         skip,
         take,
       }),
-      db.blogCategory.count({
+      db.blogTags.count({
         where: whereConditions,
       }),
     ]);
 
     // Parse to DTO
-    const categoriesDTO = categories.map(category => BlogCategoryDTOSchema.parse(category));
+    const tagsDTO = tags.map(tag => BlogTagsDTOSchema.parse(tag));
 
     return {
       success: true,
       data: {
-        categories: categoriesDTO,
+        tags: tagsDTO,
         meta: {
           totalCount,
           page,
@@ -73,7 +74,7 @@ export const getCategories = async ({
     return {
       success: false,
       data: {
-        categories: [],
+        tags: [],
         meta: {
           totalCount: 0,
           page,
@@ -85,13 +86,25 @@ export const getCategories = async ({
   }
 };
 
-export const deleteCategoryById = async (id: string) => {
+export const deleteTagById = async (id: string) => {
   try {
-    const user = await authorizeUser(["modify:blog-category"]);
+    const user = await authorizeUser(["modify:blog-tag"]);
     if (!user.success) {
       throw new Error(user.message);
     }
-    await db.blogCategory.delete({
+    const tagInUse = await db.tagsToBlog.findFirst({
+      where: { tagId: id },
+    });
+
+    if (tagInUse) {
+      return {
+        success: false,
+        data: null,
+        message: "Tag is in use and cannot be deleted.",
+      };
+    }
+
+    await db.blogTags.delete({
       where: { id },
     });
 

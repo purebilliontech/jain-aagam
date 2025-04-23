@@ -3,16 +3,16 @@
 import React, { useState, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/dataTable/dataTable";
-import { BlogCategoryDTO } from "@/schema/blogTag";
 import { usePagination } from "@/hooks/usePagination";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/dataTable/columnHeader";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { getCategories } from "./actions";
+import { getTags } from "./actions";
 import { toast } from "sonner";
 import { useAuth } from "@/context/auth-context";
+import type { BlogTagsDTO } from "@/schema/blogTag";
 
 interface CustomFilterProps {
   globalFilter: string;
@@ -40,7 +40,7 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
         </div>
         <Input
           className="pl-10 text-sm rounded-lg bg-white border-slate-200 focus-visible:ring-slate-300"
-          placeholder="Search categories by name or slug..."
+          placeholder="Search tags by name or slug..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
@@ -52,9 +52,9 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
   );
 };
 
-export default function CategoryDataTable() {
+export default function TagsDataTable() {
   const router = useRouter();
-  const [categories, setCategories] = useState<BlogCategoryDTO[]>([]);
+  const [tags, setTags] = useState<BlogTagsDTO[]>([]);
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,7 +67,7 @@ export default function CategoryDataTable() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const result = await getCategories({
+      const result = await getTags({
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
         search: searchTerm,
@@ -76,14 +76,14 @@ export default function CategoryDataTable() {
       });
 
       if (!result.success) {
-        toast.error("Failed to fetch categories");
+        toast.error("Failed to fetch tags");
         return;
       }
 
-      setCategories(result.data?.categories || []);
+      setTags(result.data?.tags || []);
       setTotalRows(result.data?.meta.totalCount || 0);
     } catch (error) {
-      console.error("Failed to fetch categories:", error);
+      console.error("Failed to fetch tags:", error);
     } finally {
       setLoading(false);
     }
@@ -94,12 +94,12 @@ export default function CategoryDataTable() {
     void fetchData();
   }, [fetchData]);
 
-  const handleAddCategory = () => {
-    router.push("/admin/blog/category/new");
+  const handleAddTag = () => {
+    router.push("/admin/blog/tag/new");
   };
 
-  const handleEditCategory = (categoryId: string) => {
-    router.push(`/admin/blog/category/${categoryId}`);
+  const handleEditTag = (tagId: string) => {
+    router.push(`/admin/blog/tag/${tagId}`);
   };
 
   const formatDate = (date: Date | string) => {
@@ -110,7 +110,7 @@ export default function CategoryDataTable() {
     });
   };
 
-  const columns: ColumnDef<BlogCategoryDTO>[] = [
+  const columns: ColumnDef<BlogTagsDTO>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
@@ -142,7 +142,7 @@ export default function CategoryDataTable() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => handleEditCategory(row.original.id)}
+            onClick={() => handleEditTag(row.original.id)}
             className="h-8 w-8 p-0 text-slate-600 hover:text-blue-600"
           >
             <Pencil className="h-4 w-4" />
@@ -156,16 +156,16 @@ export default function CategoryDataTable() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Categories</h2>
-        {hasPermissions(['modify:blog-category']) &&
-          <Button onClick={handleAddCategory} >
-            Add Category
+        <h2 className="text-2xl font-bold">Tags</h2>
+        {hasPermissions(['modify:blog-tag']) &&
+          <Button onClick={handleAddTag} >
+            Add Tag
           </Button>
         }
       </div>
       <DataTable
         columns={columns}
-        data={categories}
+        data={tags}
         CustomFilterComponent={(props) => (
           <CustomFilter
             globalFilter={props.globalFilter}

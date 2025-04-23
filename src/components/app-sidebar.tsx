@@ -60,8 +60,8 @@ const data = {
       icon: BookOpen,
       items: [
         {
-          title: "Categories",
-          url: "/admin/blog/category",
+          title: "Tags",
+          url: "/admin/blog/tag",
         },
         {
           title: "Post",

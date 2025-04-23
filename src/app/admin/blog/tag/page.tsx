@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import CategoriesDataTable from "./CategoriesDataTable";
+import CategoriesDataTable from "./TagsDataTable";
 import { authorizeUser } from "@/lib/auth";
 import NoPermission from "@/components/common/NoPermission";
+import TagsDataTable from "./TagsDataTable";
 
-export default async function CategoriesPage() {
+export default async function TagsPage() {
 
   const user = await authorizeUser(["view:blog-category"]);
 
@@ -17,7 +18,7 @@ export default async function CategoriesPage() {
   return (
     <div className="container mx-auto p-6">
       <Suspense fallback={<div>Loading...</div>}>
-        <CategoriesDataTable />
+        <TagsDataTable />
       </Suspense>
     </div>
   );
