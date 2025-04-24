@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/dataTable/dataTable";
 import { UserDTO } from "@/schema/user";
 import { usePagination } from "@/hooks/usePagination";
-import { Pencil, UserRound, Shield } from "lucide-react";
+import { Pencil, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/dataTable/columnHeader";
 import { useRouter } from "next/navigation";
