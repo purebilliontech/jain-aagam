@@ -184,3 +184,17 @@ model PlaylistVideos {
     @@unique([playlistId, videoId])
     @@map("playlist_videos")
 }
+
+model EnglishAgamContact {
+    id            String   @id @default(cuid())
+    name          String
+    contactNumber String   @map("contact_number")
+    city          String
+    country       String
+    email         String
+    createdAt     DateTime @default(now()) @map("created_at")
+    updatedAt     DateTime @updatedAt @map("updated_at")
+
+    @@index([email])
+    @@map("english_agam_contact")
+}

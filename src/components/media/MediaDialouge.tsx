@@ -9,9 +9,12 @@ import Image from "next/image";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { changeMedia, deleteMediaById, updateMediaMetadata } from "@/app/admin/media/actions";
+import {
+  changeMedia,
+  deleteMediaById,
+  updateMediaMetadata,
+} from "@/app/admin/media/actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField } from "../ui/form";
@@ -46,7 +49,7 @@ const MediaDialog = ({
       alt: media.alt || "",
       cta: media.cta || "",
     },
-  })
+  });
 
   const router = useRouter();
 
@@ -99,7 +102,6 @@ const MediaDialog = ({
       toast("Image and details updated successfully");
 
       setSelectedMedia(null);
-
     } catch (error) {
       console.error("Error replacing image:", error);
       toast("Failed to replace image");
@@ -123,7 +125,7 @@ const MediaDialog = ({
         onSave(response.data!);
       }
 
-      toast("Media details updated successfully",);
+      toast("Media details updated successfully");
 
       setSelectedMedia(null);
     } catch (error) {
@@ -133,7 +135,6 @@ const MediaDialog = ({
       setLoading(false);
     }
   };
-
 
   return (
     <>
@@ -272,7 +273,7 @@ const MediaDialog = ({
 
               <Label className="mt-5 mb-2">Url</Label>
               <Input
-                contentEditable={false}
+                readOnly
                 onClick={() => {
                   navigator.clipboard
                     .writeText(media.url)
@@ -290,8 +291,11 @@ const MediaDialog = ({
                 value={media.url || ""}
                 className="cursor-pointer !outline-0"
               />
+
               <p
-                className={`mt-1 text-xs text-buttonGreen ${isCopid ? "opacity-100" : "opacity-0"}`}
+                className={`mt-1 text-xs text-buttonGreen ${
+                  isCopid ? "opacity-100" : "opacity-0"
+                }`}
               >
                 Url Copied to Clipboard!
               </p>

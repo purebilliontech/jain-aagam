@@ -1,6 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import { z } from "zod";
-import { dateDTOSchema, genericDTOSchema, GenericOmit, genericSchema } from "./generic";
+import {  genericDTOSchema, GenericOmit, genericSchema } from "./generic";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type BlogTagsModel = Prisma.BlogTagsGetPayload<{}>;
