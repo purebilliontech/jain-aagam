@@ -104,12 +104,12 @@ model TagsToBlog {
 }
 
 model StaticPage {
-    id         String       @id @default(cuid())
+    id         String      @id @default(cuid())
     title      String
-    slug       String       @unique
-    createdAt  DateTime     @default(now()) @map("created_at")
-    updatedAt  DateTime     @default(now()) @updatedAt @map("updated_at")
-    CoverImage CoverImage[]
+    slug       String      @unique
+    createdAt  DateTime    @default(now()) @map("created_at")
+    updatedAt  DateTime    @default(now()) @updatedAt @map("updated_at")
+    CoverImage CoverImage?
 
     @@map("static_pages")
 }
@@ -118,7 +118,7 @@ model CoverImage {
     id        String     @id @default(cuid())
     mediaId   String     @map("media_id")
     media     Media      @relation(fields: [mediaId], references: [id])
-    pageId    String     @map("page_id")
+    pageId    String     @unique @map("page_id")
     page      StaticPage @relation(fields: [pageId], references: [id])
     createdAt DateTime   @default(now()) @map("created_at")
     updatedAt DateTime   @default(now()) @updatedAt @map("updated_at")

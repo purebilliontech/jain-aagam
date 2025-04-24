@@ -5,12 +5,14 @@ INSERT INTO permissions (name) VALUES
 ('modify:media'),
 ('view:blog-tag'),
 ('modify:blog-tag'),
-('view:blog-post'),
-('modify:blog-post'),
+('view:blog'),
+('modify:blog'),
 ('view:video-tag'),
 ('modify:video-tag'),
 ('view:video'),
 ('modify:video'),
 ('view:playlist'),
-('modify:playlist')
+('modify:playlist'),
+('modify:homepage'),
+('modify:bhagwan-mahavir-page');
 ON CONFLICT DO NOTHING;

@@ -25,15 +25,16 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { permission } from "process"
 
 // This is sample data.
 const data = {
   navMain: [
-
     {
       title: "Users Management",
       url: "/admin/users",
       icon: Bot,
+      permissions: ["view:user"],
     },
     {
       title: "Media",
@@ -45,14 +46,17 @@ const data = {
       title: "Blog",
       url: "#",
       icon: BookOpen,
+      permissions: ["view:blog-tag", "view:blog"],
       items: [
         {
           title: "Tags",
           url: "/admin/blog/tag",
+          permissions: ["view:blog-tag"],
         },
         {
           title: "Post",
           url: "/admin/blog/post",
+          permissions: ["view:blog"],
         },
       ],
     },
@@ -60,18 +64,40 @@ const data = {
       title: "Videos",
       url: "#",
       icon: BookOpen,
+      permissions: ["view:video-tag", "view:video", "view:playlist"],
       items: [
         {
           title: "Tags",
           url: "/admin/video/tag",
+          permissions: ["view:video-tag"],
         },
         {
           title: "Video Links",
           url: "/admin/video/video-links",
+          permissions: ["view:video"],
         },
         {
           title: "Playlist",
           url: "/admin/video/playlist",
+          permissions: ["view:playlist"],
+        },
+      ],
+    },
+    {
+      title: "Static Pages",
+      url: "#",
+      icon: BookOpen,
+      permissions: ["modify:homepage", "modify:bhagwan-mahavir-page"],
+      items: [
+        {
+          title: "Homepage",
+          url: "/admin/homepage",
+          permissions: ["modify:homepage"],
+        },
+        {
+          title: "Bhagwan Mahavir Page",
+          url: "/admin/bhagwan-mahavir",
+          permissions: ["modify:bhagwan-mahavir-page"],
         },
       ],
     },
