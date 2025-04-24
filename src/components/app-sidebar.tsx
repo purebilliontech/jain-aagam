@@ -3,6 +3,7 @@
 import * as React from "react"
 import {
   AudioWaveform,
+  Book,
   BookOpen,
   Bot,
   Command,
@@ -41,6 +42,12 @@ const data = {
       url: "/admin/media",
       icon: Bot,
       permissions: ["view:media"],
+    },
+    {
+      title: "English Aagam",
+      url: "/admin/english-agam",
+      icon: Book,
+      permissions: ["view:english-agam"],
     },
     {
       title: "Blog",
