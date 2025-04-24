@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/dataTable/columnHeader";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { getTags } from "./actions";
+import { getPlaylists } from "./actions";
 import { toast } from "sonner";
 import { useAuth } from "@/context/auth-context";
-import type { VideoTagsDTO } from "@/schema/videoTag";
+import type { PlaylistDTO } from "@/schema/playlist";
 
 interface CustomFilterProps {
   globalFilter: string;
@@ -40,7 +40,7 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
         </div>
         <Input
           className="pl-10 text-sm rounded-lg bg-white border-slate-200 focus-visible:ring-slate-300"
-          placeholder="Search tags by name or slug..."
+          placeholder="Search playlists by name..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
@@ -52,9 +52,9 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
   );
 };
 
-export default function VideoTagsDataTable() {
+export default function PlaylistsDataTable() {
   const router = useRouter();
-  const [tags, setTags] = useState<VideoTagsDTO[]>([]);
+  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,7 +67,7 @@ export default function VideoTagsDataTable() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const result = await getTags({
+      const result = await getPlaylists({
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
         search: searchTerm,
@@ -76,14 +76,14 @@ export default function VideoTagsDataTable() {
       });
 
       if (!result.success) {
-        toast.error("Failed to fetch tags");
+        toast.error("Failed to fetch playlists");
         return;
       }
 
-      setTags(result.data?.tags || []);
+      setPlaylists(result.data?.playlists || []);
       setTotalRows(result.data?.meta.totalCount || 0);
     } catch (error) {
-      console.error("Failed to fetch tags:", error);
+      console.error("Failed to fetch playlists:", error);
     } finally {
       setLoading(false);
     }
@@ -94,12 +94,8 @@ export default function VideoTagsDataTable() {
     void fetchData();
   }, [fetchData]);
 
-  const handleAddTag = () => {
-    router.push("/admin/video/tag/new");
-  };
-
-  const handleEditTag = (tagId: string) => {
-    router.push(`/admin/video/tag/${tagId}`);
+  const handleEditPlaylist = (playlistId: string) => {
+    router.push(`/admin/video/playlist/${playlistId}`);
   };
 
   const formatDate = (date: Date | string) => {
@@ -110,7 +106,7 @@ export default function VideoTagsDataTable() {
     });
   };
 
-  const columns: ColumnDef<VideoTagsDTO>[] = [
+  const columns: ColumnDef<PlaylistDTO>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
@@ -121,8 +117,13 @@ export default function VideoTagsDataTable() {
       ),
     },
     {
-      accessorKey: "slug",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Slug" />,
+      accessorKey: "description",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
+      cell: ({ row }) => (
+        <div className="max-w-xs truncate">
+          {row.getValue("description") || "No description"}
+        </div>
+      ),
     },
     {
       accessorKey: "createdAt",
@@ -138,17 +139,19 @@ export default function VideoTagsDataTable() {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => (
+        hasPermissions(["modify:video"]) &&
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => handleEditTag(row.original.id)}
+            onClick={() => handleEditPlaylist(row.original.id)}
             className="h-8 w-8 p-0 text-slate-600 hover:text-blue-600"
           >
             <Pencil className="h-4 w-4" />
             <span className="sr-only">Edit</span>
           </Button>
         </div>
+
       ),
     },
   ];
@@ -156,16 +159,11 @@ export default function VideoTagsDataTable() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Tags</h2>
-        {hasPermissions(['modify:video-tag']) &&
-          <Button onClick={handleAddTag} >
-            Add Tag
-          </Button>
-        }
+        <h2 className="text-2xl font-bold">Video Playlists</h2>
       </div>
       <DataTable
         columns={columns}
-        data={tags}
+        data={playlists}
         CustomFilterComponent={(props) => (
           <CustomFilter
             globalFilter={props.globalFilter}

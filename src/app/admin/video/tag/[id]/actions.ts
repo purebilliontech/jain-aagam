@@ -3,24 +3,24 @@
 import { db } from "@/lib/db";
 import { handleServerActionError } from "@/helpers/error";
 import {
-    BlogTagsDTOSchema,
-    BlogTagsForm,
-    BlogTagsFormSchema
-} from "@/schema/blogTag";
+    VideoTagsDTOSchema,
+    VideoTagsForm,
+    VideoTagsFormSchema
+} from "@/schema/videoTag";
 import { authorizeUser } from "@/lib/auth";
 
 
 export const getTagById = async (id: string) => {
     try {
 
-        const user = await authorizeUser(["view:blog-tag"]);
+        const user = await authorizeUser(["view:video-tag"]);
         if (!user.success) {
             throw new Error(user.message);
         }
 
         if (id === "new") return { success: true, data: null };
 
-        const tag = await db.blogTags.findUnique({
+        const tag = await db.videoTag.findUnique({
             where: { id },
         });
 
@@ -28,7 +28,7 @@ export const getTagById = async (id: string) => {
 
         return {
             success: true,
-            data: BlogTagsDTOSchema.parse(tag)
+            data: VideoTagsDTOSchema.parse(tag)
         };
     } catch (error) {
         handleServerActionError(error);
@@ -36,24 +36,24 @@ export const getTagById = async (id: string) => {
     }
 };
 
-export const createTag = async (data: BlogTagsForm) => {
+export const createTag = async (data: VideoTagsForm) => {
     try {
 
-        const user = await authorizeUser(["modify:blog-tag"]);
+        const user = await authorizeUser(["modify:video-tag"]);
         if (!user.success) {
             throw new Error(user.message);
         }
 
         // Validate form data
-        const validatedData = BlogTagsFormSchema.parse(data);
+        const validatedData = VideoTagsFormSchema.parse(data);
 
-        const tag = await db.blogTags.create({
+        const tag = await db.videoTag.create({
             data: validatedData,
         });
 
         return {
             success: true,
-            data: BlogTagsDTOSchema.parse(tag)
+            data: VideoTagsDTOSchema.parse(tag)
         };
     } catch (error) {
         handleServerActionError(error);
@@ -63,24 +63,24 @@ export const createTag = async (data: BlogTagsForm) => {
 
 export const updateTagById = async (
     id: string,
-    data: BlogTagsForm
+    data: VideoTagsForm
 ) => {
     try {
-        const user = await authorizeUser(["modify:blog-tag"]);
+        const user = await authorizeUser(["modify:video-tag"]);
         if (!user.success) {
             throw new Error(user.message);
         }
         // Validate form data
-        const validatedData = BlogTagsFormSchema.parse(data);
+        const validatedData = VideoTagsFormSchema.parse(data);
 
-        const tag = await db.blogTags.update({
+        const tag = await db.videoTag.update({
             where: { id },
             data: validatedData,
         });
 
         return {
             success: true,
-            data: BlogTagsDTOSchema.parse(tag)
+            data: VideoTagsDTOSchema.parse(tag)
         };
     } catch (error) {
         handleServerActionError(error);

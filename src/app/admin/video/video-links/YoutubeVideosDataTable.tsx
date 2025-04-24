@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/dataTable/columnHeader";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { getTags } from "./actions";
+import { getYoutubeVideos } from "./actions";
 import { toast } from "sonner";
 import { useAuth } from "@/context/auth-context";
-import type { VideoTagsDTO } from "@/schema/videoTag";
+import type { YoutubeVideoDTO } from "@/schema/video";
 
 interface CustomFilterProps {
   globalFilter: string;
@@ -40,7 +40,7 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
         </div>
         <Input
           className="pl-10 text-sm rounded-lg bg-white border-slate-200 focus-visible:ring-slate-300"
-          placeholder="Search tags by name or slug..."
+          placeholder="Search videos by name..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
@@ -52,9 +52,9 @@ const CustomFilter = ({ globalFilter, setGlobalFilter }: CustomFilterProps) => {
   );
 };
 
-export default function VideoTagsDataTable() {
+export default function YoutubeVideosDataTable() {
   const router = useRouter();
-  const [tags, setTags] = useState<VideoTagsDTO[]>([]);
+  const [videos, setVideos] = useState<YoutubeVideoDTO[]>([]);
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,7 +67,7 @@ export default function VideoTagsDataTable() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const result = await getTags({
+      const result = await getYoutubeVideos({
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
         search: searchTerm,
@@ -76,14 +76,14 @@ export default function VideoTagsDataTable() {
       });
 
       if (!result.success) {
-        toast.error("Failed to fetch tags");
+        toast.error("Failed to fetch videos");
         return;
       }
 
-      setTags(result.data?.tags || []);
+      setVideos(result.data?.videos || []);
       setTotalRows(result.data?.meta.totalCount || 0);
     } catch (error) {
-      console.error("Failed to fetch tags:", error);
+      console.error("Failed to fetch videos:", error);
     } finally {
       setLoading(false);
     }
@@ -94,12 +94,12 @@ export default function VideoTagsDataTable() {
     void fetchData();
   }, [fetchData]);
 
-  const handleAddTag = () => {
-    router.push("/admin/video/tag/new");
+  const handleAddVideo = () => {
+    router.push("/admin/video/video-links/new");
   };
 
-  const handleEditTag = (tagId: string) => {
-    router.push(`/admin/video/tag/${tagId}`);
+  const handleEditVideo = (videoId: string) => {
+    router.push(`/admin/video/video-links/${videoId}`);
   };
 
   const formatDate = (date: Date | string) => {
@@ -110,7 +110,7 @@ export default function VideoTagsDataTable() {
     });
   };
 
-  const columns: ColumnDef<VideoTagsDTO>[] = [
+  const columns: ColumnDef<YoutubeVideoDTO>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
@@ -119,10 +119,6 @@ export default function VideoTagsDataTable() {
           <span className="font-medium">{row.getValue("name")}</span>
         </div>
       ),
-    },
-    {
-      accessorKey: "slug",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Slug" />,
     },
     {
       accessorKey: "createdAt",
@@ -142,7 +138,7 @@ export default function VideoTagsDataTable() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => handleEditTag(row.original.id)}
+            onClick={() => handleEditVideo(row.original.id)}
             className="h-8 w-8 p-0 text-slate-600 hover:text-blue-600"
           >
             <Pencil className="h-4 w-4" />
@@ -156,16 +152,16 @@ export default function VideoTagsDataTable() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Tags</h2>
-        {hasPermissions(['modify:video-tag']) &&
-          <Button onClick={handleAddTag} >
-            Add Tag
+        <h2 className="text-2xl font-bold">Youtube Videos</h2>
+        {hasPermissions(['modify:video']) &&
+          <Button onClick={handleAddVideo} >
+            Add Video
           </Button>
         }
       </div>
       <DataTable
         columns={columns}
-        data={tags}
+        data={videos}
         CustomFilterComponent={(props) => (
           <CustomFilter
             globalFilter={props.globalFilter}

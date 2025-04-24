@@ -39,20 +39,7 @@ const data = {
       title: "Media",
       url: "/admin/media",
       icon: Bot,
-      // items: [
-      //   {
-      //     title: "Media",
-      //     url: "/admin/media",
-      //   },
-      //   {
-      //     title: "Explorer",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Quantum",
-      //     url: "#",
-      //   },
-      // ],
+      permissions: ["view:media"],
     },
     {
       title: "Blog",
@@ -69,24 +56,26 @@ const data = {
         },
       ],
     },
+    {
+      title: "Videos",
+      url: "#",
+      icon: BookOpen,
+      items: [
+        {
+          title: "Tags",
+          url: "/admin/video/tag",
+        },
+        {
+          title: "Video Links",
+          url: "/admin/video/video-links",
+        },
+        {
+          title: "Playlist",
+          url: "/admin/video/playlist",
+        },
+      ],
+    },
   ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: PieChart,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: Map,
-  //   },
-  // ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
