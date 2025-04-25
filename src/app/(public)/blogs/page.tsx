@@ -1,18 +1,20 @@
 import React from 'react'
 import BlogsListPage from './BlogsListPage'
-import { getBlogsList } from './actions';
+import { getBlogsList, getAllBlogTags } from './actions';
 
 const Page = async () => {
 
     const blogs = await getBlogsList();
-    console.log('This is blogs',blogs)
+    const tags = await getAllBlogTags();
+    console.log('This is blogs', blogs)
+    console.log('This is tags', tags)
 
-    if (!blogs.success) {
-        return <div>Failed to fetch blogs</div>;
+    if (!blogs.success || !tags.success) {
+        return <div>Failed to fetch blogs or tags</div>;
     }
 
     return (
-        <BlogsListPage blogs={blogs.data} />
+        <BlogsListPage blogs={blogs.data} tags={tags.data} />
     )
 }
 

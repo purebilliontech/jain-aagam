@@ -4,9 +4,9 @@ import { Search } from "lucide-react";
 import React from "react";
 import moment from "moment";
 
-const tags = ["Happiness", "Jain Agam", "Jainism"];
-
-const BlogsListPage = ({ blogs }: { blogs: BlogWithTagsAndBanner[] }) => {
+const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: { id: string; name: string; }[] }) => {
+  console.log(blogs)
+  console.log(tags)
   return (
     <>
       <div className="bg-[#E9E2D2] w-full h-64 md:h-96 flex items-center">
@@ -19,10 +19,10 @@ const BlogsListPage = ({ blogs }: { blogs: BlogWithTagsAndBanner[] }) => {
         <div className="md:w-2/3 flex flex-wrap gap-2 px-4 md:px-8 pb-8">
           {tags.map((tag) => (
             <span
-              key={tag}
+              key={tag.id}
               className="inline-block bg-primary-ui px-4 md:px-7 py-2 text-sm md:text-lg font-medium text-white rounded-full"
             >
-              {tag}
+              {tag.name}
             </span>
           ))}
         </div>
