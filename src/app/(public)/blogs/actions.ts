@@ -2,7 +2,7 @@
 
 import { handleServerActionError } from "@/helpers/error";
 import { db } from "@/lib/db";
-import { BlogWithCategoryAndBannerSchema } from "@/schema/blog";
+import { BlogWithTagsAndBannerSchema } from "@/schema/blog";
 
 export const getBlogsList = async () => {
 
@@ -13,14 +13,18 @@ export const getBlogsList = async () => {
                 published: true,
             },
             include: {
-                category: true,
+                blogToTags: {
+                    include: {
+                        tag: true,
+                    },
+                },
                 banner: true,
             },
         });
 
         return {
             success: true,
-            data: blogs.map(blog => BlogWithCategoryAndBannerSchema.parse(blog)),
+            data: blogs.map(blog => BlogWithTagsAndBannerSchema.parse(blog)),
         };
 
     } catch (error) {

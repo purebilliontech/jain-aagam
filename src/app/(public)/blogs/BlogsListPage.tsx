@@ -1,12 +1,12 @@
 import BlogCard from "@/components/blog/BlogCard";
-import type { BlogWithCategoryAndBanner } from "@/schema/blog";
+import type { BlogWithTagsAndBanner } from "@/schema/blog";
 import { Search } from "lucide-react";
 import React from "react";
 import moment from "moment";
 
 const tags = ["Happiness", "Jain Agam", "Jainism"];
 
-const BlogsListPage = ({ blogs }: { blogs: BlogWithCategoryAndBanner[] }) => {
+const BlogsListPage = ({ blogs }: { blogs: BlogWithTagsAndBanner[] }) => {
   return (
     <>
       <div className="bg-[#E9E2D2] w-full h-64 md:h-96 flex items-center">
@@ -17,9 +17,9 @@ const BlogsListPage = ({ blogs }: { blogs: BlogWithCategoryAndBanner[] }) => {
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row p-5 mt-10">
         <div className="md:w-2/3 flex flex-wrap gap-2 px-4 md:px-8 pb-8">
-          {tags.map((tag, index) => (
+          {tags.map((tag) => (
             <span
-              key={index}
+              key={tag}
               className="inline-block bg-primary-ui px-4 md:px-7 py-2 text-sm md:text-lg font-medium text-white rounded-full"
             >
               {tag}
@@ -38,10 +38,10 @@ const BlogsListPage = ({ blogs }: { blogs: BlogWithCategoryAndBanner[] }) => {
       </div>
 
       <div className="flex flex-wrap max-w-7xl mx-auto p-5 space-y-8 md:space-y-16">
-        {blogs.map((blog, index) => (
+        {blogs.map((blog) => (
           <BlogCard
             key={blog.id}
-            tags={blog.tags}
+            tags={blog.blogToTags.map(tag => tag.tag.name)}
             title={blog.title}
             date={moment(blog.publishedAt).format("LL")}
           />

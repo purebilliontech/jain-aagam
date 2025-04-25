@@ -5,6 +5,7 @@ import { getBlogsList } from './actions';
 const Page = async () => {
 
     const blogs = await getBlogsList();
+    console.log('This is blogs',blogs)
 
     if (!blogs.success) {
         return <div>Failed to fetch blogs</div>;

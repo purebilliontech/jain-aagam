@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ChevronLeft, Loader2, Trash2 } from "lucide-react";
+import { ChevronLeft, Loader2} from "lucide-react";
 import { Form, FormField } from "@/components/ui/form";
 import { useForm, type Resolver } from "react-hook-form";
 import {
@@ -13,7 +13,6 @@ import {
     GenericFormImageInput,
     GenericFormInput,
     GenericRadioGroup,
-    GenericSelectClosure,
 } from "@/components/generic/GenericFormComponents";
 import { RichTextArea } from "@/components/generic/RichTextArea";
 import slugify from "slugify";
@@ -22,26 +21,42 @@ import Link from "next/link";
 import { BlogFormSchema, type BlogDetail, type BlogForm } from "@/schema/blog";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createBlogPost, updateBlogPostById } from "./actions";
-import type { z } from "zod";
+import { createBlogPost, updateBlogPostById, getTagsList } from "./actions";
 import { getHTMLFromContentJson } from "@/utils/blog-client";
-import type { BlogCategoryDTO } from "@/schema/blogTag";
 import { useAuth } from "@/context/auth-context";
+import { useEffect } from "react";
+import type { BlogTagsDTO } from "@/schema/blogTag";
 
 type BlogPostEditorProps = {
     blog: BlogDetail | null;
-    categories: any[];
 };
 
-const BlogForm = ({
-    blog,
-    categories = [],
-}: BlogPostEditorProps) => {
+const BlogForm = ({ blog }: BlogPostEditorProps) => {
     const router = useRouter();
-
     const { hasPermissions } = useAuth();
-
     const [loading, setLoading] = useState<boolean>(false);
+    const [tags, setTags] = useState<BlogTagsDTO[]>([]);
+    const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+    // Load available tags
+    useEffect(() => {
+        const loadTags = async () => {
+            const result = await getTagsList();
+            if (result.success) {
+                setTags(result.data);
+            }
+        };
+        loadTags();
+    }, []);
+
+    // Extract tag IDs from blog data if editing
+    useEffect(() => {
+        if (blog && blog.blogToTags) {
+            const tagIds = blog.blogToTags.map(tagRelation => tagRelation.tagId);
+            setSelectedTags(tagIds);
+        }
+    }, [blog]);
+
     const form = useForm<BlogForm>({
         resolver: zodResolver(BlogFormSchema) as unknown as Resolver<BlogForm>,
         defaultValues: {
@@ -51,15 +66,19 @@ const BlogForm = ({
             authorName: blog?.authorName || "",
             readingTimeSeconds: blog?.readingTimeSeconds || 0,
             slug: blog?.slug || "",
-            tags: blog?.tags || [],
-            categoryId: blog?.categoryId || "",
+            tags: selectedTags,
             banner: blog?.banner || undefined,
             published: blog?.published || false,
         },
     });
 
+    // Update form values when selectedTags changes
+    useEffect(() => {
+        form.setValue("tags", selectedTags);
+    }, [selectedTags, form]);
+
     const saveBlog = async (formData: BlogForm) => {
-        console.log(formData);
+        setLoading(true);
         try {
             const contentJsonString = JSON.stringify(formData.contentJson);
             if (blog) {
@@ -80,8 +99,18 @@ const BlogForm = ({
             }
         } catch (error) {
             console.error(error);
+            toast.error("An error occurred while saving");
+        } finally {
+            setLoading(false);
         }
+    };
 
+    const handleTagSelection = (tagId: string) => {
+        if (selectedTags.includes(tagId)) {
+            setSelectedTags(selectedTags.filter(id => id !== tagId));
+        } else {
+            setSelectedTags([...selectedTags, tagId]);
+        }
     };
 
     return (
@@ -97,20 +126,14 @@ const BlogForm = ({
                     <div className="flex justify-between">
                         <h1 className="mb-6 text-2xl font-semibold">Blog posts</h1>
                         <div className="flex gap-5">
-                            {/* {blog && (
-                                <Link target="_blank" href={`/admin/blog/preview/${blog.slug}`}>
-                                    <Button type="button" variant={"secondary"} className="px-10">
-                                        Preview
-                                    </Button>
-                                </Link>
-                            )} */}
                             {hasPermissions(["modify:blog"]) &&
                                 <Button
                                     type="submit"
                                     variant={loading ? "outline" : "default"}
                                     className="px-10"
+                                    disabled={loading}
                                 >
-                                    {loading && <Loader2 className="animate-spin" />}
+                                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                     {loading ? "Saving" : "Save Blog"}
                                 </Button>}
                         </div>
@@ -119,7 +142,6 @@ const BlogForm = ({
                         <div className="space-y-6 md:col-span-2">
                             <Card>
                                 <CardContent className="pt-6">
-
                                     <FormField
                                         control={form.control}
                                         name="title"
@@ -160,18 +182,6 @@ const BlogForm = ({
                                     />
                                 </CardContent>
                             </Card>
-                            {/* <Card>
-                                <CardHeader>
-                                    <h2>Add Meta Tags</h2>
-                                </CardHeader>
-                                <CardContent>
-                                    <PageConfigComp
-                                        metaTags={metaTags}
-                                        pageConfigs={blog?.PageConfig || []}
-                                        savePageConfig={handleAddMetaTag}
-                                    />
-                                </CardContent>
-                            </Card> */}
                         </div>
 
                         <div className="space-y-6">
@@ -254,28 +264,6 @@ const BlogForm = ({
                                         <div>
                                             <FormField
                                                 control={form.control}
-                                                name="categoryId"
-                                                render={({ field }) => (
-                                                    <GenericFormField
-                                                        formLabel="Category"
-                                                        itemClass={` ${form.formState.errors.readingTimeSeconds?.message ? "min-h-20" : ""}`}
-                                                        divClass="w-full"
-                                                        field={field}
-                                                        cb={GenericSelectClosure({
-                                                            className: "w-full",
-                                                            triggerClass: "w-full",
-                                                            options: categories.map((category: BlogCategoryDTO) => ({
-                                                                value: category.id,
-                                                                display: category.name,
-                                                            })),
-                                                        })}
-                                                    />
-                                                )}
-                                            />
-                                        </div>
-                                        <div>
-                                            <FormField
-                                                control={form.control}
                                                 name="synopsis"
                                                 render={({ field }) => (
                                                     <GenericFormField
@@ -319,63 +307,50 @@ const BlogForm = ({
                                                 )}
                                             />
                                         </div>
+                                        <div>
+                                            <FormField
+                                                control={form.control}
+                                                name="readingTimeSeconds"
+                                                render={({ field }) => (
+                                                    <GenericFormField
+                                                        formLabel="Reading Time (seconds)"
+                                                        field={{
+                                                            ...field,
+                                                            value: field.value || 0,
+                                                            onChange: (e) => field.onChange(Number(e.target.value))
+                                                        }}
+                                                        cb={GenericFormInput}
+                                                        inputEle={<Input type="number" min="0" />}
+                                                        divClass="relative"
+                                                        itemClass="w-full"
+                                                        labelClass="text-md"
+                                                    />
+                                                )}
+                                            />
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>
 
                             <Card>
                                 <CardContent className="pt-6">
-                                    <div className="flex items-center justify-between pb-2">
-                                        <h2 className="mb-4 font-medium">Tags</h2>
-                                        <Button
-                                            type="button"
-                                            onClick={() => {
-                                                const tags = form.getValues("tags");
-                                                form.setValue("tags", [...tags, ""]);
-                                            }}
-                                        >
-                                            Add Tag
-                                        </Button>
-                                    </div>
+                                    <h2 className="mb-4 font-medium">Tags</h2>
                                     <div className="space-y-2">
-                                        {form.watch("tags").map((tag, index) => (
-                                            <div key={index} className="flex gap-2">
-                                                <FormField
-                                                    control={form.control}
-                                                    name={`tags.${index}`}
-                                                    render={({ field }) => (
-                                                        <GenericFormField
-                                                            formLabel=""
-                                                            field={field}
-                                                            inputEle={
-                                                                <Input
-                                                                    type="text"
-                                                                    placeholder="Enter tag"
-                                                                    {...field}
-                                                                />
-                                                            }
-                                                            cb={GenericFormInput}
-                                                            divClass="relative"
-                                                            itemClass="w-full"
-                                                            labelClass="text-md"
-                                                        />
-                                                    )}
+                                        {tags.map((tag) => (
+                                            <div key={tag.id} className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    id={`tag-${tag.id}`}
+                                                    checked={selectedTags.includes(tag.id)}
+                                                    onChange={() => handleTagSelection(tag.id)}
+                                                    className="mr-2 h-4 w-4"
                                                 />
-                                                <Button
-                                                    variant="ghost"
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const tags = form.getValues("tags");
-                                                        form.setValue(
-                                                            "tags",
-                                                            tags.filter((_, i) => i !== index),
-                                                        );
-                                                    }}
-                                                >
-                                                    <Trash2 />
-                                                </Button>
+                                                <label htmlFor={`tag-${tag.id}`}>{tag.name}</label>
                                             </div>
                                         ))}
+                                        {tags.length === 0 && (
+                                            <div className="text-sm text-gray-500">No tags available.</div>
+                                        )}
                                     </div>
                                 </CardContent>
                             </Card>
@@ -383,7 +358,7 @@ const BlogForm = ({
                     </div>
                 </div>
             </form>
-        </Form >
+        </Form>
     );
 };
 

@@ -9,6 +9,7 @@ import {
 import type { PaginatedReqParams } from "@/schema/common";
 import { authorizeUser } from "@/lib/auth";
 
+// actions.ts - Modified getBlogPosts function
 export const getBlogPosts = async ({
   page = 1,
   pageSize = 10,
@@ -16,11 +17,13 @@ export const getBlogPosts = async ({
   sortBy = "createdAt",
   sortDirection = "desc",
 }: PaginatedReqParams) => {
+  console.log("getBlogPosts called with params:", { page, pageSize, search, sortBy, sortDirection });
   try {
     const user = await authorizeUser(["view:blog"]);
     if (!user.success) {
       throw new Error(user.message);
     }
+    
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 
@@ -31,7 +34,17 @@ export const getBlogPosts = async ({
       whereConditions = {
         OR: [
           { title: { contains: search, mode: "insensitive" } },
-          { tagsString: { contains: search, mode: "insensitive" } }
+          { synopsis: { contains: search, mode: "insensitive" } },
+          { authorName: { contains: search, mode: "insensitive" } },
+          {
+            blogToTags: {
+              some: {
+                tag: {
+                  name: { contains: search, mode: "insensitive" }
+                }
+              }
+            }
+          }
         ],
       };
     }
@@ -43,24 +56,35 @@ export const getBlogPosts = async ({
     // Get data with pagination
     const [posts, totalCount] = await Promise.all([
       db.blog.findMany({
-        where: whereConditions,
+        where: search ? whereConditions : undefined,
         include: {
-          category: true,
-        },
-        omit: {
-          contentJson: true
+          banner: true,
+          blogToTags: {
+            include: {
+              tag: true
+            }
+          }
         },
         orderBy,
         skip,
         take,
       }),
       db.blog.count({
-        where: whereConditions,
+        where: search ? whereConditions : undefined,
       }),
     ]);
 
-    // Parse to DTO
-    const blogPostsDTO = posts.map((post: any) => BlogDataTableRowSchema.parse(post));
+    // Process the data before validation
+    const processedPosts = posts.map(post => {
+      return {
+        ...post,
+        // Generate tagsString for display
+        tagsString: post.blogToTags.map(relation => relation.tag.name).join(', ')
+      };
+    });
+
+    // Parse with the updated schema
+    const blogPostsDTO = processedPosts.map(post => BlogDataTableRowSchema.parse(post));
 
     return {
       success: true,
@@ -75,6 +99,7 @@ export const getBlogPosts = async ({
       }
     };
   } catch (error) {
+    console.error("Error in getBlogPosts:", error);
     handleServerActionError(error);
     return {
       success: false,
@@ -92,17 +117,29 @@ export const getBlogPosts = async ({
 };
 
 export const deleteBlogPostById = async (id: string) => {
+  console.log("deleteBlogPostById called with id:", id);
   try {
     const user = await authorizeUser(["modify:blog"]);
+    console.log("User authorization result:", user);
     if (!user.success) {
       throw new Error(user.message);
     }
+    
+    // First delete all tag relationships
+    await db.tagsToBlog.deleteMany({
+      where: { blogId: id }
+    });
+    console.log("Deleted tag relationships for blogId:", id);
+    
+    // Then delete the blog post
     await db.blog.delete({
       where: { id },
     });
+    console.log("Deleted blog post with id:", id);
 
     return { success: true, data: null };
   } catch (error) {
+    console.error("Error in deleteBlogPostById:", error);
     handleServerActionError(error);
     return { success: false, data: null };
   }

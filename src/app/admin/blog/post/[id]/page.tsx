@@ -1,7 +1,6 @@
 import React from 'react'
-import { getBlogPostById, getCategoriesList } from './actions';
+import { getBlogPostById } from './actions';
 import { notFound } from 'next/navigation';
-import { BlogFormSchema } from '@/schema/blog';
 import BlogForm from './BlogForm';
 import { authorizeUser } from '@/lib/auth';
 import NoPermission from '@/components/common/NoPermission';
@@ -11,7 +10,6 @@ const BlogIndexPage = async ({ params }: {
         id: string;
     }>;
 }) => {
-
     const user = await authorizeUser(["view:blog"]);
 
     if (!user.success) {
@@ -24,15 +22,14 @@ const BlogIndexPage = async ({ params }: {
 
     const { success, data: blog } = await getBlogPostById(id);
 
-    const { data: categories } = await getCategoriesList();
-
-    // If not creating a new category and category wasn't found
+    // If not creating a new blog post and the post wasn't found
     if (id !== "new" && !success) {
         return notFound();
     }
+    
     return (
         <>
-            <BlogForm blog={blog} categories={categories} />
+            <BlogForm blog={blog} />
         </>
     )
 }

@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/dataTable/dataTable";
-import { BlogDTO, type BlogDataTableRow } from "@/schema/blog";
+import { type BlogDataTableRow } from "@/schema/blog";
 import { usePagination } from "@/hooks/usePagination";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -56,8 +56,6 @@ export default function BlogDataTable() {
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   const { pagination, onPaginationChange } = usePagination(10, 0);
 
   const fetchData = useCallback(async () => {
@@ -67,9 +65,8 @@ export default function BlogDataTable() {
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
         search: searchTerm,
-        sortBy,
-        sortDirection,
       });
+      console.log(result)
 
       setBlogs(result.data.posts);
       setTotalRows(result.data.meta.totalCount);
@@ -78,7 +75,7 @@ export default function BlogDataTable() {
     } finally {
       setLoading(false);
     }
-  }, [pagination.pageIndex, pagination.pageSize, searchTerm, sortBy, sortDirection]);
+  }, [pagination.pageIndex, pagination.pageSize, searchTerm]);
 
   // Update data when pagination or filters change
   React.useEffect(() => {
@@ -110,18 +107,6 @@ export default function BlogDataTable() {
           <span className="font-medium">{row.getValue("title")}</span>
         </div>
       ),
-    },
-    {
-      accessorKey: "category.name",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Category" />,
-    },
-    {
-      accessorKey: "published",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Published" />,
-    },
-    {
-      accessorKey: "publishedAt",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Published At" />,
     },
     {
       accessorKey: "tagsString",

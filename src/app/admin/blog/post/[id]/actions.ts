@@ -4,7 +4,6 @@ import { handleServerActionError } from "@/helpers/error";
 import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { BlogDetailSchema, type BlogForm } from "@/schema/blog";
-import { BlogCategoryDTOSchema } from "@/schema/blogTag";
 import { formatContentJson } from "@/utils/blog";
 
 export const getBlogPostById = async (id: string) => {
@@ -19,8 +18,12 @@ export const getBlogPostById = async (id: string) => {
         const post = await db.blog.findUnique({
             where: { id },
             include: {
-                category: true,
                 banner: true,
+                blogToTags: {
+                    include: {
+                        tag: true
+                    }
+                }
             },
         });
 
@@ -36,15 +39,14 @@ export const getBlogPostById = async (id: string) => {
     }
 }
 
-export const getCategoriesList = async () => {
+export const getTagsList = async () => {
     try {
-        const user = await authorizeUser(["view:blog-category"]);
+        const user = await authorizeUser(["view:blog"]);
         if (!user.success) {
             throw new Error(user.message);
         }
-        const categoriesList = await db.blogCategory.findMany();
-        const categories = categoriesList.map(category => BlogCategoryDTOSchema.parse(category));
-        return { success: true, data: categories };
+        const tagsList = await db.blogTags.findMany();
+        return { success: true, data: tagsList };
     } catch (error) {
         handleServerActionError(error);
         return { success: false, data: [] };
@@ -58,6 +60,7 @@ export const createBlogPost = async (data: BlogForm, contentJsonString: string) 
             throw new Error(user.message);
         }
 
+        // Create the blog post first
         const newPost = await db.blog.create({
             data: {
                 title: data.title,
@@ -66,18 +69,26 @@ export const createBlogPost = async (data: BlogForm, contentJsonString: string) 
                 authorName: data.authorName,
                 readingTimeSeconds: data.readingTimeSeconds,
                 slug: data.slug,
-                categoryId: data.categoryId,
-                tags: data.tags,
-                tagsString: data.tags.join(", "),
                 published: data.published,
                 publishedAt: new Date(),
                 bannerId: data.banner.id,
             },
             include: {
-                category: true,
                 banner: true,
             },
         });
+
+        // Then connect the tags in a separate operation
+        if (data.tags && data.tags.length > 0) {
+            await Promise.all(data.tags.map(tagId => 
+                db.tagsToBlog.create({
+                    data: {
+                        blogId: newPost.id,
+                        tagId: tagId
+                    }
+                })
+            ));
+        }
 
         return {
             success: true,
@@ -95,6 +106,8 @@ export const updateBlogPostById = async (id: string, data: BlogForm, contentJson
         if (!user.success) {
             throw new Error(user.message);
         }
+        
+        // First, update the main blog post
         const updatedPost = await db.blog.update({
             where: { id },
             data: {
@@ -104,14 +117,30 @@ export const updateBlogPostById = async (id: string, data: BlogForm, contentJson
                 authorName: data.authorName,
                 readingTimeSeconds: data.readingTimeSeconds,
                 slug: data.slug,
-                categoryId: data.categoryId,
-                tags: data.tags,
-                tagsString: data.tags.join(", "),
-                published: false,
+                published: data.published,
                 publishedAt: new Date(),
                 bannerId: data.banner.id,
             },
         });
+
+        // Next, handle the tags - first delete existing relationships
+        await db.tagsToBlog.deleteMany({
+            where: {
+                blogId: id
+            }
+        });
+
+        // Then create new tag relationships
+        if (data.tags && data.tags.length > 0) {
+            await Promise.all(data.tags.map(tagId => 
+                db.tagsToBlog.create({
+                    data: {
+                        blogId: id,
+                        tagId: tagId
+                    }
+                })
+            ));
+        }
 
         return {
             success: true,
