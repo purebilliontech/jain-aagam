@@ -37,13 +37,17 @@ export function NavMain({
   }[]
 }) {
 
-  const { hasPermissions } = useAuth();
+  const { hasPermissions, hasAnyPermission } = useAuth();
 
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
+          if (item.permissions && !hasAnyPermission(item.permissions)) {
+            return null;
+          }
+
           if (item.items && item.items.length > 0) {
             return (
               <Collapsible
