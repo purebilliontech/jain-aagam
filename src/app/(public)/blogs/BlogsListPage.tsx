@@ -44,6 +44,7 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
             tags={blog.blogToTags.map(tag => tag.tag.name)}
             title={blog.title}
             date={moment(blog.publishedAt).format("LL")}
+            image={blog.banner}
           />
         ))}
       </div>
