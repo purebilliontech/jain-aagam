@@ -1,8 +1,9 @@
-// EnglishAgam.tsx
+"use client";
+
 import FEButton from '@/components/common/FEButton'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { 
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -27,28 +28,28 @@ const englishAgamContactSchema = z.object({
     .refine(name => /^[a-zA-Z\s.\-']+$/.test(name), {
       message: "Name should only contain letters, spaces, hyphens, periods, and apostrophes"
     }),
-    
+
   contactNumber: z.string()
     .min(10, { message: "Contact number must be at least 10 digits" })
     .max(15, { message: "Contact number cannot exceed 15 digits" })
     .refine(phone => /^[+\d\s\-()]+$/.test(phone), {
       message: "Please enter a valid phone number format"
     }),
-    
+
   city: z.string()
     .min(2, { message: "City name must be at least 2 characters" })
     .max(50, { message: "City name cannot exceed 50 characters" })
     .refine(city => /^[a-zA-Z\s.\-']+$/.test(city), {
       message: "City should only contain letters, spaces, hyphens, and apostrophes"
     }),
-    
+
   country: z.string()
     .min(2, { message: "Country name must be at least 2 characters" })
     .max(50, { message: "Country name cannot exceed 50 characters" })
     .refine(country => /^[a-zA-Z\s.\-']+$/.test(country), {
       message: "Country should only contain letters, spaces, hyphens, and apostrophes"
     }),
-    
+
   email: z.string()
     .email({ message: "Please enter a valid email address" })
     .min(5, { message: "Email must be at least 5 characters" })
@@ -62,187 +63,187 @@ const englishAgamContactSchema = z.object({
 type EnglishAgamContactType = z.infer<typeof englishAgamContactSchema>
 
 const EnglishAgam = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [isSubmitting, setIsSubmitting] = useState(false)
-    
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors }
-    } = useForm<EnglishAgamContactType>({
-      resolver: zodResolver(englishAgamContactSchema),
-      mode: "onBlur" // Validate fields when they lose focus
-    })
-    
-    const onSubmit = async (data: EnglishAgamContactType) => {
-      try {
-        setIsSubmitting(true)
-        
-        // Sanitize inputs before submission (trimming whitespace)
-        const sanitizedData = {
-          ...data,
-          name: data.name.trim(),
-          city: data.city.trim(),
-          country: data.country.trim(),
-          email: data.email.trim().toLowerCase(),
-          contactNumber: data.contactNumber.trim()
-        }
-        
-        // Call server action to save data
-        const result = await submitEnglishAgamContact(sanitizedData)
-        
-        if (result.success) {
-          toast.success("Your information has been submitted successfully")
-          reset() // Reset form fields
-          setIsOpen(false) // Close modal
-        } else {
-          toast.error(result.message || "Something went wrong")
-          
-          // If there are field-specific errors, handle them
-          if (result.errors) {
-            // You can handle specific field errors here if needed
-            console.error("Validation errors:", result.errors)
-          }
-        }
-      } catch (error) {
-        toast.error("Failed to submit. Please try again.")
-        console.error(error)
-      } finally {
-        setIsSubmitting(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<EnglishAgamContactType>({
+    resolver: zodResolver(englishAgamContactSchema),
+    mode: "onBlur" // Validate fields when they lose focus
+  })
+
+  const onSubmit = async (data: EnglishAgamContactType) => {
+    try {
+      setIsSubmitting(true)
+
+      // Sanitize inputs before submission (trimming whitespace)
+      const sanitizedData = {
+        ...data,
+        name: data.name.trim(),
+        city: data.city.trim(),
+        country: data.country.trim(),
+        email: data.email.trim().toLowerCase(),
+        contactNumber: data.contactNumber.trim()
       }
+
+      // Call server action to save data
+      const result = await submitEnglishAgamContact(sanitizedData)
+
+      if (result.success) {
+        toast.success("Your information has been submitted successfully")
+        reset() // Reset form fields
+        setIsOpen(false) // Close modal
+      } else {
+        toast.error(result.message || "Something went wrong")
+
+        // If there are field-specific errors, handle them
+        if (result.errors) {
+          // You can handle specific field errors here if needed
+          console.error("Validation errors:", result.errors)
+        }
+      }
+    } catch (error) {
+      toast.error("Failed to submit. Please try again.")
+      console.error(error)
+    } finally {
+      setIsSubmitting(false)
     }
+  }
 
-    return (
-        <section className='relative h-full px-5 py-10 md:px-10 lg:px-20 xl:px-48'>
-            <Image 
-                className='-z-10 absolute top-0 left-0 inset-0 object-cover object-center' 
-                src={'/static/english-agam-bg.png'} 
-                fill 
-                alt='Agams BG' 
-                priority
-            />
+  return (
+    <section className='relative h-full px-5 py-10 md:px-10 lg:px-20 xl:px-48'>
+      <Image
+        className='-z-10 absolute top-0 left-0 inset-0 object-cover object-center'
+        src={'/static/english-agam-bg.png'}
+        fill
+        alt='Agams BG'
+        priority
+      />
 
-            <div className='z-50 bg-[#E9E2D2ED] p-5 md:p-10 lg:p-14 max-w-7xl mx-auto rounded-4xl flex flex-col md:flex-row gap-5 md:gap-10'>
-                <div className="w-full pt-2 md:pt-0 md:w-1/3 flex justify-center">
-                    <Image 
-                        src={'/static/red-book.png'} 
-                        width={300} 
-                        height={600} 
-                        alt='Red Book' 
-                        className='mx-auto' 
-                    />
-                </div>
-                <div className="w-full md:w-2/3 pt-3">
-                    <h3 className='text-typography font-semibold font-mono text-2xl md:text-3xl lg:text-4xl text-center md:text-left'>
-                        Launching ENGLISH Aagams
-                    </h3>
-                    <p className='text-typography text-lg md:text-xl lg:text-2xl mt-5 mb-8 text-justify'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi dolores officia saepe illo suscipit, libero ut quod quibusdam at ratione animi cumque id doloribus autem labore deleniti ad voluptate neque sint laudantium est veniam ipsam error. Nulla, fugit, libero omnis inventore non cumque natus ab soluta placeat ex magni expedita.
-                    </p>
-                    <div className="flex justify-center md:justify-start">
-                        <FEButton onClick={() => setIsOpen(true)}>BOOK NOW</FEButton>
-                    </div>
-                </div>
+      <div className='z-50 bg-[#E9E2D2ED] p-5 md:p-10 lg:p-14 max-w-7xl mx-auto rounded-4xl flex flex-col md:flex-row gap-5 md:gap-10'>
+        <div className="w-full pt-2 md:pt-0 md:w-1/3 flex justify-center">
+          <Image
+            src={'/static/red-book.png'}
+            width={300}
+            height={600}
+            alt='Red Book'
+            className='mx-auto'
+          />
+        </div>
+        <div className="w-full md:w-2/3 pt-3">
+          <h3 className='text-typography font-semibold font-mono text-2xl md:text-3xl lg:text-4xl text-center md:text-left'>
+            Launching ENGLISH Aagams
+          </h3>
+          <p className='text-typography text-lg md:text-xl lg:text-2xl mt-5 mb-8 text-justify'>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi dolores officia saepe illo suscipit, libero ut quod quibusdam at ratione animi cumque id doloribus autem labore deleniti ad voluptate neque sint laudantium est veniam ipsam error. Nulla, fugit, libero omnis inventore non cumque natus ab soluta placeat ex magni expedita.
+          </p>
+          <div className="flex justify-center md:justify-start">
+            <FEButton onClick={() => setIsOpen(true)}>BOOK NOW</FEButton>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Form Modal */}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>English Aagam Contact Information</DialogTitle>
+            <DialogDescription>
+              Please fill in your details to register your interest in English Aagams.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Full Name <span className="text-red-500">*</span></Label>
+              <Input
+                id="name"
+                placeholder="Enter your full name"
+                {...register("name")}
+                aria-invalid={errors.name ? "true" : "false"}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name.message}</p>
+              )}
             </div>
 
-            {/* Contact Form Modal */}
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>English Aagam Contact Information</DialogTitle>
-                        <DialogDescription>
-                            Please fill in your details to register your interest in English Aagams.
-                        </DialogDescription>
-                    </DialogHeader>
-                    
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="name">Full Name <span className="text-red-500">*</span></Label>
-                            <Input 
-                                id="name" 
-                                placeholder="Enter your full name" 
-                                {...register("name")} 
-                                aria-invalid={errors.name ? "true" : "false"}
-                            />
-                            {errors.name && (
-                                <p className="text-red-500 text-sm">{errors.name.message}</p>
-                            )}
-                        </div>
-                        
-                        <div className="space-y-2">
-                            <Label htmlFor="contactNumber">Contact Number <span className="text-red-500">*</span></Label>
-                            <Input 
-                                id="contactNumber" 
-                                placeholder="Enter your contact number" 
-                                {...register("contactNumber")} 
-                                aria-invalid={errors.contactNumber ? "true" : "false"}
-                            />
-                            {errors.contactNumber && (
-                                <p className="text-red-500 text-sm">{errors.contactNumber.message}</p>
-                            )}
-                        </div>
-                        
-                        <div className="space-y-2">
-                            <Label htmlFor="city">City <span className="text-red-500">*</span></Label>
-                            <Input 
-                                id="city" 
-                                placeholder="Enter your city" 
-                                {...register("city")} 
-                                aria-invalid={errors.city ? "true" : "false"}
-                            />
-                            {errors.city && (
-                                <p className="text-red-500 text-sm">{errors.city.message}</p>
-                            )}
-                        </div>
-                        
-                        <div className="space-y-2">
-                            <Label htmlFor="country">Country <span className="text-red-500">*</span></Label>
-                            <Input 
-                                id="country" 
-                                placeholder="Enter your country" 
-                                {...register("country")} 
-                                aria-invalid={errors.country ? "true" : "false"}
-                            />
-                            {errors.country && (
-                                <p className="text-red-500 text-sm">{errors.country.message}</p>
-                            )}
-                        </div>
-                        
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email Address <span className="text-red-500">*</span></Label>
-                            <Input 
-                                id="email" 
-                                type="email" 
-                                placeholder="Enter your email address" 
-                                {...register("email")} 
-                                aria-invalid={errors.email ? "true" : "false"}
-                            />
-                            {errors.email && (
-                                <p className="text-red-500 text-sm">{errors.email.message}</p>
-                            )}
-                        </div>
-                        
-                        <DialogFooter className="pt-4">
-                            <Button 
-                                type="button" 
-                                variant="outline" 
-                                onClick={() => setIsOpen(false)}
-                            >
-                                Cancel
-                            </Button>
-                            <Button 
-                                type="submit" 
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? "Submitting..." : "Submit"}
-                            </Button>
-                        </DialogFooter>
-                    </form>
-                </DialogContent>
-            </Dialog>
-        </section>
-    )
+            <div className="space-y-2">
+              <Label htmlFor="contactNumber">Contact Number <span className="text-red-500">*</span></Label>
+              <Input
+                id="contactNumber"
+                placeholder="Enter your contact number"
+                {...register("contactNumber")}
+                aria-invalid={errors.contactNumber ? "true" : "false"}
+              />
+              {errors.contactNumber && (
+                <p className="text-red-500 text-sm">{errors.contactNumber.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="city">City <span className="text-red-500">*</span></Label>
+              <Input
+                id="city"
+                placeholder="Enter your city"
+                {...register("city")}
+                aria-invalid={errors.city ? "true" : "false"}
+              />
+              {errors.city && (
+                <p className="text-red-500 text-sm">{errors.city.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="country">Country <span className="text-red-500">*</span></Label>
+              <Input
+                id="country"
+                placeholder="Enter your country"
+                {...register("country")}
+                aria-invalid={errors.country ? "true" : "false"}
+              />
+              {errors.country && (
+                <p className="text-red-500 text-sm">{errors.country.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address <span className="text-red-500">*</span></Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email address"
+                {...register("email")}
+                aria-invalid={errors.email ? "true" : "false"}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
+            </div>
+
+            <DialogFooter className="pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </section>
+  )
 }
 
 export default EnglishAgam
