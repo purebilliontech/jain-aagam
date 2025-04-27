@@ -109,8 +109,21 @@ export default function BlogDataTable() {
       ),
     },
     {
-      accessorKey: "tagsString",
+      accessorKey: "blogToTags",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Tags" />,
+      cell: ({ row }) => {
+        const blogToTags = row.getValue("blogToTags") as unknown;
+        if (!Array.isArray(blogToTags)) {
+          return null;
+        }
+        return (
+          <div className="flex items-center gap-2">
+            <span className="font-medium">
+              {blogToTags.map((tag) => (tag as any).tag.name).join(", ")}
+            </span>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "readingTimeSeconds",
