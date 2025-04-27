@@ -1,5 +1,5 @@
 import React from 'react'
-import { getBlogPostById } from './actions';
+import { getBlogPostById, getTagsList } from './actions';
 import { notFound } from 'next/navigation';
 import BlogForm from './BlogForm';
 import { authorizeUser } from '@/lib/auth';
@@ -22,14 +22,16 @@ const BlogIndexPage = async ({ params }: {
 
     const { success, data: blog } = await getBlogPostById(id);
 
-    // If not creating a new blog post and the post wasn't found
     if (id !== "new" && !success) {
         return notFound();
     }
-    
+
+    const { data: tags } = await getTagsList();
+
+
     return (
         <>
-            <BlogForm blog={blog} />
+            <BlogForm tags={tags} blog={blog} />
         </>
     )
 }

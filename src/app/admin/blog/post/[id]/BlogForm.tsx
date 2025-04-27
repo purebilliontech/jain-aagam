@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ChevronLeft, Loader2} from "lucide-react";
+import { ChevronLeft, Loader2, X } from "lucide-react";
 import { Form, FormField } from "@/components/ui/form";
 import { useForm, type Resolver } from "react-hook-form";
 import {
@@ -26,36 +26,17 @@ import { getHTMLFromContentJson } from "@/utils/blog-client";
 import { useAuth } from "@/context/auth-context";
 import { useEffect } from "react";
 import type { BlogTagsDTO } from "@/schema/blogTag";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type BlogPostEditorProps = {
     blog: BlogDetail | null;
+    tags: BlogTagsDTO[];
 };
 
-const BlogForm = ({ blog }: BlogPostEditorProps) => {
+const BlogForm = ({ blog, tags }: BlogPostEditorProps) => {
     const router = useRouter();
     const { hasPermissions } = useAuth();
     const [loading, setLoading] = useState<boolean>(false);
-    const [tags, setTags] = useState<BlogTagsDTO[]>([]);
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-    // Load available tags
-    useEffect(() => {
-        const loadTags = async () => {
-            const result = await getTagsList();
-            if (result.success) {
-                setTags(result.data);
-            }
-        };
-        loadTags();
-    }, []);
-
-    // Extract tag IDs from blog data if editing
-    useEffect(() => {
-        if (blog && blog.blogToTags) {
-            const tagIds = blog.blogToTags.map(tagRelation => tagRelation.tagId);
-            setSelectedTags(tagIds);
-        }
-    }, [blog]);
 
     const form = useForm<BlogForm>({
         resolver: zodResolver(BlogFormSchema) as unknown as Resolver<BlogForm>,
@@ -66,16 +47,11 @@ const BlogForm = ({ blog }: BlogPostEditorProps) => {
             authorName: blog?.authorName || "",
             readingTimeSeconds: blog?.readingTimeSeconds || 0,
             slug: blog?.slug || "",
-            tags: selectedTags,
+            tags: blog?.blogToTags.map((tag) => tag.tagId) || [],
             banner: blog?.banner || undefined,
             published: blog?.published || false,
         },
     });
-
-    // Update form values when selectedTags changes
-    useEffect(() => {
-        form.setValue("tags", selectedTags);
-    }, [selectedTags, form]);
 
     const saveBlog = async (formData: BlogForm) => {
         setLoading(true);
@@ -105,13 +81,7 @@ const BlogForm = ({ blog }: BlogPostEditorProps) => {
         }
     };
 
-    const handleTagSelection = (tagId: string) => {
-        if (selectedTags.includes(tagId)) {
-            setSelectedTags(selectedTags.filter(id => id !== tagId));
-        } else {
-            setSelectedTags([...selectedTags, tagId]);
-        }
-    };
+
 
     return (
         <Form {...form}>
@@ -141,7 +111,7 @@ const BlogForm = ({ blog }: BlogPostEditorProps) => {
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                         <div className="space-y-6 md:col-span-2">
                             <Card>
-                                <CardContent className="pt-6">
+                                <CardContent className="pt-6 ">
                                     <FormField
                                         control={form.control}
                                         name="title"
@@ -152,7 +122,7 @@ const BlogForm = ({ blog }: BlogPostEditorProps) => {
                                                 inputEle={
                                                     <Input type="text" placeholder="Enter Blog Title" />
                                                 }
-                                                divClass="relative"
+                                                divClass="relative mb-5"
                                                 cb={GenericFormInput}
                                             />
                                         )}
@@ -335,22 +305,54 @@ const BlogForm = ({ blog }: BlogPostEditorProps) => {
                             <Card>
                                 <CardContent className="pt-6">
                                     <h2 className="mb-4 font-medium">Tags</h2>
-                                    <div className="space-y-2">
-                                        {tags.map((tag) => (
-                                            <div key={tag.id} className="flex items-center">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`tag-${tag.id}`}
-                                                    checked={selectedTags.includes(tag.id)}
-                                                    onChange={() => handleTagSelection(tag.id)}
-                                                    className="mr-2 h-4 w-4"
-                                                />
-                                                <label htmlFor={`tag-${tag.id}`}>{tag.name}</label>
-                                            </div>
-                                        ))}
-                                        {tags.length === 0 && (
-                                            <div className="text-sm text-gray-500">No tags available.</div>
-                                        )}
+
+                                    <div className="form-item mb-3">
+                                        <Select
+                                            onValueChange={(selectedTagId) => {
+                                                const currentTags = form.watch("tags");
+                                                if (!currentTags.includes(selectedTagId)) {
+                                                    form.setValue("tags", [...currentTags, selectedTagId]);
+                                                }
+                                            }}
+                                            value=""
+                                            disabled={!hasPermissions(["modify:video"])}
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select a tag" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    {tags.filter(tag => !form.watch("tags").includes(tag.id)).map(tag => (
+                                                        <SelectItem key={tag.id} value={tag.id}>
+                                                            {tag.name}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-2">
+                                        {form.watch("tags").map((tagId) => {
+                                            const tag = tags.find((t) => t.id === tagId);
+                                            return (
+                                                <div key={tagId} className="flex text-xs items-center space-x-2 bg-slate-200 px-2 py-1 rounded">
+                                                    <span>{tag?.name}</span>
+                                                    {hasPermissions(["modify:video"]) &&
+                                                        <button
+                                                            type="button"
+                                                            className="cursor-pointer"
+                                                            onClick={() => {
+                                                                const updatedTags = form.watch("tags").filter((id) => id !== tagId);
+                                                                form.setValue("tags", updatedTags);
+                                                            }}
+                                                        >
+                                                            <X className="w-4 h-4" />
+                                                        </button>
+                                                    }
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </CardContent>
                             </Card>

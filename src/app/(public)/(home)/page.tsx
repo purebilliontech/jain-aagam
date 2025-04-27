@@ -1,5 +1,3 @@
-"use client";
-
 import WhatAreAgams from "./(sections)/WhatAreAgams";
 import Agams from "./(sections)/Agams";
 import AgamEbooks from "./(sections)/AgamEbooks";
@@ -8,11 +6,16 @@ import AgamWisdom from "./(sections)/AgamWisdom";
 import JoinMission from "./(sections)/JoinMission";
 import { Timeline } from "./(sections)/Timeline";
 import TopSection from "./(sections)/TopSection";
+import { getHomepageContent } from "./actions";
 
-export default function Home() {
+export default async function Home() {
+
+  const homepageContent = await getHomepageContent();
+
+
   return (
     <>
-      <TopSection />
+      <TopSection coverImage={homepageContent.data?.CoverImage || null} />
       <WhatAreAgams />
       <Agams />
       <AgamEbooks />

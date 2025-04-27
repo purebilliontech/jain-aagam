@@ -10,11 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   GenericFormField,
   GenericFormInput,
-  GenericRadioGroup,
-  GenericSelectClosure,
 } from "@/components/generic/GenericFormComponents";
 import {
-  YoutubeVideoDTO,
   YoutubeVideoForm,
   YoutubeVideoFormSchema,
   type YoutubeVideoWithTags,

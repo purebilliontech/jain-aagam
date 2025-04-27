@@ -1,6 +1,5 @@
 import React from "react";
 import PanchMahavrats from "./(sections)/PanchMahavrats";
-import Image from "next/image";
 import { EbooksTimeline } from "./(sections)/EbooksTimeline";
 import TopSection from "./(sections)/TopSection";
 import BhagwanMahavir from "./(sections)/BhagwanMahavir";
@@ -9,11 +8,15 @@ import ShortFilmsAndDramas from "./(sections)/ShortFilmsAndDramas";
 import NavkarMahamantrs from "./(sections)/NavkarMahamantrs";
 import IndianIndependence from "./(sections)/IndianIndependence";
 import ViewsOnJainism from "./(sections)/ViewsOnJainism";
+import { getBhagwanMahavirPageData } from "./actions";
 
-function Ebooks() {
+export default async function Ebooks() {
+
+  const bhagwanMahavirPage = await getBhagwanMahavirPageData();
+
   return (
     <>
-      <TopSection />
+      <TopSection coverImage={bhagwanMahavirPage.data?.CoverImage || null} />
       <BhagwanMahavir />
       <Upvasana />
       <EbooksTimeline
@@ -112,20 +115,14 @@ function Ebooks() {
       </div>
 
       <ShortFilmsAndDramas />
-
       <PanchMahavrats />
-
       <Upvasana />
-
       <NavkarMahamantrs />
       <IndianIndependence />
-
       <Upvasana />
-
       <ViewsOnJainism />
 
     </>
   );
 }
 
-export default Ebooks;

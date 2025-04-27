@@ -4,6 +4,7 @@ import { handleServerActionError } from "@/helpers/error";
 import { authorizeUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { BlogDetailSchema, type BlogForm } from "@/schema/blog";
+import { BlogTagsDTOSchema } from "@/schema/blogTag";
 import { formatContentJson } from "@/utils/blog";
 
 export const getBlogPostById = async (id: string) => {
@@ -46,7 +47,10 @@ export const getTagsList = async () => {
             throw new Error(user.message);
         }
         const tagsList = await db.blogTags.findMany();
-        return { success: true, data: tagsList };
+
+        const tagsDTO = tagsList.map(tag => BlogTagsDTOSchema.parse(tag));
+
+        return { success: true, data: tagsDTO };
     } catch (error) {
         handleServerActionError(error);
         return { success: false, data: [] };
@@ -72,6 +76,13 @@ export const createBlogPost = async (data: BlogForm, contentJsonString: string) 
                 published: data.published,
                 publishedAt: new Date(),
                 bannerId: data.banner.id,
+                blogToTags: {
+                    createMany: {
+                        data: data.tags.map(tagId => ({
+                            tagId: tagId
+                        }))
+                    }
+                }
             },
             include: {
                 banner: true,
@@ -79,16 +90,16 @@ export const createBlogPost = async (data: BlogForm, contentJsonString: string) 
         });
 
         // Then connect the tags in a separate operation
-        if (data.tags && data.tags.length > 0) {
-            await Promise.all(data.tags.map(tagId => 
-                db.tagsToBlog.create({
-                    data: {
-                        blogId: newPost.id,
-                        tagId: tagId
-                    }
-                })
-            ));
-        }
+        // if (data.tags && data.tags.length > 0) {
+        //     await Promise.all(data.tags.map(tagId =>
+        //         db.tagsToBlog.create({
+        //             data: {
+        //                 blogId: newPost.id,
+        //                 tagId: tagId
+        //             }
+        //         })
+        //     ));
+        // }
 
         return {
             success: true,
@@ -106,7 +117,7 @@ export const updateBlogPostById = async (id: string, data: BlogForm, contentJson
         if (!user.success) {
             throw new Error(user.message);
         }
-        
+
         // First, update the main blog post
         const updatedPost = await db.blog.update({
             where: { id },
@@ -120,27 +131,37 @@ export const updateBlogPostById = async (id: string, data: BlogForm, contentJson
                 published: data.published,
                 publishedAt: new Date(),
                 bannerId: data.banner.id,
+                blogToTags: {
+                    deleteMany: {
+                        blogId: id
+                    },
+                    createMany: {
+                        data: data.tags.map(tagId => ({
+                            tagId: tagId
+                        }))
+                    }
+                }
             },
         });
 
         // Next, handle the tags - first delete existing relationships
-        await db.tagsToBlog.deleteMany({
-            where: {
-                blogId: id
-            }
-        });
+        // await db.tagsToBlog.deleteMany({
+        //     where: {
+        //         blogId: id
+        //     }
+        // });
 
-        // Then create new tag relationships
-        if (data.tags && data.tags.length > 0) {
-            await Promise.all(data.tags.map(tagId => 
-                db.tagsToBlog.create({
-                    data: {
-                        blogId: id,
-                        tagId: tagId
-                    }
-                })
-            ));
-        }
+        // // Then create new tag relationships
+        // if (data.tags && data.tags.length > 0) {
+        //     await Promise.all(data.tags.map(tagId =>
+        //         db.tagsToBlog.create({
+        //             data: {
+        //                 blogId: id,
+        //                 tagId: tagId
+        //             }
+        //         })
+        //     ));
+        // }
 
         return {
             success: true,

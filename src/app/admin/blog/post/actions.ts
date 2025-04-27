@@ -3,13 +3,10 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { handleServerActionError } from "@/helpers/error";
-import {
-  BlogDataTableRowSchema,
-} from "@/schema/blog";
+import { BlogDataTableRowSchema } from "@/schema/blog";
 import type { PaginatedReqParams } from "@/schema/common";
 import { authorizeUser } from "@/lib/auth";
 
-// actions.ts - Modified getBlogPosts function
 export const getBlogPosts = async ({
   page = 1,
   pageSize = 10,
@@ -23,19 +20,15 @@ export const getBlogPosts = async ({
     if (!user.success) {
       throw new Error(user.message);
     }
-    
+
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 
-    // Build where conditions
-    let whereConditions: Prisma.BlogWhereInput = {};
-
-    if (search) {
-      whereConditions = {
+    const whereConditions: Prisma.BlogWhereInput = search
+      ? {
         OR: [
           { title: { contains: search, mode: "insensitive" } },
           { synopsis: { contains: search, mode: "insensitive" } },
-          { authorName: { contains: search, mode: "insensitive" } },
           {
             blogToTags: {
               some: {
@@ -46,14 +39,12 @@ export const getBlogPosts = async ({
             }
           }
         ],
-      };
-    }
+      }
+      : {};
 
-    // Build ordering
     const orderBy: Prisma.BlogOrderByWithRelationInput = {};
     orderBy[sortBy as keyof Prisma.BlogOrderByWithRelationInput] = sortDirection;
 
-    // Get data with pagination
     const [posts, totalCount] = await Promise.all([
       db.blog.findMany({
         where: search ? whereConditions : undefined,
@@ -74,17 +65,7 @@ export const getBlogPosts = async ({
       }),
     ]);
 
-    // Process the data before validation
-    const processedPosts = posts.map(post => {
-      return {
-        ...post,
-        // Generate tagsString for display
-        tagsString: post.blogToTags.map(relation => relation.tag.name).join(', ')
-      };
-    });
-
-    // Parse with the updated schema
-    const blogPostsDTO = processedPosts.map(post => BlogDataTableRowSchema.parse(post));
+    const blogPostsDTO = posts.map(post => BlogDataTableRowSchema.parse(post));
 
     return {
       success: true,
@@ -124,17 +105,11 @@ export const deleteBlogPostById = async (id: string) => {
     if (!user.success) {
       throw new Error(user.message);
     }
-    
-    // First delete all tag relationships
-    await db.tagsToBlog.deleteMany({
-      where: { blogId: id }
-    });
+
+    await db.tagsToBlog.deleteMany({ where: { blogId: id } });
     console.log("Deleted tag relationships for blogId:", id);
-    
-    // Then delete the blog post
-    await db.blog.delete({
-      where: { id },
-    });
+
+    await db.blog.delete({ where: { id } });
     console.log("Deleted blog post with id:", id);
 
     return { success: true, data: null };
