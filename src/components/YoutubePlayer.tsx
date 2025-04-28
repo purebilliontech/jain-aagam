@@ -18,7 +18,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
     const iframe = document.createElement("iframe");
     iframe.width = "100%";
     iframe.height = "100%";
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1`;
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&showinfo=0&modestbranding=1&enablejsapi=1`;
     iframe.title = "YouTube video player";
     iframe.frameBorder = "0";
     iframe.allow =
@@ -88,7 +88,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
   return (
     <div
       ref={containerRef}
-      className={`absolute inset-0 z-20 ${isPlayerLoaded ? "opacity-100" : "opacity-10"}`}
+      className={`absolute inset-0 z-20 ${isPlayerLoaded ? "opacity-100" : "opacity-80"}`}
     />
   );
 };
