@@ -89,12 +89,12 @@ export function LoginForm() {
                                                 formLabel={
                                                     <div className="flex w-full justify-between items-center">
                                                         <Label htmlFor="password">Password</Label>
-                                                        <Link
+                                                        {/* <Link
                                                             href="/auth/forgot"
                                                             className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                                                         >
                                                             Forgot your password?
-                                                        </Link>
+                                                        </Link> */}
                                                     </div>
                                                 }
                                                 field={field}

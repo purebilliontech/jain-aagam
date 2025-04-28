@@ -2,23 +2,18 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
   Book,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  Users,
+  Image,
+  FileText,
+  Video,
+  Layout,
+  Home,
+  Globe,
+  LogOut,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -26,21 +21,21 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { permission } from "process"
+import { Button } from "./ui/button"
+import Link from "next/link"
 
-// This is sample data.
 const data = {
   navMain: [
     {
       title: "Users Management",
       url: "/admin/users",
-      icon: Bot,
+      icon: Users,
       permissions: ["view:user"],
     },
     {
       title: "Media",
       url: "/admin/media",
-      icon: Bot,
+      icon: Image,
       permissions: ["view:media"],
     },
     {
@@ -52,7 +47,7 @@ const data = {
     {
       title: "Blog",
       url: "#",
-      icon: BookOpen,
+      icon: FileText,
       permissions: ["view:blog-tag", "view:blog"],
       items: [
         {
@@ -70,7 +65,7 @@ const data = {
     {
       title: "Videos",
       url: "#",
-      icon: BookOpen,
+      icon: Video,
       permissions: ["view:video-tag", "view:video", "view:playlist"],
       items: [
         {
@@ -93,18 +88,20 @@ const data = {
     {
       title: "Static Pages",
       url: "#",
-      icon: BookOpen,
+      icon: Layout,
       permissions: ["modify:homepage", "modify:bhagwan-mahavir-page"],
       items: [
         {
           title: "Homepage",
           url: "/admin/homepage",
           permissions: ["modify:homepage"],
+          icon: Home,
         },
         {
           title: "Bhagwan Mahavir Page",
           url: "/admin/bhagwan-mahavir",
           permissions: ["modify:bhagwan-mahavir-page"],
+          icon: Globe,
         },
       ],
     },
@@ -122,9 +119,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        {/* TODO: Add Logout button  */}
+        <Link href="/auth/logout">
+          <Button variant={'secondary'} className="w-full py-2 my-4 ">
+            Logout <LogOut />
+          </Button>
+        </Link>
+
       </SidebarFooter>
-      <SidebarRail />
+      {/* <SidebarRail /> */}
     </Sidebar>
   )
 }
