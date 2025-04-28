@@ -15,12 +15,12 @@ export default async function Home() {
 
   return (
     <>
-      <TopSection coverImage={homepageContent.data?.CoverImage || null} />
+      <TopSection coverImage={homepageContent.data?.homepage.CoverImage || null} />
       <WhatAreAgams />
       <Agams />
       <AgamEbooks />
       <EnglishAgam />
-      <AgamWisdom />
+      <AgamWisdom blogs={homepageContent.data?.latestBlogs || []} />
       <div className="overflow-x-hidden">
 
         <Timeline data={[

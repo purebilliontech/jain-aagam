@@ -153,7 +153,7 @@ export default function VideoForm({ video, tags }: { video: YoutubeVideoWithTags
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => router.push("/admin/video")}
+                    onClick={() => router.push("/admin/video/video-links")}
                   >
                     Cancel
                   </Button>
