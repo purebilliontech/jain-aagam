@@ -230,7 +230,7 @@ const WhatAreAgams = () => {
 
           {/* Right Bottom Button (Upang Aagams) */}
           <motion.div
-            className="w-16 h-16 md:w-30 md:h-30 rounded-full bg-[#E3DFD5] drop-shadow-xl flex flex-col items-center justify-center font-mono text-xs md:text-xl text-[#686151] absolute bottom-20 right-0 sm:right-10 md:right-40 cursor-pointer z-10"
+            className="w-16 h-16 md:w-30 md:h-30 rounded-full bg-[#E3DFD5] drop-shadow-xl flex flex-col items-center justify-center font-mono text-xs md:text-xl text-[#686151] absolute bottom-40 right-0 sm:right-10 md:right-40 cursor-pointer z-10"
             onClick={toggleRightBottomPopup}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
           >

@@ -1,9 +1,9 @@
 "use client"
 import FEButton from "@/components/common/FEButton";
 import SectionTitle from "@/components/common/SectionTitle";
-import { Search, Play } from "lucide-react";
-import Image from "next/image";
+import { Search } from "lucide-react";
 import React, { useState } from "react";
+import YouTubePlayer from "@/components/YoutubePlayer";
 
 const tags = ["Happiness", "Jain Agam", "Jainism", "Live Streams"];
 
@@ -46,29 +46,11 @@ const extractVideoId = (url: string): string => {
 // Video thumbnail component
 const VideoThumbnail = ({ videoUrl }: { videoUrl: string }) => {
   const videoId = extractVideoId(videoUrl);
-  
-  const openVideo = () => {
-    window.open(videoUrl, '_blank');
-  };
 
   return (
-    <div 
-      className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02]"
-      onClick={openVideo}
-    >
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02]">
       <div className="relative w-full h-48">
-        <Image 
-          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`} 
-          alt="Video thumbnail"
-          className="object-cover transition-opacity duration-300"
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-all duration-300">
-          <div className="bg-primary-ui p-3 rounded-full transform transition-transform duration-300 hover:scale-110">
-            <Play className="text-white" size={24} />
-          </div>
-        </div>
+        <YouTubePlayer videoId={videoId} onVideoEnd={() => {}} />
       </div>
     </div>
   );
@@ -77,29 +59,10 @@ const VideoThumbnail = ({ videoUrl }: { videoUrl: string }) => {
 // Featured video component
 const FeaturedVideoThumbnail = ({ videoUrl, isLarge = false }: { videoUrl: string, isLarge?: boolean }) => {
   const videoId = extractVideoId(videoUrl);
-  
-  const openVideo = () => {
-    window.open(videoUrl, '_blank');
-  };
 
   return (
-    <div 
-      className={`rounded-2xl overflow-hidden cursor-pointer relative group w-full ${isLarge ? 'h-48 md:h-96' : 'h-44'}`}
-      onClick={openVideo}
-    >
-      <Image
-        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-        alt="Video thumbnail" 
-        className="object-cover transition-all duration-300 group-hover:opacity-90"
-        fill
-        sizes="(max-width: 768px) 100vw, 50vw"
-        priority={isLarge}
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-        <div className="bg-primary-ui p-4 rounded-full transform transition-transform duration-300 hover:scale-110">
-          <Play className="text-white" size={isLarge ? 32 : 24} />
-        </div>
-      </div>
+    <div className={`rounded-2xl overflow-hidden cursor-pointer relative group w-full ${isLarge ? 'h-48 md:h-96' : 'h-44'}`}>
+      <YouTubePlayer videoId={videoId} onVideoEnd={() => {}} />
     </div>
   );
 };
