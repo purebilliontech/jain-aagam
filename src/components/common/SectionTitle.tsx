@@ -1,10 +1,16 @@
 import Image from 'next/image'
 import React from 'react'
 
-const SectionTitle = ({ title, subtitle }: { title: string, subtitle: string }) => {
+interface SectionTitleProps {
+    title: string;
+    subtitle: string;
+    className?: string; // Optional prop for custom Tailwind CSS classes
+}
+
+const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, className }) => {
     return (
         <>
-            <div className='max-w-7xl mx-auto'>
+            <div className={`max-w-7xl mx-auto ${className}`}>
 
                 <p className='font-sans font-bold text-secondary-ui tracking-[0.2em] text-center mb-1.5'>{subtitle}</p>
 
