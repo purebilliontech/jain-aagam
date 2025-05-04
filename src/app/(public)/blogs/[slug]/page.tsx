@@ -8,12 +8,18 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
     const blog = await getBlogBySlug(slug);
 
-    if (!blog.success && !blog.data) {
+    if (!blog.success || !blog.data) {
         return <div>Blog Not Found</div>;
     }
 
+    const { blog: blogData, mediaList } = blog.data;
+
+    if (!blogData || !mediaList) {
+        return <div>Blog Data Incomplete</div>;
+    }
+
     return (
-        <BlogDetailPage blog={blog.data?.blog!} mediaList={blog.data?.mediaList!} />
+        <BlogDetailPage blog={blogData} mediaList={mediaList} />
     )
 }
 
