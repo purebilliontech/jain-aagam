@@ -146,7 +146,7 @@ const EnglishAgam = () => {
           <h3 className="text-typography font-semibold font-mono text-2xl md:text-3xl lg:text-4xl text-center md:text-left">
             Launching ENGLISH Aagams
           </h3>
-          <p className="text-typography text-lg md:text-xl lg:text-2xl mt-5 mb-8 text-justify">
+          <p className="text-typography text-md md:text-lg lg:text-xl mt-5 mb-8 text-justify">
             The Jain Aagams, originally written in the Aradhamagadhi Prakrit
             script, have been meticulously translated into Indian scripts like
             Hindi, Gujarati, Marathi, Kannada, Tamil and more by Sadhu-Sadhvijis
@@ -158,7 +158,7 @@ const EnglishAgam = () => {
             highly educated Jain sadhu-sadhvijis and distinguished scholars and
             experts.{" "}
           </p>
-          <p className="text-typography text-lg md:text-xl lg:text-2xl mt-5 mb-8 text-justify">
+          <p className="text-typography text-md md:text-lg lg:text-xl mt-5 mb-8 text-justify">
             The first of these Aagams, Shree Upasakdashang Sutra, has been
             launched in 2024 and is now available for purchase.
           </p>
