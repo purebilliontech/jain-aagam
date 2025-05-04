@@ -3,6 +3,8 @@
 import { handleServerActionError } from "@/helpers/error";
 import { db } from "@/lib/db";
 import { HomepageDTOSchema } from "@/schema/staticPage";
+import BlogsListPage from "../blogs/BlogsListPage";
+import { BlogWithTagsAndBannerSchema } from "@/schema/blog";
 
 export const getHomepageContent = async () => {
     try {
@@ -19,9 +21,30 @@ export const getHomepageContent = async () => {
             }
         });
 
+        const latestBlogs = await db.blog.findMany({
+            where: {
+                published: true,
+            },
+            include: {
+                banner: true,
+                blogToTags: {
+                    include: {
+                        tag: true,
+                    },
+                },
+            },
+            take: 6,
+            orderBy: {
+                publishedAt: "desc"
+            }
+        });
+
         return {
             success: true,
-            data: HomepageDTOSchema.parse(homepage)
+            data: {
+                homepage: HomepageDTOSchema.parse(homepage),
+                latestBlogs: latestBlogs.map(blog => BlogWithTagsAndBannerSchema.parse(blog))
+            }
         };
 
     } catch (error) {

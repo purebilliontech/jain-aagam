@@ -184,9 +184,9 @@ const WhatAreAgams = () => {
             {isRightBottomPopupVisible && (
               <motion.div
                 className="w-64 absolute top-105 right-0 z-20 md:block hidden"
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
+                initial={{ opacity: 0, y: 0 }}
+                animate={{ opacity: 1, y: 80 }}
+                exit={{ opacity: 0, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
               >
                 <div className="flex items-start gap-4 p-4">

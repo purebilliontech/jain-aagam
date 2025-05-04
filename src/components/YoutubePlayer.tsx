@@ -14,10 +14,26 @@ let isApiLoaded = false;
 const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
-  const [isPlayerReady, setIsPlayerReady] = useState(false);
+  const [isPlayerLoaded, setIsPlayerLoaded] = useState(false);
 
   // Load YouTube API once
   useEffect(() => {
+    if (!containerRef.current) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.width = "100%";
+    iframe.height = "100%";
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&showinfo=0&modestbranding=1&enablejsapi=1`;
+    iframe.title = "YouTube video player";
+    iframe.frameBorder = "0";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.id = `youtube-player-${videoId}`;
+
+    containerRef.current.innerHTML = "";
+    containerRef.current.appendChild(iframe);
+
     const loadYouTubeAPI = () => {
       if (isApiLoaded) return Promise.resolve();
       if (isApiLoading) {
@@ -99,7 +115,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
           },
           events: {
             onReady: () => {
-              setIsPlayerReady(true);
+              setIsPlayerLoaded(true);
             },
             onStateChange: (event: { data: number }) => {
               if (event.data === 0) {
@@ -129,21 +145,10 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
   }, [videoId, onVideoEnd]);
 
   return (
-    <div className="relative w-full h-full">
-      {/* Loading overlay */}
-      {!isPlayerReady && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
-          <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-        </div>
-      )}
-      
-      {/* YouTube player container */}
-      <div
-        ref={containerRef}
-        className="absolute inset-0 z-20 transition-opacity duration-300"
-        style={{ opacity: isPlayerReady ? 1 : 0 }}
-      />
-    </div>
+    <div
+      ref={containerRef}
+      className={`absolute inset-0 z-20 ${isPlayerLoaded ? "opacity-100" : "opacity-80"}`}
+    />
   );
 };
 

@@ -5,12 +5,10 @@ import React from "react";
 import moment from "moment";
 
 const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: { id: string; name: string; }[] }) => {
-  console.log(blogs)
-  console.log(tags)
   return (
     <>
       <div className="bg-[#E9E2D2] w-full h-64 md:h-96 flex items-center">
-        <h1 className="text-primary-ui p-4 md:p-20 text-4xl md:text-8xl font-semibold">
+        <h1 className="max-w-7xl mx-auto text-primary-ui p-4 md:p-20 text-4xl md:text-8xl font-semibold">
           ARTICLES
         </h1>
       </div>
