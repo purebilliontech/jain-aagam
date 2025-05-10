@@ -14,11 +14,11 @@ const AgamSection = ({ title, content }: { title: string, content: string }) => 
 
 const Agams = () => {
     const agamData = [
-        { title: 'Ang Aagams:', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.' },
-        { title: 'Upang Aagams:', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.' },
-        { title: 'Mool Aagams:', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.' },
-        { title: 'Chhed Aagams:', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.' },
-        { title: 'Avashyak Aagams:', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.' },
+        { title: 'Ang Sutras:', content: 'These are the core texts, the direct preachings of Parmatma Mahavir that were weaved into scriptures by his chief disciples – the Gandhars. They are also known as the Dwaadshangi Ganipitak or the eternal 12 texts of wisdom. The twelfth sutra has been lost with time; there are 11 Ang Sutras with us today. .' },
+        { title: 'Upang Sutra:', content: 'These are the subsidiary texts, the scriptures which have been derived from the core Ang Sutras. These scriptures have been created by Acharya Bhagwants, and there are numerous Upaang Sutras, of which 12 texts are with us today. ' },
+        { title: 'Mool Sutras:', content: 'These texts reveal the fundamentals of Jainism, just like the roots of a tree. Mool Sutras contain profound insights on life-transforming lessons shared by Bhagwan Mahavir.' },
+        { title: 'Chhed Sutras:', content: 'These are distinctive scriptures formulated specially for the conduct of ascetics. While in sadhana, if a seeker commits faults or mistakes, Chhed Sutras throw light on well-defined corrective measures and forms of repentance for self-improvement. ' },
+        { title: 'Avashyak Sutra:', content: 'Avashyak Sutra is an independent Sutra that has been mandated as ‘a must’ for laymen and ascetics alike. It highlights spiritual practices for daily inner cleansing and sadhanas for daily self-purification.' },
     ];
 
     return (

@@ -14,8 +14,12 @@ export const getBlogBySlug = async (slug: string) => {
                 slug,
             },
             include: {
-                category: true,
-                banner: true,
+                banner: true, 
+                blogToTags: {
+                    include: {
+                        tag: true,
+                    },
+                },
             },
         });
 
