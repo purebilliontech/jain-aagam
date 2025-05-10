@@ -5,8 +5,7 @@ const SectionTitle = ({ title, subtitle }: { title: string, subtitle: string }) 
     return (
         <>
             <div className='max-w-7xl mx-auto'>
-
-                <p className='font-sans font-bold text-secondary-ui tracking-[0.2em] text-center mb-1.5'>{subtitle}</p>
+                <p className='font-sans font-bold text-secondary-ui text-xs tracking-[0.2em] text-center'>{subtitle}</p>
 
                 <div className="flex items-center md:flex-row flex-col">
                     <div className="md:w-1/5 w-1/2 max-md:my-3">
