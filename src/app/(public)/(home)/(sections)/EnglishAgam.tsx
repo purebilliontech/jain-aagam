@@ -16,59 +16,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { toast } from "sonner";
-import { submitEnglishAgamContact } from "./actions";
+import { submitEnglishAgamContact } from "@/app/(public)/(home)/actions";
+import { EnglishAgamContactFormSchema } from "@/schema/englishAagam";
+import { EnglishAgamContactForm } from "@/schema/englishAagam";
+import Typography from "@/components/common/typography";
 
-// Enhanced Zod schema with more specific validations
-const englishAgamContactSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "Name must be at least 2 characters" })
-    .max(100, { message: "Name cannot exceed 100 characters" })
-    .refine((name) => /^[a-zA-Z\s.\-']+$/.test(name), {
-      message:
-        "Name should only contain letters, spaces, hyphens, periods, and apostrophes",
-    }),
-
-  contactNumber: z
-    .string()
-    .min(10, { message: "Contact number must be at least 10 digits" })
-    .max(15, { message: "Contact number cannot exceed 15 digits" })
-    .refine((phone) => /^[+\d\s\-()]+$/.test(phone), {
-      message: "Please enter a valid phone number format",
-    }),
-
-  city: z
-    .string()
-    .min(2, { message: "City name must be at least 2 characters" })
-    .max(50, { message: "City name cannot exceed 50 characters" })
-    .refine((city) => /^[a-zA-Z\s.\-']+$/.test(city), {
-      message:
-        "City should only contain letters, spaces, hyphens, and apostrophes",
-    }),
-
-  country: z
-    .string()
-    .min(2, { message: "Country name must be at least 2 characters" })
-    .max(50, { message: "Country name cannot exceed 50 characters" })
-    .refine((country) => /^[a-zA-Z\s.\-']+$/.test(country), {
-      message:
-        "Country should only contain letters, spaces, hyphens, and apostrophes",
-    }),
-
-  email: z
-    .string()
-    .email({ message: "Please enter a valid email address" })
-    .min(5, { message: "Email must be at least 5 characters" })
-    .max(100, { message: "Email cannot exceed 100 characters" })
-    .refine((email) => !email.endsWith(".con"), {
-      message: "Did you mean .com instead of .con?",
-    }),
-});
-
-// TypeScript type derived from the schema
-type EnglishAgamContactType = z.infer<typeof englishAgamContactSchema>;
 
 const EnglishAgam = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,27 +32,17 @@ const EnglishAgam = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<EnglishAgamContactType>({
-    resolver: zodResolver(englishAgamContactSchema),
+  } = useForm<EnglishAgamContactForm>({
+    resolver: zodResolver(EnglishAgamContactFormSchema),
     mode: "onBlur", // Validate fields when they lose focus
   });
 
-  const onSubmit = async (data: EnglishAgamContactType) => {
+  const onSubmit = async (data: EnglishAgamContactForm) => {
     try {
       setIsSubmitting(true);
 
-      // Sanitize inputs before submission (trimming whitespace)
-      const sanitizedData = {
-        ...data,
-        name: data.name.trim(),
-        city: data.city.trim(),
-        country: data.country.trim(),
-        email: data.email.trim().toLowerCase(),
-        contactNumber: data.contactNumber.trim(),
-      };
-
       // Call server action to save data
-      const result = await submitEnglishAgamContact(sanitizedData);
+      const result = await submitEnglishAgamContact(data);
 
       if (result.success) {
         toast.success("Your information has been submitted successfully");
@@ -107,12 +50,6 @@ const EnglishAgam = () => {
         setIsOpen(false); // Close modal
       } else {
         toast.error(result.message || "Something went wrong");
-
-        // If there are field-specific errors, handle them
-        if (result.errors) {
-          // You can handle specific field errors here if needed
-          console.error("Validation errors:", result.errors);
-        }
       }
     } catch (error) {
       toast.error("Failed to submit. Please try again.");
@@ -135,18 +72,18 @@ const EnglishAgam = () => {
       <div className="z-50 bg-[#E9E2D2ED] p-5 md:p-10 lg:p-14 max-w-7xl mx-auto rounded-4xl flex flex-col md:flex-row gap-5 md:gap-10">
         <div className="w-full pt-2 md:pt-0 md:w-1/3 flex justify-center">
           <Image
-            src={"/static/red-book.png"}
-            width={300}
+            src={"/static/home/english-agam-book.png"}
+            width={400}
             height={600}
-            alt="Red Book"
-            className="mx-auto"
+            alt="English Agam Book"
+            className="mx-auto w-full h-auto object-contain"
           />
         </div>
         <div className="w-full md:w-2/3 pt-3">
-          <h3 className="text-typography font-semibold font-mono text-2xl md:text-3xl lg:text-4xl text-center md:text-left">
+          <Typography variant="h2" className="text-typography text-center md:text-left">
             Launching ENGLISH Aagams
-          </h3>
-          <p className="text-typography text-md md:text-lg lg:text-xl mt-5 mb-8 text-justify">
+          </Typography>
+          <Typography variant="p" className="text-typography  mt-5 mb-8 text-justify">
             The Jain Aagams, originally written in the Aradhamagadhi Prakrit
             script, have been meticulously translated into Indian scripts like
             Hindi, Gujarati, Marathi, Kannada, Tamil and more by Sadhu-Sadhvijis
@@ -157,11 +94,11 @@ const EnglishAgam = () => {
             global accessibility, with absolute authenticity being preserved by
             highly educated Jain sadhu-sadhvijis and distinguished scholars and
             experts.{" "}
-          </p>
-          <p className="text-typography text-md md:text-lg lg:text-xl mt-5 mb-8 text-justify">
+          </Typography>
+          <Typography variant="p" className="text-typography  mt-5 mb-8 text-justify">
             The first of these Aagams, Shree Upasakdashang Sutra, has been
             launched in 2024 and is now available for purchase.
-          </p>
+          </Typography>
           <div className="flex justify-center md:justify-start">
             <FEButton onClick={() => setIsOpen(true)}>BOOK NOW</FEButton>
           </div>

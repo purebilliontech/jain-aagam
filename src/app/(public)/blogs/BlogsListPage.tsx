@@ -28,7 +28,7 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
   // Filter blogs whenever selected tags or search term changes
   useEffect(() => {
     let result = [...blogs];
-    
+
     // Filter by selected tags if any are selected
     if (selectedTags.length > 0) {
       result = result.filter(blog => {
@@ -36,16 +36,16 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
         return selectedTags.some(tag => blogTags.includes(tag));
       });
     }
-    
+
     // Filter by search term if provided
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
-      result = result.filter(blog => 
-        blog.title.toLowerCase().includes(term) || 
+      result = result.filter(blog =>
+        blog.title.toLowerCase().includes(term) ||
         blog.blogToTags.some(tag => tag.tag.name.toLowerCase().includes(term))
       );
     }
-    
+
     setFilteredBlogs(result);
   }, [selectedTags, searchTerm, blogs]);
 
@@ -63,11 +63,10 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
             <button
               key={tag.id}
               onClick={() => handleTagClick(tag.name)}
-              className={`inline-block px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full transition-colors ${
-                selectedTags.includes(tag.name)
-                  ? "bg-primary-ui text-white" 
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              className={`inline-block px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full transition-colors ${selectedTags.includes(tag.name)
+                ? "bg-primary-ui text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
             >
               {tag.name}
             </button>
@@ -91,8 +90,8 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
           <p className="text-xl text-gray-500">No articles found matching your filter criteria.</p>
         </div>
       ) : (
-<div className="flex flex-wrap max-w-7xl mx-auto p-5 space-y-8 md:space-y-16">
-{filteredBlogs.map((blog) => (
+        <div className="flex flex-wrap max-w-7xl mx-auto p-5 space-y-8 md:space-y-16">
+          {filteredBlogs.map((blog) => (
             <BlogCard
               key={blog.id}
               tags={blog.blogToTags.map(tag => tag.tag.name)}
@@ -107,7 +106,7 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
 
       {selectedTags.length > 0 && (
         <div className="max-w-7xl mx-auto px-5 pb-10">
-          <button 
+          <button
             onClick={() => setSelectedTags([])}
             className="text-primary-ui hover:underline font-medium"
           >

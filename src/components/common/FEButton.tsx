@@ -7,7 +7,7 @@ const FEButton = React.forwardRef<HTMLButtonElement, FEButtonProps>(
         return (
             <button
                 ref={ref}
-                className={`bg-accent-ui cursor-pointer text-white md:px-12 px-10 md:text-xl md:py-5 py-4 font-semibold tracking-wide rounded-3xl font-montserrat ${className}`}
+                className={`bg-accent-ui cursor-pointer text-white md:px-10 px-10 md:text-lg md:py-4 py-3 font-semibold tracking-wide rounded-2xl font-montserrat ${className}`}
                 {...props}
             />
         );

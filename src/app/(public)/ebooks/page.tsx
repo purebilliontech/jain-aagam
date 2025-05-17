@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import React from "react";
 import PanchMahavrats from "./(sections)/PanchMahavrats";
 import { EbooksTimeline } from "./(sections)/EbooksTimeline";

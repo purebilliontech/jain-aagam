@@ -26,21 +26,21 @@ const WhatAreAgams = () => {
     <>
       <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <SectionTitle title="What are Aagams?" subtitle="THE TIMELESS WISDOM" className="mt-20" />
-        
+
         {/* Description Section */}
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-16 my-12 md:my-16 lg:my-20">
           <div className="w-full md:w-1/2">
             <Image
-              src={"/static/placeholder.png"}
-              width={500}
-              height={500}
-              alt="Image for presentation"
-              className="w-full h-auto"
+              src={"/static/home/nirvan.jpg"}
+              width={600}
+              height={600}
+              alt="Nirvan Aagam"
+              className="w-full h-auto rounded-lg"
             />
           </div>
           <div className="w-full md:w-1/2 text-[#8E8777] mt-6 md:mt-0">
             <p>
-            Jain Aagams are the sacred scriptures of Jainism – the texts that encapsulate the infinite wisdom expounded by Bhagwan Mahavir, the 24th Tirthankar of Jainism. After attaining kevlagnan or omniscience, Bhagwan Mahavir illuminated the world with knowledge that transcended the past, present and future, encompassing every possible subject of the whole universe. The vast knowledge was then assimilated by his disciples, the Gandhars and the Acharyas, into Aagam scriptures. During Bhagwan Mahavir’s presence, there were countless Aagams. But with time, this legacy of wisdom slowly and gradually started depleting. Today, the world has preciously conserved 32 of these Aagams as per the Sthankwasi Tradition and 45 of them as per the Derawasi Tradition. 
+              Jain Aagams are the sacred scriptures of Jainism – the texts that encapsulate the infinite wisdom expounded by Bhagwan Mahavir, the 24th Tirthankar of Jainism. After attaining kevlagnan or omniscience, Bhagwan Mahavir illuminated the world with knowledge that transcended the past, present and future, encompassing every possible subject of the whole universe. The vast knowledge was then assimilated by his disciples, the Gandhars and the Acharyas, into Aagam scriptures. During Bhagwan Mahavir’s presence, there were countless Aagams. But with time, this legacy of wisdom slowly and gradually started depleting. Today, the world has preciously conserved 32 of these Aagams as per the Sthankwasi Tradition and 45 of them as per the Derawasi Tradition.
             </p>
           </div>
         </div>
@@ -67,7 +67,7 @@ const WhatAreAgams = () => {
               <h2>Upang</h2>
               <h2>Aagams</h2>
             </motion.div>
-            
+
             {/* Horizontal line and dot connecting to tree */}
             <div className="relative">
               <div className="absolute top-1/2 left-0 w-[50vw] sm:w-[20vw] md:w-[15vw] lg:w-[20vw] h-[1px] bg-[#D9D2BF] transform -translate-y-1/2"></div>
@@ -106,7 +106,7 @@ const WhatAreAgams = () => {
               <div className="absolute top-1/2 right-0 w-[50vw] sm:w-[20vw] md:w-[15vw] lg:w-[26vw] h-[1px] bg-[#D9D2BF] transform -translate-y-1/2"></div>
               <div className="absolute top-1/2 right-[50vw] sm:right-[20vw] md:right-[15vw] lg:right-[26vw] h-2 w-2 rounded-full bg-[#D9D2BF] transform -translate-y-1/2"></div>
             </div>
-            
+
             <motion.div
               className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-[#E3DFD5] drop-shadow-xl flex flex-col items-center justify-center font-mono text-xs sm:text-sm md:text-base lg:text-xl text-[#686151] cursor-pointer z-10 order-1"
               onClick={toggleRightTopPopup}
@@ -149,7 +149,7 @@ const WhatAreAgams = () => {
               <div className="absolute top-1/2 right-0 w-[50vw] sm:w-[20vw] md:w-[15vw] lg:w-[25vw] h-[1px] bg-[#D9D2BF] transform -translate-y-1/2"></div>
               <div className="absolute top-1/2 right-[50vw] sm:right-[20vw] md:right-[15vw] lg:right-[25vw] h-2 w-2 rounded-full bg-[#D9D2BF] transform -translate-y-1/2"></div>
             </div>
-            
+
             <motion.div
               className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-[#E3DFD5] drop-shadow-xl flex flex-col items-center justify-center font-mono text-xs sm:text-sm md:text-base lg:text-xl text-[#686151] cursor-pointer z-10 order-1"
               onClick={toggleRightBottomPopup}

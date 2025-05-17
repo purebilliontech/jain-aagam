@@ -20,7 +20,7 @@ const BlogCard = ({ title, date, tags, image, slug }: { title: string, date: str
 
                     <div className="flex flex-wrap gap-2 md:px-8 px-5 pb-8">
                         {tags.map((tag, index) => (
-                            <span key={index} className="inline-block bg-primary-ui md:px-7 px-5 md:py-2 py-1.5 md:text-lg font-medium text-white  rounded-full">
+                            <span key={index} className="inline-block bg-primary-ui md:px-5 px-3 md:py-1.5 py-1  text-white rounded-full">
                                 {tag}
                             </span>
                         ))}

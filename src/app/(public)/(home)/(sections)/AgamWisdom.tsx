@@ -13,6 +13,7 @@ const AgamWisdom = ({ blogs }: { blogs: BlogWithTagsAndBanner[] }) => {
                 {blogs.map((blog) => (
                     <BlogCard
                         key={blog.id}
+                        slug={blog.slug}
                         title={blog.title}
                         date={blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString() : new Date(blog.createdAt).toLocaleDateString()}
                         tags={blog.blogToTags.map(tag => tag.tag.name)}

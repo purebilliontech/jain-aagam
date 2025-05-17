@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import Typography from './typography';
 
 interface SectionTitleProps {
     title: string;
@@ -12,14 +13,14 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, className 
         <>
             <div className={`max-w-7xl mx-auto ${className}`}>
 
-                <p className='font-sans font-bold text-secondary-ui tracking-[0.2em] text-center mb-1.5'>{subtitle}</p>
+                <Typography variant='p' className='font-sans font-bold text-xs text-secondary-ui tracking-[4px] text-center mb-1.5'>{subtitle}</Typography>
 
                 <div className="flex items-center md:flex-row flex-col">
                     <div className="md:w-1/5 w-1/2 max-md:my-3">
                         <Image src={'/static/title-ornament.png'} width={300} height={24} alt='Image for presentation' />
                     </div>
                     <div className="md:w-3/5">
-                        <h2 className="md:text-6xl text-4xl text-primary-ui font-semibold font-mono text-center">{title}</h2>
+                        <Typography variant='h2' className="text-primary-ui  text-center">{title}</Typography>
                     </div>
                     <div className="md:w-1/5 md:block hidden">
                         <Image src={'/static/title-ornament.png'} width={300} height={24} alt='Image for presentation' />

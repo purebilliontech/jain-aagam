@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import WhatAreAgams from "./(sections)/WhatAreAgams";
 import Agams from "./(sections)/Agams";
 import AgamEbooks from "./(sections)/AgamEbooks";
@@ -11,7 +13,6 @@ import { getHomepageContent } from "./actions";
 export default async function Home() {
 
   const homepageContent = await getHomepageContent();
-
 
   return (
     <>

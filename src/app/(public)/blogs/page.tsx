@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import React from 'react'
 import BlogsListPage from './BlogsListPage'
 import { getBlogsList, getAllBlogTags } from './actions';
@@ -6,8 +8,6 @@ const Page = async () => {
 
     const blogs = await getBlogsList();
     const tags = await getAllBlogTags();
-    console.log('This is blogs', blogs)
-    console.log('This is tags', tags)
 
     if (!blogs.success || !tags.success) {
         return <div>Failed to fetch blogs or tags</div>;
