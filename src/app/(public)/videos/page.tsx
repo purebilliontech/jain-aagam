@@ -50,7 +50,7 @@ const VideoThumbnail = ({ videoUrl }: { videoUrl: string }) => {
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02]">
       <div className="relative w-full h-48">
-        <YouTubePlayer videoId={videoId} onVideoEnd={() => {}} />
+        <YouTubePlayer videoId={videoId} onVideoEnd={() => { }} />
       </div>
     </div>
   );
@@ -62,12 +62,12 @@ const FeaturedVideoThumbnail = ({ videoUrl, isLarge = false }: { videoUrl: strin
 
   return (
     <div className={`rounded-2xl overflow-hidden cursor-pointer relative group w-full ${isLarge ? 'h-48 md:h-96' : 'h-44'}`}>
-      <YouTubePlayer videoId={videoId} onVideoEnd={() => {}} />
+      <YouTubePlayer videoId={videoId} onVideoEnd={() => { }} />
     </div>
   );
 };
 
-function Videos() {
+export default function Videos() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTag, setActiveTag] = useState("All");
 
@@ -81,11 +81,10 @@ function Videos() {
         <div className="md:w-2/3 flex flex-wrap gap-2 px-4 md:px-8 pb-8">
           <span
             onClick={() => setActiveTag("All")}
-            className={`inline-block px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full cursor-pointer transition-colors duration-300 ${
-              activeTag === "All" 
-                ? "bg-primary-ui text-white" 
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
+            className={`inline-block px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full cursor-pointer transition-colors duration-300 ${activeTag === "All"
+              ? "bg-primary-ui text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
           >
             All
           </span>
@@ -93,11 +92,10 @@ function Videos() {
             <span
               key={index}
               onClick={() => setActiveTag(tag)}
-              className={`inline-block px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full cursor-pointer transition-colors duration-300 ${
-                activeTag === tag 
-                  ? "bg-primary-ui text-white" 
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              className={`inline-block px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full cursor-pointer transition-colors duration-300 ${activeTag === tag
+                ? "bg-primary-ui text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
             >
               {tag}
             </span>
@@ -106,8 +104,8 @@ function Videos() {
         <div className="md:w-1/3 mt-4 md:mt-0">
           <div className="flex border-b border-primary-ui">
             <Search className="text-primary-ui" />
-            <input 
-              className="w-full border-none outline-none px-2 pb-1 text-sm md:text-lg" 
+            <input
+              className="w-full border-none outline-none px-2 pb-1 text-sm md:text-lg"
               placeholder="Search videos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -153,5 +151,3 @@ function Videos() {
     </>
   );
 }
-
-export default Videos;
