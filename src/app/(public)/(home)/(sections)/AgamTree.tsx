@@ -1,15 +1,18 @@
+"use client"
+
 import Typography from '@/components/common/typography'
 import Image from 'next/image'
-import React from 'react'
-
+import React, { useState } from 'react'
 
 const TreeMarker = ({ className, title, subtitle }: { className: string, title: string, subtitle: string }) => {
+
+    const [isHovered, setIsHovered] = useState(false);
     return (
-        <div className={`absolute group ${className}`}>
-            <div className="bg-[#E3DFD5] sm:w-16 sm:h-16 w-12 h-12 p-2 text-center flex justify-center items-center rounded-full">
+        <div className={`absolute group ${className}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            <div className="bg-[#E3DFD5] cursor-pointer sm:w-16 sm:h-16 w-12 h-12 p-2 text-center flex justify-center items-center rounded-full">
                 <Typography variant='h4' className='!sm:text-sm !text-xs leading-tight w-full italic text-typography'>{title}</Typography>
             </div>
-            <div className="absolute -top-5 border-l-8 border-typography left-16 md:left-44 sm:left-36 sm:pl-3 p-1 md:min-w-52 w-28 sm:min-w-40 group-hover:opacity-100 opacity-0 transition-opacity duration-300 ">
+            <div className={`absolute -top-5 border-l-8 border-typography left-16 md:left-44 sm:left-36 sm:pl-3 p-1 md:min-w-52 w-28 sm:min-w-40 ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 `}>
                 <Typography variant='h4' className='w-full italic text-typography max-sm:text-sm'>{title}</Typography>
                 <Typography variant='p' className='!sm:text-base w-full font-mono  italic text-typography/70 !text-xs leading-none'>{subtitle}</Typography>
             </div>

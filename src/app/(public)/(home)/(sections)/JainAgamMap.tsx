@@ -1,16 +1,20 @@
+"use client"
+
 import Typography from '@/components/common/typography'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 
 
 const MapMarker = ({ className, title, subtitle }: { className: string, title: string, subtitle: string }) => {
+
+  const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className={`absolute group ${className}`}>
+    <div className={`absolute group ${className}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className="bg-red-400 w-3 h-3 flex justify-center items-center rounded-full">
         <div className="bg-red-400 w-3 h-3 rounded-full animate-ping">
         </div>
       </div>
-      <div className="absolute top-3 left-3 p-3 md:min-w-40 group-hover:opacity-100 opacity-0 transition-opacity duration-300 bg-[#D9D2C0] rounded-lg">
+      <div className={`absolute top-5 -left-5 min-w-28 sm:left-3 p-3 md:min-w-40  ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 bg-[#D9D2C0] rounded-lg `}>
         <div className="w-6 h-6 bg-white rounded-full"></div>
         <Typography variant='h4' className='!text-base w-full italic text-typography'>{title}</Typography>
         <Typography variant='h4' className='!text-base italic text-typography/70'>{subtitle}</Typography>

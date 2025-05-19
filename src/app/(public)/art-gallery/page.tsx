@@ -1,10 +1,18 @@
 import React from 'react'
 import TopSection from './(sections)/TopSection'
+import HeroSection from './(sections)/HeroSection'
+import Paintings from './(sections)/Paintings'
+import ShowcaseImage from './(sections)/ShowcaseImage'
+import Reservations from './(sections)/Reservations'
 
 export default function ArtGalleryPage() {
     return (
         <>
             <TopSection coverImage={null} />
+            <HeroSection />
+            <Paintings />
+            <ShowcaseImage />
+            <Reservations />
         </>
     )
 }
