@@ -14,7 +14,7 @@ const AgamEbooks = () => {
                 <SectionTitle title='Agam Ebooks' subtitle='EXPLORE' />
 
                 {/* Responsive grid layout */}
-                <div className="md:mt-24 mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-6 md:gap-8 lg:gap-10">
+                <div className="md:mt-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-6 md:gap-8 lg:gap-10">
                     {Array.from({ length: expanded ? 34 : 8 }).map((_, index) => (
                         <Image
                             src={`/static/ebooks/ebook-${index}.jpg`}

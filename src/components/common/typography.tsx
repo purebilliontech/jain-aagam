@@ -11,8 +11,8 @@ const Typography: React.FC<TypographyProps> = ({ variant, children, className = 
     const variantStyles: { [key in TypographyProps['variant']]: string } = {
         h1: 'text-5xl font-mono',
         h2: 'text-4xl font-mono font-normal',
-        h3: 'text-3xl font-mono',
-        h4: 'text-2xl font-mono',
+        h3: 'text-2xl md:text-3xl font-mono',
+        h4: 'text-lg md:text-2xl font-mono',
         h5: 'text-xl',
         p: 'text-base',
         span: 'text-base',

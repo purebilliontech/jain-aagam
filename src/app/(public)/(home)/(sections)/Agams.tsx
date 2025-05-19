@@ -1,13 +1,14 @@
+import Typography from '@/components/common/typography'
 import Image from 'next/image'
 import React from 'react'
 
 const AgamSection = ({ title, content }: { title: string, content: string }) => {
     return (
-        <div className='mt-5 p-4 md:p-0'>
-            <h3 className='text-2xl md:text-3xl font-mono font-semibold text-primary-ui'>{title}</h3>
-            <p className='text-muted-ui text-lg md:text-xl font-mono font-semibold'>
+        <div className='mt-5 '>
+            <Typography variant='h3' className='text-primary-ui text-justify'>{title}</Typography>
+            <Typography variant='h4' className='text-muted-ui text-justify'>
                 {content}
-            </p>
+            </Typography>
         </div>
     )
 }

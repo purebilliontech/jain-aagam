@@ -71,7 +71,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                         </div>
 
                         {/* Timeline Content */}
-                        <div className="relative pl-6 md:pl-10 w-full">
+                        <div className="relative -mt-10 md:mt-0 md:pl-10 md:w-full w-1/2 ml-auto">
                             <div className="text-[#E9E2D2] dark:text-[#E9E2D2]">{item.content}</div>
                         </div>
 
