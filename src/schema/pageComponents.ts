@@ -6,8 +6,8 @@ import { MediaDTOSchema } from "./media";
 type CoverImageModel = Prisma.CoverImageGetPayload<object>;
 
 export const CoverImageSchema = genericSchema.extend({
-    mediaId: z.string(),
-    pageId: z.string(),
+    mediaId: z.string().cuid(),
+    pageId: z.string().cuid(),
     media: MediaDTOSchema
 }) satisfies z.Schema<CoverImageModel>;
 export type CoverImage = z.infer<typeof CoverImageSchema>;

@@ -7,8 +7,8 @@ type VideoTagsModel = Prisma.VideoTagGetPayload<{}>;
 
 // for checking prisma validations
 export const VideoTagsSchema = genericSchema.extend({
-    name: z.string(),
-    slug: z.string(),
+    name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+    slug: z.string().min(3, { message: "Slug must be at least 3 characters" }),
     active: z.boolean(),
 }) satisfies z.Schema<VideoTagsModel>;
 
@@ -31,8 +31,8 @@ type TagsToVideoModel = Prisma.TagsToVideoGetPayload<{}>;
 
 // for checking prisma validations
 export const TagsToVideoSchema = genericSchema.extend({
-    videoTagsId: z.string(), // actual tag
-    videoId: z.string(), // video
+    videoTagsId: z.string().cuid(), // actual tag
+    videoId: z.string().cuid(), // video
 }) satisfies z.Schema<TagsToVideoModel>;
 
 export type TagsToVideo = z.infer<typeof TagsToVideoSchema>;

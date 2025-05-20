@@ -105,6 +105,12 @@ const data = {
         },
       ],
     },
+    {
+      title: "Frontend Playlists",
+      url: "/admin/playlist",
+      icon: Layout,
+      permissions: ["view:frontend-playlist", "modify:frontend-playlist"],
+    },
   ],
 }
 

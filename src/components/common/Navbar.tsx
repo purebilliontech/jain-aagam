@@ -10,8 +10,8 @@ const navLinks = [
         href: "/",
     },
     {
-        title: "Ebooks",
-        href: "/ebooks",
+        title: "Bhagwan Mahavir",
+        href: "/bhagwan-mahavir",
     },
     {
         title: "Articles",

@@ -8,9 +8,9 @@ type UserModel = Prisma.UsersGetPayload<{}>;
 
 // for checking prisma validations
 export const UserSchema = genericSchema.extend({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string(),
+    name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z.string().min(4, { message: "Password must be at least 4 characters" }),
     lastLogin: z.date(),
 }) satisfies z.Schema<UserModel>;
 

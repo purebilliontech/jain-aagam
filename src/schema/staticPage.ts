@@ -8,8 +8,8 @@ type StaticPageModel = Prisma.StaticPageGetPayload<{}>;
 
 // for checking prisma validations
 export const StaticPageSchema = genericSchema.extend({
-    title: z.string().min(1, { message: "Title is required" }),
-    slug: z.string().min(1, { message: "Slug is required" }),
+    title: z.string().min(3, { message: "Title must be at least 3 characters" }),
+    slug: z.string().min(3, { message: "Slug must be at least 3 characters" }),
 }) satisfies z.Schema<StaticPageModel>;
 
 export type StaticPage = z.infer<typeof StaticPageSchema>;

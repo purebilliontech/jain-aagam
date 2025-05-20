@@ -26,7 +26,7 @@ export default async function Home() {
       <AgamEbooks />
       <JainAgamMap />
       <EnglishAgam />
-      <AgamWisdom blogs={homepageContent.data?.latestBlogs || []} />
+      <AgamWisdom blogs={homepageContent.data?.latestBlogs || []} videos={homepageContent.data?.videos || null} />
       <div className="overflow-hidden">
         <Timeline data={[
           {

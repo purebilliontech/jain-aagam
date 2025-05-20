@@ -6,6 +6,8 @@ import { HomepageDTOSchema } from "@/schema/staticPage";
 import { BlogWithTagsAndBannerSchema } from "@/schema/blog";
 import { EnglishAgamContactForm } from "@/schema/englishAagam";
 import { EnglishAgamContactSchema } from "@/schema/englishAagam";
+import { PlaylistSchema } from "@/schema/playlist";
+import { FrontendPlaylistDTOSchema } from "@/schema/frontendPlaylist";
 
 export const getHomepageContent = async () => {
     try {
@@ -40,11 +42,18 @@ export const getHomepageContent = async () => {
             }
         });
 
+        const videos = await db.frontendPlaylist.findUnique({
+            where: {
+                slug: "homepage-videos"
+            }
+        });
+
         return {
             success: true,
             data: {
                 homepage: HomepageDTOSchema.parse(homepage),
-                latestBlogs: latestBlogs.map(blog => BlogWithTagsAndBannerSchema.parse(blog))
+                latestBlogs: latestBlogs.map(blog => BlogWithTagsAndBannerSchema.parse(blog)),
+                videos: videos ? FrontendPlaylistDTOSchema.parse(videos) : null
             }
         };
 

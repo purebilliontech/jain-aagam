@@ -8,8 +8,8 @@ type YoutubeVideoModel = Prisma.YoutubeVideoGetPayload<{}>;
 
 // for checking prisma validations
 export const YoutubeVideoSchema = genericSchema.extend({
-    url: z.string().url(),
-    name: z.string(),
+    url: z.string().url({ message: "Invalid URL" }),
+    name: z.string().min(3, { message: "Name must be at least 3 characters" }),
 }) satisfies z.Schema<YoutubeVideoModel>;
 
 export type YoutubeVideo = z.infer<typeof YoutubeVideoSchema>;

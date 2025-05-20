@@ -7,8 +7,8 @@ type BlogTagsModel = Prisma.BlogTagsGetPayload<{}>;
 
 // for checking prisma validations
 export const BlogTagsSchema = genericSchema.extend({
-  name: z.string(),
-  slug: z.string(),
+  name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+  slug: z.string().min(3, { message: "Slug must be at least 3 characters" }),
   active: z.boolean(),
 }) satisfies z.Schema<BlogTagsModel>;
 

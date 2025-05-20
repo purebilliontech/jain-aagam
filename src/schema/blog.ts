@@ -34,7 +34,7 @@ export const BlogSchema = genericSchema.extend({
   bannerId: z.string(),
   authorName: z.string(),
   readingTimeSeconds: z.number(),
-  slug: z.string(),
+  slug: z.string().min(1, { message: "Slug is required" }),
   published: z.boolean(),
   publishedAt: z.date(),
   contentJson: z.object({}).passthrough(),

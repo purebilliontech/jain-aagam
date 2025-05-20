@@ -8,8 +8,8 @@ type PlaylistVideosModel = Prisma.PlaylistVideosGetPayload<{}>;
 
 // for checking prisma validations
 export const PlaylistVideosSchema = genericSchema.extend({
-    playlistId: z.string(),
-    videoId: z.string(),
+    playlistId: z.string().cuid(),
+    videoId: z.string().cuid(),
 }) satisfies z.Schema<PlaylistVideosModel>;
 
 export type PlaylistVideos = z.infer<typeof PlaylistVideosSchema>;
@@ -30,8 +30,8 @@ type PlaylistModel = Prisma.PlaylistGetPayload<{}>;
 
 // for checking prisma validations
 export const PlaylistSchema = genericSchema.extend({
-    name: z.string(),
-    slug: z.string(),
+    name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+    slug: z.string().min(3, { message: "Slug must be at least 3 characters" }),
     description: z.string(),
 }) satisfies z.Schema<PlaylistModel>;
 

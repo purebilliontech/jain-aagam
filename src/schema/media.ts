@@ -8,7 +8,7 @@ type MediaModel = Prisma.MediaGetPayload<{}>;
 export const MediaSchema = genericSchema.extend({
     id: z.string().cuid(),
     type: z.string(),
-    url: z.string().url(),
+    url: z.string().url({ message: "Invalid URL" }),
     alt: z.string(),
     title: z.string(),
     cta: z.string().nullable(),
