@@ -4,19 +4,19 @@ import React from "react";
 
 const TopSection = ({ coverImage }: { coverImage: CoverImageDTO | null }) => {
     return (
-        <section className="min-h-screen relative flex flex-col md:flex-row items-center justify-center md:justify-around mx-auto">
+        <section className="w-screen h-full relative flex flex-col md:flex-row items-center justify-center md:justify-around mx-auto">
             <Image
                 src={coverImage?.media.url ?? "/static/placeholder.png"}
                 alt={coverImage?.media.alt ?? "Image for presentation"}
-                width={500}
-                height={500}
-                className="w-screen h-screen object-cover absolute -z-50 top-0 left-0 object-center"
+                width={2000}
+                height={2000}
+                className="w-screen h-full object-cover"
             />
-            <div className="text-center p-4 md:text-left ">
+            {/* <div className="text-center p-4 md:text-left ">
                 <h2 className="text-primary-ui font-sans text-5xl md:text-8xl font-semibold">
                     Bhagwan Mahavir
                 </h2>
-            </div>
+            </div> */}
         </section>
     );
 };

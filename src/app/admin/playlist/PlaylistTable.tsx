@@ -157,11 +157,11 @@ export default function PlaylistTable() {
         <div className="space-y-4">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Playlists</h2>
-                {hasPermissions(['modify:frontend-playlist']) &&
+                {/* {hasPermissions(['modify:frontend-playlist']) &&
                     <Button onClick={handleAddPlaylist} >
                         Add Playlist
                     </Button>
-                }
+                } */}
             </div>
             <DataTable
                 columns={columns}

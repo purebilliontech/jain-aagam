@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 /* @import "tw-animate-css"; */
 
-@custom-variant dark (&:is(.dark *)); 
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -117,6 +117,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
@@ -137,22 +138,24 @@
 
 
 @media screen and (max-width: 768px) {
-  .blog-html h2,
-  .blog-html h3,
+
   .blog-html span,
   .blog-html p {
     margin-bottom: 16px;
     color: var(--color-typography);
+    line-height: 1.25 !important;
   }
 
   .blog-html h2 {
-    font-size: 12px !important;
-    font-weight: 700;
+    font-size: 24px !important;
+    font-weight: 500;
+    line-height: 1.25 !important;
   }
 
   .blog-html h3 {
-    font-size: 12px !important;
-    font-weight: 700;
+    font-size: 20px !important;
+    font-weight: 500;
+    line-height: 1.25 !important;
   }
 
   .blog-html p {
@@ -161,8 +164,6 @@
   }
 }
 
-.blog-html h2,
-.blog-html h3,
 .blog-html span,
 .blog-html p {
   margin-bottom: 16px;
@@ -170,16 +171,25 @@
 }
 
 .blog-html h2 {
-  font-size: 30px !important;
-  font-weight: 700;
+  font-size: 36px !important;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  line-height: 1.25 !important;
+  margin-bottom: 8px;
+  margin-top: 16px;
 }
 
 .blog-html h3 {
   font-size: 24px !important;
-  font-weight: 700;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  line-height: 1.25 !important;
+  margin-bottom: 8px;
+  margin-top: 16px;
 }
 
 .blog-html p {
   font-size: 16px !important;
   line-height: 16px;
+  line-height: 1.25 !important;
 }

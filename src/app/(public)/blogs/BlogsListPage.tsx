@@ -63,10 +63,7 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
             <button
               key={tag.id}
               onClick={() => handleTagClick(tag.name)}
-              className={`inline-block px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full transition-colors ${selectedTags.includes(tag.name)
-                ? "bg-primary-ui text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
+              className={`inline-block cursor-pointer px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full transition-colors bg-primary-ui text-white`}
             >
               {tag.name}
             </button>

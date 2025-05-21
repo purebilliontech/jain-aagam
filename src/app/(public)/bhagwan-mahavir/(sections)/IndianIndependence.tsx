@@ -24,7 +24,7 @@ const IndianIndependence = () => {
 
         {/* Lorem Ipsum Text */}
         <div className="my-20">
-          <Typography variant="p" >
+          <Typography variant="p" className="text-typography">
             The goal of Bhagwan Mahavir&apos;s principles is to attain spiritual
             peace, secure a better rebirth, and ultimately achieve liberation
             from the cycle of birth and death. It is the path to end sorrow and
@@ -32,7 +32,7 @@ const IndianIndependence = () => {
             individual soul but also foster a world filled with peace, harmony,
             and compassion for every living being.
           </Typography>
-          <Typography variant="p" className="mt-4">
+          <Typography variant="p" className="mt-4 text-typography">
             Inspired by Bhagwan Mahavir’s foremost principle of Ahimsa
             (non-violence), Mahatma Gandhi led India’s independence movement
             through peaceful, bloodless resistance, setting a global example of
@@ -51,7 +51,7 @@ const IndianIndependence = () => {
         </div>
 
         <div className="mt-20">
-          <Typography variant="p" >
+          <Typography variant="p" className="text-typography" >
             Shri Becharji Swami of the Gondal Sanghani sect of Jainism had
             blessed Gandhiji with three infallible vows before he left for
             England – refraining from meat, alcohol and infidelity. Gandhiji
@@ -59,7 +59,7 @@ const IndianIndependence = () => {
             deep influence on his leadership and personality, his courage and
             his sattva (inner strength).
           </Typography>
-          <Typography variant="p" className="mt-4" >
+          <Typography variant="p" className="mt-4 text-typography" >
             Pujya Shri Ujjwalkumariji Mahasatiji was a Jain sadhviji, an
             intellectual thinker and scholar, who had philosophical discussions
             for almost 20 days with Gandhiji, before India’s final battle for

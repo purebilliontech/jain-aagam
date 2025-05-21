@@ -14,6 +14,10 @@ const navLinks = [
         href: "/bhagwan-mahavir",
     },
     {
+        title: "Art Gallery",
+        href: "/art-gallery",
+    },
+    {
         title: "Articles",
         href: "/blogs",
     },

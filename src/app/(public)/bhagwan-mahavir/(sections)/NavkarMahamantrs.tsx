@@ -57,7 +57,7 @@ const NavkarMahamantrs = () => {
 
                     <div className="md:w-1/3">
                         {mahaMantras.map((mantra, index) => (
-                            <div onMouseEnter={() => setSelectedMeaning(mantra.meaning)}>
+                            <div key={index} onMouseEnter={() => setSelectedMeaning(mantra.meaning)}>
                                 <Typography variant='h4' key={index} className='text-center  font-mono font-semibold text-typography cursor-pointer hover:text-primary-ui'>{mantra.line}</Typography>
                             </div>
                         ))}
@@ -72,7 +72,7 @@ const NavkarMahamantrs = () => {
                     </div>
 
                 </div>
-                <Typography variant='p' className='text-justify my-20'>
+                <Typography variant='p' className='text-justify text-typography my-20'>
                     Namaskar Mahamantra is a universal Mantra of peace and Maitri (friendship) towards every living being.
                     <br />
                     <br />

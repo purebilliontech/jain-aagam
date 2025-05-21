@@ -51,8 +51,8 @@ export default function Reservations() {
     return (
         <section className="md:p-10 p-5 bg-[#E9E2D2]" >
             <SectionTitle title='Purchase & Reservations ' subtitle='ART GALLERY' />
-            <Typography variant='p' className='text-justify text-foreground-ui mt-5'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta quam molestias itaque excepturi, rerum quibusdam amet numquam reiciendis? Et, quos suscipit deleniti illo laboriosam perspiciatis cupiditate obcaecati quam ipsa aperiam nihil nostrum ipsam rerum. Dolorum, facilis est iusto placeat soluta tempore eaque, quod minima harum voluptate amet deserunt, beatae reiciendis!
+            <Typography variant='p' className='text-justify text-foreground-ui mt-5 max-w-7xl mx-auto'>
+                If you are interested in in purchasing or making reservations for paintings from the Aaradhya Art Gallery, you can connect with the team and they will get in touch with you soon!
             </Typography>
 
             <Form {...form}>
@@ -131,7 +131,7 @@ export default function Reservations() {
                         )}
                     />
                     <div className="flex justify-center mt-6">
-                        <FEButton >Explore All</FEButton>
+                        <FEButton >Submit</FEButton>
                     </div>
                 </form>
             </Form>

@@ -14,7 +14,7 @@ export default function YTVideoPlayer({ videoUrl, className }: { videoUrl: strin
     const videoId = extractVideoId(videoUrl);
 
     return (
-        <div className={`relative w-full h-48 ${className}`}>
+        <div className={`relative w-full aspect-video ${className}`}>
             <YouTubePlayer videoId={videoId} onVideoEnd={() => { }} />
         </div>
     )
