@@ -111,6 +111,12 @@ const data = {
       icon: Layout,
       permissions: ["view:frontend-playlist", "modify:frontend-playlist"],
     },
+    {
+      title: "Reservations",
+      url: "/admin/reservations",
+      icon: Layout,
+      permissions: ["view:reservations"],
+    },
   ],
 }
 

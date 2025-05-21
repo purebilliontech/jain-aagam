@@ -16,5 +16,6 @@ INSERT INTO permissions (name) VALUES
 ('modify:homepage'),
 ('modify:bhagwan-mahavir-page'),
 ('view:frontend-playlist'),
-('modify:frontend-playlist')
+('modify:frontend-playlist'),
+('view:reservations')
 ON CONFLICT DO NOTHING;

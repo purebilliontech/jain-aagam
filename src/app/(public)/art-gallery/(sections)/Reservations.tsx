@@ -2,8 +2,7 @@
 
 import Typography from '@/components/common/typography'
 import SectionTitle from '@/components/common/SectionTitle'
-import React from 'react'
-import { Button } from "@/components/ui/button"
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -17,25 +16,18 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import FEButton from '@/components/common/FEButton'
-
-const formSchema = z.object({
-    name: z.string().min(2, {
-        message: "Name must be at least 2 characters.",
-    }),
-    city: z.string().min(2, {
-        message: "City must be at least 2 characters.",
-    }),
-    contact: z.string().min(10, {
-        message: "Contact must be at least 10 characters.",
-    }),
-    email: z.string().email({
-        message: "Please enter a valid email address.",
-    }),
-})
+import { ReservationFormSchema } from '@/schema/reservations'
+import { createReservation } from '../actions'
+import { toast } from 'sonner'
 
 export default function Reservations() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const form = useForm<z.infer<typeof ReservationFormSchema>>({
+        resolver: zodResolver(ReservationFormSchema),
         defaultValues: {
             name: "",
             city: "",
@@ -44,8 +36,21 @@ export default function Reservations() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof ReservationFormSchema>) {
+        try {
+            const response = await createReservation(values);
+            if (response.success) {
+                toast.success(response.message);
+                setIsSuccess(true);
+                setMessage(response.message);
+            } else {
+                toast.error(response.message);
+                setIsSuccess(false);
+                setMessage(response.message);
+            }
+        } catch (error) {
+            toast.error("Something went wrong");
+        }
     }
 
     return (
@@ -131,8 +136,9 @@ export default function Reservations() {
                         )}
                     />
                     <div className="flex justify-center mt-6">
-                        <FEButton >Submit</FEButton>
+                        <FEButton type='submit' >Submit</FEButton>
                     </div>
+                    {isSuccess && <Typography variant='p' className='text-center text-foreground-ui mt-5 max-w-7xl mx-auto'>{message}</Typography>}
                 </form>
             </Form>
         </section>

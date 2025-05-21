@@ -2,9 +2,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTable } from '@/components/dataTable/dataTable';
-import { EnglishAgamContactDTO } from '@/schema/englishAagam';
+import { ReservationDTO } from '@/schema/reservations';
 import { usePagination } from '@/hooks/usePagination';
-import { getEnglishAagams } from './action';
+import { getReservations } from './action';
 import { DataTableColumnHeader } from '@/components/dataTable/columnHeader';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -35,7 +35,7 @@ const CustomFilter: React.FC<CustomFilterProps> = ({ globalFilter, setGlobalFilt
         </div>
         <Input
           className="pl-10 text-sm rounded-lg bg-white border-slate-200 focus-visible:ring-slate-300"
-          placeholder="Search English Aagam by name, city, or country ..."
+          placeholder="Search reservations by name, city, or email ..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
@@ -47,23 +47,21 @@ const CustomFilter: React.FC<CustomFilterProps> = ({ globalFilter, setGlobalFilt
   );
 };
 
-export default function EnglishAagam() {
-  const [englishAagams, setEnglishAagams] = useState<EnglishAgamContactDTO[]>([]);
+export default function Reservations() {
+  const [reservations, setReservations] = useState<ReservationDTO[]>([]);
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const { pagination, onPaginationChange } = usePagination(20, 0);
 
-
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const result = await getEnglishAagams(pagination.pageIndex, searchTerm);
-      setEnglishAagams(result.data.englishAagamList);
+      const result = await getReservations(pagination.pageIndex, searchTerm);
+      setReservations(result.data.reservationList);
       setTotalRows(result.data.meta.totalCount);
-      console.log('result', result)
     } catch (error) {
-      console.error("Failed to fetch English Aagams:", error);
+      console.error("Failed to fetch reservations:", error);
     } finally {
       setLoading(false);
     }
@@ -73,7 +71,7 @@ export default function EnglishAagam() {
     void fetchData();
   }, [fetchData]);
 
-  const columns: ColumnDef<EnglishAgamContactDTO>[] = [
+  const columns: ColumnDef<ReservationDTO>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
@@ -83,15 +81,11 @@ export default function EnglishAagam() {
       header: ({ column }) => <DataTableColumnHeader column={column} title="City" />,
     },
     {
-      accessorKey: "country",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
-    },
-    {
       accessorKey: "email",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
     },
     {
-      accessorKey: "contactNumber",
+      accessorKey: "contact",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Phone" />,
     },
   ];
@@ -99,11 +93,11 @@ export default function EnglishAagam() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">English Aagam Contacts</h2>
+        <h2 className="text-2xl font-bold">Reservations</h2>
       </div>
       <DataTable
         columns={columns}
-        data={englishAagams}
+        data={reservations}
         CustomFilterComponent={(props) => (
           <CustomFilter
             globalFilter={props.globalFilter}

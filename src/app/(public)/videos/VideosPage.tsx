@@ -21,6 +21,17 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
                 <h1 className="text-primary-ui p-4 md:p-20 text-4xl md:text-8xl font-semibold">VIDEOS</h1>
             </div>
 
+            <div className="max-w-7xl mx-auto my-10 p-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <YTVideoPlayer videoUrl={data.highlights?.videos[0] || ""} className="w-full rounded-lg overflow-hidden md:col-span-2  h-full" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:col-span-2 lg:grid-cols-1 lg:col-span-1 gap-4">
+                        <YTVideoPlayer videoUrl={data.highlights?.videos[1] || ""} className="w-full rounded-lg overflow-hidden" />
+                        <YTVideoPlayer videoUrl={data.highlights?.videos[2] || ""} className="w-full rounded-lg overflow-hidden" />
+
+                    </div>
+                </div>
+            </div>
+
             <div className="my-10 mt-20 max-w-7xl mx-auto">
                 <SectionTitle title="Shree Suyagadang Sutra" subtitle="EXPLORE" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-10">
