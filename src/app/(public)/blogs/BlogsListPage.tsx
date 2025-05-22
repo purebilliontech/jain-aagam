@@ -101,9 +101,9 @@ const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPaginatio
 
   return (
     <>
-      <div className="bg-[#E9E2D2] w-full h-64 md:h-96 flex items-center">
-        <h1 className="max-w-7xl mx-auto text-primary-ui p-4 md:p-20 text-4xl md:text-8xl font-semibold">
-          ARTICLES
+      <div className="bg-[url('/static/blog-banner.png')] bg-cover bg-center w-full h-64 md:h-96 flex items-center">
+        <h1 className="max-w-7xl mx-auto text-primary-ui p-4 md:p-20 text-4xl md:text-4xl font-semibold">
+          BLOGS
         </h1>
       </div>
 

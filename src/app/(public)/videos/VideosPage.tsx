@@ -17,8 +17,10 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
 
     return (
         <>
-            <div className="bg-[#E9E2D2] w-full h-64 md:h-96 flex items-center">
-                <h1 className="text-primary-ui p-4 md:p-20 text-4xl md:text-8xl font-semibold">VIDEOS</h1>
+            <div className="bg-[url('/static/blog-banner.png')] bg-cover bg-center w-full h-64 md:h-96 flex items-center">
+                <h1 className="max-w-7xl mx-auto text-primary-ui p-4 md:p-20 text-4xl md:text-4xl font-semibold">
+                    VIDEOS
+                </h1>
             </div>
 
             <div className="max-w-7xl mx-auto my-10 p-5">
@@ -32,7 +34,7 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
                 </div>
             </div>
 
-            <div className="my-10 mt-20 max-w-7xl mx-auto">
+            <div className="my-10 mt-20 max-w-7xl mx-auto p-5">
                 <SectionTitle title="Shree Suyagadang Sutra" subtitle="EXPLORE" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-10">
                     {data.shreeSuyagadangSutra && data.shreeSuyagadangSutra.videos.map((video) => (
@@ -41,7 +43,7 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
                 </div>
             </div>
 
-            <div className="my-10 mt-20 max-w-7xl mx-auto">
+            <div className="my-10 mt-20 max-w-7xl mx-auto p-5">
                 <SectionTitle title="Shree Nandi Sutra" subtitle="EXPLORE" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-10">
                     {data.shreeNandiSutra && data.shreeNandiSutra.videos.map((video) => (
@@ -50,7 +52,7 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
                 </div>
             </div>
 
-            <div className="my-10 mt-20 max-w-7xl mx-auto">
+            <div className="my-10 mt-20 max-w-7xl mx-auto p-5">
                 <SectionTitle title="Shree Dashvaikalik Sutra" subtitle="EXPLORE" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-10">
                     {data.shreeDashvaikalikSutra && data.shreeDashvaikalikSutra.videos.map((video) => (
@@ -59,7 +61,7 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
                 </div>
             </div>
 
-            <div className="my-10 mt-20 max-w-7xl mx-auto">
+            <div className="my-10 mt-20 max-w-7xl mx-auto p-5">
                 <SectionTitle title="Shree Uttaradhyayan Sutra" subtitle="EXPLORE" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-10">
                     {data.shreeUttaradhyayanSutra && data.shreeUttaradhyayanSutra.videos.map((video) => (
