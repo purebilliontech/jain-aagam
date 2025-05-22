@@ -4,7 +4,6 @@ import SectionTitle from '@/components/common/SectionTitle'
 import YTVideoPlayer from '@/components/common/YTVideoPlayer'
 import type { BlogWithTagsAndBanner } from '@/schema/blog'
 import { FrontendPlaylistDTO } from '@/schema/frontendPlaylist'
-import { Playlist } from '@prisma/client'
 import Link from 'next/link'
 import React from 'react'
 
@@ -12,7 +11,7 @@ const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos:
     return (
         <section className='mt-32 mb-20 max-w-7xl w-full mx-auto p-5'>
             <SectionTitle title='Agam Wisdom' subtitle='BLOGS & VIDOS' />
-            <div className="flex flex-wrap justify-center mt-24 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-24 ">
                 {blogs.map((blog) => (
                     <BlogCard
                         key={blog.id}

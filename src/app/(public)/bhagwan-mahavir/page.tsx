@@ -123,8 +123,10 @@ export default async function Ebooks() {
           TRAILER VIDEO BANNER OF AB DUNIYA JANEGI SUPER SCIENTIST KO
         </h1>
       </div> */}
+      <div className="p-5">
 
-      <YTVideoPlayer className="max-w-5xl mx-auto  rounded-lg overflow-hidden flex flex-col items-center justify-center mb-20" videoUrl={"https://youtu.be/T-hdL0CpB1k?si=cr35z17eWzjAg6gd"} />
+        <YTVideoPlayer className="max-w-5xl mx-auto  rounded-lg overflow-hidden flex flex-col items-center justify-center mb-20" videoUrl={"https://youtu.be/T-hdL0CpB1k?si=cr35z17eWzjAg6gd"} />
+      </div>
 
       <ShortFilmsAndDramas playlist={bhagwanMahavirPage.shortFilms || null} />
       <Upvasana

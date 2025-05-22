@@ -7,11 +7,11 @@ import EnglishAgam from "./(sections)/EnglishAgam";
 import AgamWisdom from "./(sections)/AgamWisdom";
 import JoinMission from "./(sections)/JoinMission";
 import { Timeline } from "./(sections)/Timeline";
-import TopSection from "./(sections)/TopSection";
 import { getHomepageContent } from "./actions";
 import Typography from "@/components/common/typography";
 import JainAgamMap from "./(sections)/JainAgamMap";
 import AgamTree from "./(sections)/AgamTree";
+import BannerParallex from "./(sections)/BannerParallex";
 
 export default async function Home() {
 
@@ -19,7 +19,10 @@ export default async function Home() {
 
   return (
     <>
-      <TopSection coverImage={homepageContent.data?.homepage.CoverImage || null} />
+
+
+      <BannerParallex />
+      {/* <TopSection coverImage={homepageContent.data?.homepage.CoverImage || null} /> */}
       <WhatAreAgams />
       <AgamTree />
       <Agams />

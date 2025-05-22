@@ -70,13 +70,13 @@ const EnglishAgam = () => {
       />
 
       <div className="z-50 bg-[#E9E2D2ED] p-5 md:p-10 lg:p-14 max-w-7xl mx-auto rounded-4xl flex flex-col md:flex-row gap-5 md:gap-10">
-        <div className="w-full pt-2 md:pt-0 md:w-1/3 flex justify-center">
+        <div className="w-full pt-2 md:pt-0 md:w-1/3 flex justify-center items-center">
           <Image
             src={"/static/home/english-agam-book.png"}
             width={400}
             height={600}
             alt="English Agam Book"
-            className="mx-auto w-full h-auto object-contain drop-shadow-2xl shadow-2xl "
+            className="mx-auto w-full h-fit object-contain drop-shadow-2xl shadow-2xl "
           />
         </div>
         <div className="w-full md:w-2/3 pt-3">

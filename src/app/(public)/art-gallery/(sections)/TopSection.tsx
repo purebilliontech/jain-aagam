@@ -4,7 +4,7 @@ import React from "react";
 
 const TopSection = ({ coverImage }: { coverImage: CoverImageDTO | null }) => {
     return (
-        <section className="min-h-screen relative flex flex-col md:flex-row items-center justify-center md:justify-around mx-auto">
+        <section className="md:h-[55vh] lg:h-[65vh] xl:h-[90vh] h-[35vh] relative flex flex-col md:flex-row items-center justify-center md:justify-around mx-auto">
             <Image
                 src={coverImage?.media.url ?? "/static/art/banner.png"}
                 alt={coverImage?.media.alt ?? "Image for presentation"}
