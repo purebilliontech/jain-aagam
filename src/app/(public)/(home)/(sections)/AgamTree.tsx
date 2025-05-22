@@ -27,9 +27,9 @@ export default function AgamTree() {
             <div className="max-w-7xl mx-auto relative my-20 md:h-screen">
                 <Image src={'/static/home/tree.png'} alt='Jain Agam Map' className='w-full h-full object-contain max-sm:p-5' width={2000} height={1000} />
 
-                <TreeMarker className='top-[30%] left-[50%]' title="Upang Agam" subtitle='The core texts like the trunk of a tree' />
-                <TreeMarker className='sm:top-[50%] top-[47%] left-[48%]' title="Ang Agam" subtitle='The core texts like the trunk of a tree' />
-                <TreeMarker className='sm:top-[70%] top-[67%] left-[50%]' title="Mul Agam" subtitle='The roots or fundamental basics' />
+                <TreeMarker className='top-[30%] left-[50%]' title="Upang Aagam" subtitle='Just like the branches and leaves form a part of the tree' />
+                <TreeMarker className='sm:top-[50%] top-[47%] left-[48%]' title="Ang Aagam" subtitle='The core texts like the trunk of a tree' />
+                <TreeMarker className='sm:top-[70%] top-[67%] left-[50%]' title="Mul Aagam" subtitle='The roots or fundamental basics' />
 
             </div>
         </>
