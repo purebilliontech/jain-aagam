@@ -66,7 +66,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                                     {item.subtitle}
                                 </p>
                             </div>
-                            <div className="h-6 w-6 md:h-10 md:w-10 md:ml-5 rounded-full bg-[#E9E2D2] dark:bg-[#E9E2D2] flex items-center justify-center">
+                            <div className="h-6 w-6 md:h-10 md:w-10 md:ml-[18px] rounded-full bg-[#E9E2D2] dark:bg-[#E9E2D2] flex items-center justify-center">
                             </div>
                         </div>
 

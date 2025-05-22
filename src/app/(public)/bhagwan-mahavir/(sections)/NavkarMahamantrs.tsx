@@ -88,7 +88,7 @@ const NavkarMahamantrs = () => {
                     The way a child can approach his mother at any hour of the day without hesitation, this mantra can also be recited anytime, anywhere and by anyone - to experience peace, positivity and feel absolutely relaxed.
                 </Typography>
 
-                <YTVideoPlayer className='max-w-7xl mx-auto md:h-[80vh] flex flex-col items-center justify-center ' videoUrl={"https://www.youtube.com/watch?v=ia0c2tzXXqE"} />
+                <YTVideoPlayer className='max-w-7xl mx-auto rounded-lg overflow-hidden flex flex-col items-center justify-center ' videoUrl={"https://www.youtube.com/watch?v=ia0c2tzXXqE"} />
 
             </section >
         </>

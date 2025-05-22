@@ -60,9 +60,9 @@ const EnglishAgam = () => {
   };
 
   return (
-    <section className="relative h-full px-5 py-10 md:px-10 lg:px-20 xl:px-48">
+    <section className="relative h-full px-5 py-10 md:px-10 bg-[url('/static/english-agam-bg.png')] bg-cover bg-fixed bg-center lg:px-20 xl:px-48">
       <Image
-        className="-z-10 absolute top-0 left-0 inset-0 object-cover object-center"
+        className="-z-10 sticky top-0 left-0 inset-0 object-cover object-center"
         src={"/static/english-agam-bg.png"}
         fill
         alt="Agams BG"
@@ -76,7 +76,7 @@ const EnglishAgam = () => {
             width={400}
             height={600}
             alt="English Agam Book"
-            className="mx-auto w-full h-auto object-contain"
+            className="mx-auto w-full h-auto object-contain drop-shadow-2xl shadow-2xl "
           />
         </div>
         <div className="w-full md:w-2/3 pt-3">

@@ -1,7 +1,7 @@
 import SectionTitle from '@/components/common/SectionTitle'
 import Typography from '@/components/common/typography'
-import Image from 'next/image'
 import React from 'react'
+
 const viewsOnJainism = [
     {
         quote: "I say with conviction that the doctrine for which the name of Lord Mahavira is glorified nowadays is the doctrine of Ahimsa. If anyone has practiced to the fullest extent and has propagated most the doctrine of Ahimsa, it was Lord Mahavira.",
@@ -48,9 +48,9 @@ const ViewsOnJainism = () => {
                         <div className="flex flex-col md:flex-row gap-10">
                             <div className="pt-5">
                                 <Typography variant='p' className='text-justify text-typography font-sans'>
-                                    "{view.quote}"
+                                    &ldquo;{view.quote}&rdquo;
                                 </Typography>
-                                <Typography variant='p' className='text-typography font-mono mt-5'>- {view.author}</Typography>
+                                <Typography variant='p' className='text-typography font-mono font-semibold mt-5'>- {view.author}</Typography>
                             </div>
                         </div>
 

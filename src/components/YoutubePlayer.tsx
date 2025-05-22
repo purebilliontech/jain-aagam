@@ -5,13 +5,15 @@ import React, { useState, useEffect, useRef } from "react";
 interface YouTubePlayerProps {
   videoId: string;
   onVideoEnd: () => void;
+  onPause: () => void;
+  onPlay: () => void;
 }
 
 // Keep track of API loading state across components
 let isApiLoading = false;
 let isApiLoaded = false;
 
-const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) => {
+const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd, onPause, onPlay }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const [isPlayerLoaded, setIsPlayerLoaded] = useState(false);
@@ -23,7 +25,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
     const iframe = document.createElement("iframe");
     iframe.width = "100%";
     iframe.height = "100%";
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&showinfo=0&modestbranding=1&enablejsapi=1`;
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1`;
     iframe.title = "YouTube video player";
     iframe.frameBorder = "0";
     iframe.allow =
@@ -76,10 +78,10 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
     // Initialize player
     const initializePlayer = async () => {
       if (!containerRef.current) return;
-      
+
       // Clear any existing content
       containerRef.current.innerHTML = "";
-      
+
       // Create iframe placeholder
       const iframeId = `youtube-iframe-${videoId}-${Date.now()}`;
       const iframeContainer = document.createElement("div");
@@ -87,10 +89,10 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
       iframeContainer.style.width = "100%";
       iframeContainer.style.height = "100%";
       containerRef.current.appendChild(iframeContainer);
-      
+
       // Make sure API is loaded
       await loadYouTubeAPI();
-      
+
       // Clean up any existing player
       if (playerRef.current) {
         try {
@@ -99,7 +101,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
           console.error("Error destroying player:", e);
         }
       }
-      
+
       // Create new player
       try {
         playerRef.current = new window.YT.Player(iframeId, {
@@ -116,10 +118,26 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
           events: {
             onReady: () => {
               setIsPlayerLoaded(true);
+              playerRef.current?.playVideo();
             },
             onStateChange: (event: { data: number }) => {
-              if (event.data === 0) {
-                onVideoEnd();
+              // YouTube player states:
+              // -1 (unstarted)
+              // 0 (ended)
+              // 1 (playing)
+              // 2 (paused)
+              // 3 (buffering)
+              // 5 (video cued)
+              switch (event.data) {
+                case 0:
+                  onVideoEnd();
+                  break;
+                case 1:
+                  onPlay();
+                  break;
+                case 2:
+                  onPause();
+                  break;
               }
             }
           }
@@ -142,7 +160,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd }) =>
         playerRef.current = null;
       }
     };
-  }, [videoId, onVideoEnd]);
+  }, [videoId, onVideoEnd, onPlay, onPause]);
 
   return (
     <div

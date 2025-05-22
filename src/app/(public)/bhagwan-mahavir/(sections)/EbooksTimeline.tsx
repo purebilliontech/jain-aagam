@@ -27,14 +27,14 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
         staggerChildren: 0.2
       }}
       key={index}
-      className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+      className={`flex flex-col ${index % 2 === 1 ? "md:flex-row" : "md:flex-row-reverse"
         } justify-between mb-24 md:mb-48`}
     >
       {/* Content Section */}
       <motion.div
-        className={`w-full md:w-5/12 flex flex-col ${index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"}`}
-        initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+        className={`w-full md:w-5/12 flex flex-col ${index % 2 === 1 ? "md:mr-auto" : "md:ml-auto"}`}
+        initial={{ opacity: 0, x: index % 2 === 1 ? -20 : 20 }}
+        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 1 ? -20 : 20 }}
         transition={{ duration: 0.7, delay: 0.2 }}
       >
         <div className="mb-6 flex flex-col items-center justify-center ">
@@ -52,9 +52,9 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
 
       {/* Image Section */}
       <motion.div
-        className={`w-full md:w-5/12 mt-6 md:mt-0 ${index % 2 === 0 ? "md:ml-auto" : "md:mr-auto"}`}
-        initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
+        className={`w-full md:w-5/12 mt-6 md:mt-0 ${index % 2 === 1 ? "md:ml-auto" : "md:mr-auto"}`}
+        initial={{ opacity: 0, x: index % 2 === 1 ? 20 : -20 }}
+        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 1 ? 20 : -20 }}
         transition={{ duration: 0.7, delay: 0.3 }}
       >
         {item.image ? (

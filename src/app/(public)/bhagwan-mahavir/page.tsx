@@ -20,7 +20,10 @@ export default async function Ebooks() {
     <>
       <TopSection coverImage={bhagwanMahavirPage.data?.CoverImage || null} />
       <BhagwanMahavir />
-      <Upvasana />
+      <Upvasana
+        title="॥ विवत्ती अविणीयस्स, संपत्ती विणीयस्स य ॥"
+        content="The arrogant invites misfortune, whereas the respectful attains prosperity. Respect in any field is the most important anchor of success. "
+        reference="Shree Dashvaikalik Sutra, 9th Adhyayan, Uddeshak 2" />
       <EbooksTimeline
         data={[
           {
@@ -63,7 +66,7 @@ export default async function Ebooks() {
 
               </>
             ),
-            alignment: "left",
+            alignment: "right",
             image: "/static/meditation-image.jpg", // You might need a placeholder image
           },
           {
@@ -88,7 +91,7 @@ export default async function Ebooks() {
 
               </>
             ),
-            alignment: "right",
+            alignment: "left",
           },
           {
             title: "Nirvan",
@@ -107,7 +110,7 @@ export default async function Ebooks() {
                 brilliance of His soul, rooted in deep spiritual awakening.
               </>
             ),
-            alignment: "left",
+            alignment: "right",
           },
         ]}
       />
@@ -119,14 +122,37 @@ export default async function Ebooks() {
         </h1>
       </div> */}
 
-      <YTVideoPlayer className="max-w-7xl mx-auto md:h-[80vh] flex flex-col items-center justify-center mb-20" videoUrl={"https://youtu.be/T-hdL0CpB1k?si=cr35z17eWzjAg6gd"} />
+      <YTVideoPlayer className="max-w-5xl mx-auto  rounded-lg overflow-hidden flex flex-col items-center justify-center mb-20" videoUrl={"https://youtu.be/T-hdL0CpB1k?si=cr35z17eWzjAg6gd"} />
 
       <ShortFilmsAndDramas playlist={bhagwanMahavirPage.shortFilms || null} />
+      <Upvasana
+        title="॥ सव्वे जीवा वि इच्छंति, जीविउं ण मरिज्जिउं ॥"
+        content="Every living being wishes to live, none wish to die. And thus, we must not harm even the tiniest of living beings or give them pain."
+        reference="Shree Dashvaikalik Sutra, 6th Adhyayan" />
+
       <PanchMahavrats />
-      <Upvasana />
+      <Upvasana
+        title="॥ कोहो पीइं पणासेइ, माणो विणय णासणो,
+माया मित्ताणि णासेइ, लोहो सव्व विणासणो ॥"
+        content="Anger destroys our love, ego destroys our respect, 
+Deceit destroys our friendship, and greed destroys everything. "
+        reference="Shree Dashvaikalik Sutra, 8th Adhyayan" />
+
       <NavkarMahamantrs />
+      <Upvasana
+        title="॥ इच्छा उ आगाससमा अणंतिया ॥"
+        content="Desires have no limits. They are limitless like this sky."
+        reference="Shree Uttaradhyayan Sutra, 9th Adhyayan, Gatha 48" />
+
+
+
       <IndianIndependence />
-      <Upvasana />
+      <Upvasana
+        title="॥ सच्चं खलु भगवं ॥"
+        content="Truth itself is God."
+        reference="Shree Uttaradhyayan Sutra, 9th Adhyayan, Gatha 48" />
+
+
       <ViewsOnJainism />
     </>
   );

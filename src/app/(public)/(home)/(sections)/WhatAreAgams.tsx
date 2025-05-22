@@ -1,26 +1,10 @@
 'use client'
 import SectionTitle from "@/components/common/SectionTitle";
 import Image from "next/image";
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
 
 const WhatAreAgams = () => {
-  // Separate state for each popup
-  const [isLeftPopupVisible, setIsLeftPopupVisible] = useState(false);
-  const [isRightTopPopupVisible, setIsRightTopPopupVisible] = useState(false);
-  const [isRightBottomPopupVisible, setIsRightBottomPopupVisible] = useState(false);
 
-  const toggleLeftPopup = () => {
-    setIsLeftPopupVisible(!isLeftPopupVisible);
-  };
-
-  const toggleRightTopPopup = () => {
-    setIsRightTopPopupVisible(!isRightTopPopupVisible);
-  };
-
-  const toggleRightBottomPopup = () => {
-    setIsRightBottomPopupVisible(!isRightBottomPopupVisible);
-  };
 
   return (
     <>
@@ -38,7 +22,7 @@ const WhatAreAgams = () => {
               className="w-full h-auto rounded-lg"
             />
           </div>
-          <div className="w-full md:w-1/2 text-[#8E8777] mt-6 md:mt-0">
+          <div className="w-full md:w-1/2 text-justify text-[#8E8777] mt-6 md:mt-0">
             <p>
               Jain Aagams are the sacred scriptures of Jainism – the texts that encapsulate the infinite wisdom expounded by Bhagwan Mahavir, the 24th Tirthankar of Jainism. After attaining kevlagnan or omniscience, Bhagwan Mahavir illuminated the world with knowledge that transcended the past, present and future, encompassing every possible subject of the whole universe. The vast knowledge was then assimilated by his disciples, the Gandhars and the Acharyas, into Aagam scriptures. During Bhagwan Mahavir’s presence, there were countless Aagams. But with time, this legacy of wisdom slowly and gradually started depleting. Today, the world has preciously conserved 32 of these Aagams as per the Sthankwasi Tradition and 45 of them as per the Derawasi Tradition.
             </p>

@@ -8,11 +8,11 @@ const ShortFilmsAndDramas = ({ playlist }: { playlist: FrontendPlaylistDTO | nul
 
     return (
         <>
-            <section className='max-w-7xl mx-auto p-5'>
+            <section className='max-w-7xl mx-auto p-5 mb-10'>
                 <SectionTitle title='Short Films & Dramas' subtitle='INSPIRATION' />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
                     {playlist.videos.map((item, index) => (
-                        <YTVideoPlayer key={index} videoUrl={item} className="h-52 rounded-lg overflow-hidden" />
+                        <YTVideoPlayer key={index} videoUrl={item} className=" rounded-lg overflow-hidden" />
                     ))}
                 </div>
             </section>

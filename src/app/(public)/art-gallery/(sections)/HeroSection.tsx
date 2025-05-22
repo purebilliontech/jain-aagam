@@ -11,7 +11,7 @@ export default function HeroSection() {
 
                 <Typography variant='p' className='text-justify mt-5 text-typography'>Aaradhya Art Gallery is an exquisite collection of paintings and artwork that depict inspiring and heart-touching stories from the glorious history of Jainism. Every painting has been exclusively created by renowned artists to bring to life moments that can transform our mindset and change our destiny. Inspired by Param Gurudev Shree Namramuni Maharaj Saheb, the Aaradhya Art Gallery presents 108 paintings that aim to take forward the legacy of Jain culture, literature and philosophy through stunning artwork that speak a thousand words and awaken the profound wisdom of the Jain Aagam Scriptures as revealed by Bhagwan Mahavir. </Typography>
 
-                <YTVideoPlayer videoUrl='https://www.youtube.com/watch?v=qJUuaDaDA90' className='my-10 rounded-lg overflow-hidden h-[70vh]' />
+                <YTVideoPlayer videoUrl='https://www.youtube.com/watch?v=qJUuaDaDA90' className='my-10 rounded-lg overflow-hidden max-w-5xl mx-auto' />
 
             </div>
         </>
