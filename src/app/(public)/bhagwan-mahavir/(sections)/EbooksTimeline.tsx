@@ -58,13 +58,13 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
         transition={{ duration: 0.7, delay: 0.3 }}
       >
         {item.image ? (
-          <div className="bg-neutral-200 rounded-md overflow-hidden aspect-[4/3] shadow-md">
+          <div className=" rounded-md overflow-hidden aspect-[4/3] shadow-md">
             <Image
               src={item.image}
               alt={item.title}
               className="w-full h-full object-cover"
-              width={400}
-              height={400}
+              width={600}
+              height={600}
             />
           </div>
         ) : (

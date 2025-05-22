@@ -45,6 +45,7 @@ export default async function Ebooks() {
               </>
             ),
             alignment: "right",
+            image: "/static/bhagwan/1.png", // You might need a placeholder image
           },
           {
             title: "Renunciation",
@@ -67,7 +68,7 @@ export default async function Ebooks() {
               </>
             ),
             alignment: "right",
-            image: "/static/meditation-image.jpg", // You might need a placeholder image
+            image: "/static/bhagwan/2.png", // You might need a placeholder image
           },
           {
             title: "Omniscience",
@@ -111,6 +112,7 @@ export default async function Ebooks() {
               </>
             ),
             alignment: "right",
+            image: "/static/bhagwan/nirvan.jpg", // You might need a placeholder image
           },
         ]}
       />
