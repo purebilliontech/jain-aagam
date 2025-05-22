@@ -5,14 +5,83 @@ import type { BlogWithTagsAndBanner } from "@/schema/blog";
 import { Search } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import moment from "moment";
+import { getBlogsList } from "./actions";
 
-const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: { id: string; name: string; }[] }) => {
+const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPagination }: {
+  blogs: BlogWithTagsAndBanner[],
+  tags: { id: string; name: string; }[],
+  pagination: {
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
+  }
+}) => {
   // State to track selected tags for filtering
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   // State to track blogs after filtering
-  const [filteredBlogs, setFilteredBlogs] = useState<BlogWithTagsAndBanner[]>(blogs);
+  const [blogs, setBlogs] = useState<BlogWithTagsAndBanner[]>(initialBlogs);
   // State for search input
   const [searchTerm, setSearchTerm] = useState("");
+  // State for current page
+  const [currentPage, setCurrentPage] = useState(initialPagination.page);
+  // State for pagination
+  const [pagination, setPagination] = useState(initialPagination);
+  // State for loading
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch blogs when filters change
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setIsLoading(true);
+      try {
+        const result = await getBlogsList(currentPage, pagination.pageSize, searchTerm, selectedTags);
+        if (result.success) {
+          setBlogs(result.data);
+          setPagination(result.pagination);
+        }
+      } catch (error) {
+        console.error('Failed to fetch blogs:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Debounce search term changes
+    const timeoutId = setTimeout(() => {
+      fetchBlogs();
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [currentPage]);
+
+  // Fetch blogs when filters change
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setIsLoading(true);
+      try {
+        const result = await getBlogsList(1, 6, searchTerm, selectedTags);
+        if (result.success) {
+          setBlogs(result.data);
+          setPagination(result.pagination);
+        }
+      } catch (error) {
+        console.error('Failed to fetch blogs:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    setPagination(initialPagination);
+    setCurrentPage(1);
+
+    // Debounce search term changes
+    const timeoutId = setTimeout(() => {
+      fetchBlogs();
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, selectedTags]);
 
   // Handle tag selection/deselection
   const handleTagClick = (tagName: string) => {
@@ -25,29 +94,10 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
     });
   };
 
-  // Filter blogs whenever selected tags or search term changes
-  useEffect(() => {
-    let result = [...blogs];
-
-    // Filter by selected tags if any are selected
-    if (selectedTags.length > 0) {
-      result = result.filter(blog => {
-        const blogTags = blog.blogToTags.map(tag => tag.tag.name);
-        return selectedTags.some(tag => blogTags.includes(tag));
-      });
-    }
-
-    // Filter by search term if provided
-    if (searchTerm.trim()) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(blog =>
-        blog.title.toLowerCase().includes(term) ||
-        blog.blogToTags.some(tag => tag.tag.name.toLowerCase().includes(term))
-      );
-    }
-
-    setFilteredBlogs(result);
-  }, [selectedTags, searchTerm, blogs]);
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -63,7 +113,8 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
             <button
               key={tag.id}
               onClick={() => handleTagClick(tag.name)}
-              className={`inline-block cursor-pointer px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full transition-colors bg-primary-ui text-white`}
+              className={`inline-block cursor-pointer px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full transition-colors ${selectedTags.includes(tag.name) ? 'bg-primary-ui/80' : 'bg-primary-ui'
+                } text-white`}
             >
               {tag.name}
             </button>
@@ -82,23 +133,50 @@ const BlogsListPage = ({ blogs, tags }: { blogs: BlogWithTagsAndBanner[], tags: 
         </div>
       </div>
 
-      {filteredBlogs.length === 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center items-center max-w-7xl mx-auto p-5 h-64">
+          <p className="text-xl text-gray-500">Loading...</p>
+        </div>
+      ) : blogs.length === 0 ? (
         <div className="flex justify-center items-center max-w-7xl mx-auto p-5 h-64">
           <p className="text-xl text-gray-500">No articles found matching your filter criteria.</p>
         </div>
       ) : (
-        <div className="flex flex-wrap max-w-7xl mx-auto p-5 space-y-8 md:space-y-16">
-          {filteredBlogs.map((blog) => (
-            <BlogCard
-              key={blog.id}
-              tags={blog.blogToTags.map(tag => tag.tag.name)}
-              title={blog.title}
-              date={moment(blog.publishedAt).format("LL")}
-              image={blog.banner}
-              slug={blog.slug}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-5 max-w-7xl mx-auto">
+            {blogs.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                tags={blog.blogToTags.map(tag => tag.tag.name)}
+                title={blog.title}
+                date={moment(blog.publishedAt).format("LL")}
+                image={blog.banner}
+                slug={blog.slug}
+              />
+            ))}
+          </div>
+
+          {/* Pagination Controls */}
+          <div className="flex justify-center items-center gap-4 mt-8 mb-12">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1 || isLoading}
+              className="px-4 py-2 rounded-md bg-primary-ui text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span className="text-lg">
+              Page {currentPage} of {pagination.totalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === pagination.totalPages || isLoading}
+              className="px-4 py-2 rounded-md bg-primary-ui text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        </>
       )}
 
       {selectedTags.length > 0 && (

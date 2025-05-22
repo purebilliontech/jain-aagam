@@ -2,22 +2,22 @@ import type { MediaDTO } from '@/schema/media'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import Typography from '../common/typography'
 
 const BlogCard = ({ title, date, tags, image, slug }: { title: string, date: string, tags: string[], image?: MediaDTO, slug: string }) => {
     return (
         <>
-            <Link href={`/blogs/${slug}`} className="md:w-1/3 p-5">
-                <div className="flex flex-col overflow-hidden bg-card-ui md:rounded-4xl rounded-2xl">
+            <Link href={`/blogs/${slug}`} className="w-full h-full ">
+                <div className="flex flex-col h-full overflow-hidden bg-card-ui md:rounded-4xl rounded-2xl">
                     {image ?
                         <Image src={image.url} className='h-52 object-cover' width={600} height={500} alt={image.alt} />
                         : <Image src={'/static/placeholder.png'} className='h-52 object-cover' width={600} height={500} alt='Image for presentation' />}
                     <div className="md:p-8 p-5">
-                        <h3 className='font-mono font-semibold italic text-2xl text-typography' >
+                        <Typography variant='h4' className='font-mono font-semibold italic ' >
                             {title}
-                        </h3>
-                        <p className='font-mono font-semibold text-xl mt-4 italic'>{date}</p>
+                        </Typography>
+                        <Typography variant='p' className='font-mono font-semibold mt-2 text-typography italic'>{date}</Typography>
                     </div>
-
                     <div className="flex flex-wrap gap-2 md:px-8 px-5 pb-8">
                         {tags.map((tag, index) => (
                             <span key={index} className="inline-block bg-primary-ui md:px-5 px-3 md:py-1.5 py-1  text-white rounded-full">

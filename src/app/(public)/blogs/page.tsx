@@ -14,7 +14,7 @@ const Page = async () => {
     }
 
     return (
-        <BlogsListPage blogs={blogs.data} tags={tags.data} />
+        <BlogsListPage blogs={blogs.data} tags={tags.data} pagination={blogs.pagination} />
     )
 }
 
