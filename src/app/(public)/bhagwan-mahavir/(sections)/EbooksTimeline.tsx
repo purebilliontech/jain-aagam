@@ -62,7 +62,7 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
             <Image
               src={item.image}
               alt={item.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
               width={600}
               height={600}
             />
