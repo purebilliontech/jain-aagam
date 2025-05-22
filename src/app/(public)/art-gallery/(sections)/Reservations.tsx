@@ -144,7 +144,9 @@ export default function Reservations() {
                 </form>
             </Form>
             <Typography variant='p' className='text-center text-primary-ui font-semibold mt-5 w-full mx-auto text-xl'>
-                For more information, contact: +91 00000 00000
+                For more information,
+                <br className='md:hidden' />
+                {" "} contact: +91 91671 09889
             </Typography>
         </section>
     )

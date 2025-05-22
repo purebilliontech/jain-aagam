@@ -44,7 +44,7 @@ const Navbar = () => {
 
                     <div className="flex h-20 items-center justify-between p-5 max-md:border-b">
                         <Link href={'/'}>
-                            <p className="font-semibold font-sans text-xl">JAIN AGAM</p>
+                            <p className="font-semibold font-sans text-xl">JAIN AAGAM</p>
                         </Link>
 
                         <div
