@@ -54,7 +54,7 @@ const ViewsOnJainism = () => {
                             </div>
                         </div>
 
-                        <div className="flex px-5 my-10">
+                        <div className="flex my-10">
                             <div className="w-4 h-4 bg-primary-ui rounded-full"></div>
                             <div className="h-0.5 w-full bg-primary-ui mt-[9px]"></div>
                             <div className="w-4 h-4 bg-primary-ui rounded-full"></div>

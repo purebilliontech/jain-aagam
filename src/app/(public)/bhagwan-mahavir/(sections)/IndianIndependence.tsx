@@ -18,7 +18,7 @@ const IndianIndependence = () => {
               <Image src="/static/indian-independence/3.jpg" alt="Gandhi & Bicharji Swami Painting" className="w-full object-cover rounded-lg" width={500} height={500} />
             </div>
 
-            <Image src="/static/indian-independence/4.jpg" className="w-full h-full object-cover rounded-lg" alt="Gandhi & Bicharji Swami Painting" width={500} height={500} />
+            <Image src="/static/indian-independence/4.jpg" className="w-full md:h-full object-cover rounded-lg" alt="Gandhi & Bicharji Swami Painting" width={500} height={500} />
           </div>
         </div>
 
