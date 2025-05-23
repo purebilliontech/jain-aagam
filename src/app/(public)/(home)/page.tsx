@@ -12,6 +12,7 @@ import Typography from "@/components/common/typography";
 import JainAgamMap from "./(sections)/JainAgamMap";
 import AgamTree from "./(sections)/AgamTree";
 import BannerParallex from "./(sections)/BannerParallex";
+import TreeDesktop from "./(sections)/TreeDesktop";
 
 export default async function Home() {
 
@@ -24,7 +25,16 @@ export default async function Home() {
       <BannerParallex />
       {/* <TopSection coverImage={homepageContent.data?.homepage.CoverImage || null} /> */}
       <WhatAreAgams />
-      <AgamTree />
+
+      <div className="hidden md:block">
+
+        <TreeDesktop />
+      </div>
+
+      <div className="block md:hidden">
+
+        <AgamTree />
+      </div>
       <Agams />
       <AgamEbooks />
       <JainAgamMap />
@@ -71,7 +81,7 @@ export default async function Home() {
             content: (
               <div className="h-[40vh] md:h-[30vh]">
                 <Typography variant='h4' className="text-lg font-bold">Launch of the first English Jain Aagam</Typography>
-                <Typography variant='p' className="text-xs md:text-base">With Param Gurudev Shree Namramuni Maharaj Saheb's guidance and inspiration</Typography>
+                <Typography variant='p' className="text-xs md:text-base">With Param Gurudev Shree Namramuni Maharaj Saheb&apos;s guidance and inspiration</Typography>
                 <Typography variant='p' className="text-xs md:text-base">The Global Jain Aagam Mission translated the very first Jain Aagam in English – Shree Upasakdashang Sutra.</Typography>
               </div>
             ),

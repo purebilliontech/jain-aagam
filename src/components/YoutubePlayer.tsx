@@ -13,10 +13,52 @@ interface YouTubePlayerProps {
 let isApiLoading = false;
 let isApiLoaded = false;
 
+
 const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd, onPause, onPlay }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const [isPlayerLoaded, setIsPlayerLoaded] = useState(false);
+
+  const [playerState, setPlayerState] = useState<number>(-1);
+
+  const timeoutRef = useRef(null);
+
+
+
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    if (playerState === 1) {
+      onPlay();
+    }
+    if (playerState === 0) {
+      onVideoEnd();
+    }
+
+    if (playerState === 2) {
+      // Wait 1 second and check if value changed
+      timeoutRef.current = setTimeout(() => {
+        if (playerState === 2) {
+          console.log("Delayed action for 2");
+          onPause();
+        } else {
+          // If value changed during timeout, do nothing here
+          console.log("Value changed during delay, no action for 2");
+        }
+      }, 1000);
+    }
+
+    // Cleanup on unmount or before next effect
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [playerState]);
+
+
 
   // Load YouTube API once
   useEffect(() => {
@@ -75,6 +117,9 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd, onPa
       });
     };
 
+
+
+
     // Initialize player
     const initializePlayer = async () => {
       if (!containerRef.current) return;
@@ -121,6 +166,8 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd, onPa
               playerRef.current?.playVideo();
             },
             onStateChange: (event: { data: number }) => {
+              setPlayerState(event.data);
+              // console.log('event.data -> ', event.data);
               // YouTube player states:
               // -1 (unstarted)
               // 0 (ended)
@@ -128,17 +175,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd, onPa
               // 2 (paused)
               // 3 (buffering)
               // 5 (video cued)
-              switch (event.data) {
-                case 0:
-                  onVideoEnd();
-                  break;
-                case 1:
-                  onPlay();
-                  break;
-                case 2:
-                  onPause();
-                  break;
-              }
+
             }
           }
         });
@@ -160,7 +197,9 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, onVideoEnd, onPa
         playerRef.current = null;
       }
     };
-  }, [videoId, onVideoEnd, onPlay, onPause]);
+  }, [videoId]);
+
+
 
   return (
     <div

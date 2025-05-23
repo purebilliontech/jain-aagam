@@ -93,6 +93,7 @@ export default async function Ebooks() {
               </>
             ),
             alignment: "left",
+            image: "/static/bhagwan/3.jpg",
           },
           {
             title: "Nirvan",
