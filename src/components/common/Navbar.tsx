@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -44,7 +45,7 @@ const Navbar = () => {
 
                     <div className="flex h-20 items-center justify-between p-5 max-md:border-b">
                         <Link href={'/'}>
-                            <p className="font-semibold font-sans text-xl">JAIN AAGAM</p>
+                            <Image src={'/logo.png'} alt='Logo' width={100} height={100} className='object-contain h-full' />
                         </Link>
 
                         <div
