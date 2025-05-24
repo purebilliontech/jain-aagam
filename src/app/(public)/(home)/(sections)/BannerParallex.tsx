@@ -24,7 +24,7 @@ const BannerParallex = () => {
                 <Image src={'/static/layers/bottom.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50' />
             </motion.div>
 
-            <motion.div style={{ scale: s }} className="absolute bottom-0 left-1/2 max-md:scale-150 max-md:bottom-10 -translate-x-1/2 w-full max-w-7xl px-20">
+            <motion.div style={{ scale: s }} className="absolute bottom-5 left-1/2 max-md:scale-150 max-md:bottom-10 -translate-x-1/2 w-full max-w-7xl  sm:px-20 md:px-10 lg:px-40 px-0">
                 <Image src={'/static/layers/book.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50' />
             </motion.div>
 
@@ -34,7 +34,7 @@ const BannerParallex = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
 
-                style={{ scale: mainScale }} className="absolute top-10 left-1/2 max-sm:max-w-64 -translate-x-1/2 w-full max-w-60">
+                style={{ scale: mainScale }} className="absolute top-10 left-1/2  -translate-x-1/2 w-full max-w-60 max-md:w-44">
                 <Image src={'/static/layers/main.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50 ' />
             </motion.div>
 
@@ -43,7 +43,7 @@ const BannerParallex = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 // style={{ scale: mainScale, y: book }}
-                className="absolute bottom-[10vh] w-full"
+                className="absolute  bottom-5  w-full"
             >
                 <h1 className='text-4xl md:text-5xl lg:text-7xl font-bold text-center text-[#ECA055] z-50 tracking-wider [text-shadow:_2px_2px_2px_rgb(0_0_0_/_40%)]'>AAGAM SHASTRA</h1>
 

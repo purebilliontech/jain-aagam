@@ -22,7 +22,7 @@ const Painting = ({ title, subtitle, image, content, reverse }: { title: string,
 export default function Paintings() {
     return (
         <>
-            <div className="bg-muted-ui py-10">
+            <div className="bg-muted-ui md:py-10 py-1">
 
                 <div className="max-w-7xl mx-auto ">
 

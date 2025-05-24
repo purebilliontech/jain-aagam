@@ -25,7 +25,7 @@ export const getBlogsList = async (
     if (searchTerm) {
       whereClause.OR = [
         { title: { contains: searchTerm, mode: "insensitive" } },
-        { synopsis: { contains: searchTerm, mode: "insensitive" } },
+        // { synopsis: { contains: searchTerm, mode: "insensitive" } },
       ];
     }
 

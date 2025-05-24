@@ -12,8 +12,8 @@ export default function ShowcaseImage() {
 
                 <div className="w-full h-full flex absolute top-0 left-0 z-50 bg-black/55 rounded-2xl">
                     <div className="w-1/3 p-1 border-r-4 border-white flex items-center justify-end">
-                        <Typography variant='h3' className='max-sm:text-sm !text-5xl  text-[#E9E2D2] text-right'>
-                            <span className='italic font-medium mr-3'>
+                        <Typography variant='h3' className='max-sm:text-sm md:!text-5xl  text-[#E9E2D2] text-right'>
+                            <span className='italic font-medium md:mr-3'>
                                 Historic
                             </span>
                             <br />
@@ -23,8 +23,8 @@ export default function ShowcaseImage() {
                         </Typography>
                     </div>
                     <div className="w-1/3 md:p-5 p-2 border-l-4 border-white border-r-4 flex items-center justify-end">
-                        <Typography variant='h3' className='max-sm:text-sm !text-5xl  text-[#E9E2D2] text-right'>
-                            <span className='italic font-medium mr-3'>
+                        <Typography variant='h3' className='max-sm:text-sm md:!text-5xl  text-[#E9E2D2] text-right'>
+                            <span className='italic font-medium md:mr-3'>
                                 Compelling
                             </span>
                             <br />
@@ -34,8 +34,8 @@ export default function ShowcaseImage() {
                         </Typography>
                     </div>
                     <div className="w-1/3 md:p-5 p-2 border-l-4 border-white flex items-center justify-end">
-                        <Typography variant='h3' className='max-sm:text-sm !text-5xl  text-[#E9E2D2] text-right'>
-                            <span className='italic font-medium mr-3'>
+                        <Typography variant='h3' className='max-sm:text-sm md:!text-5xl  text-[#E9E2D2] text-right'>
+                            <span className='italic font-medium md:mr-3'>
                                 Eye-opening
 
                             </span>

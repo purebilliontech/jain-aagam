@@ -3,7 +3,7 @@ import React from 'react'
 
 const InnerBanner = ({ image, alt, children }: { image: string, alt: string, children?: React.ReactNode }) => {
     return (
-        <section className="relative w-screen h-[70vh]">
+        <section className="relative w-screen h-[35vh] sm:h-[40vh] md:h-[70vh]">
             <Image
                 src={image}
                 alt={alt}

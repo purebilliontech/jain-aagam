@@ -112,14 +112,23 @@ const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPaginatio
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row p-5 mt-10">
         <div className="md:w-2/3 flex flex-wrap gap-2 px-4 md:px-8 pb-8">
+          <button
+            onClick={() => setSelectedTags([])}
+            className={`cursor-pointer ${selectedTags.length === 0 ? 'border-typography  rounded-full border-2' : ''}`}
+          >
+            <span className="inline-block bg-primary-ui md:px-4 px-2 md:py-1.5 py-1  text-white rounded-full text-sm">
+              All
+            </span>
+          </button>
           {tags.map((tag) => (
             <button
               key={tag.id}
               onClick={() => handleTagClick(tag.name)}
-              className={`inline-block cursor-pointer px-4 md:px-7 py-2 text-sm md:text-lg font-medium rounded-full transition-colors ${selectedTags.includes(tag.name) ? 'bg-primary-ui/80' : 'bg-primary-ui'
-                } text-white`}
+              className={`cursor-pointer ${selectedTags.includes(tag.name) ? 'border-typography  rounded-full border-2' : ''}`}
             >
-              {tag.name}
+              <span className="inline-block bg-primary-ui md:px-4 px-2 md:py-1.5 py-1  text-white rounded-full text-sm">
+                {tag.name}
+              </span>
             </button>
           ))}
         </div>
@@ -159,24 +168,90 @@ const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPaginatio
             ))}
           </div>
 
-          {/* Pagination Controls */}
-          <div className="flex justify-center items-center gap-4 mt-8 mb-12">
+          {/* Improved Pagination Controls */}
+          <div className="flex justify-center items-center gap-4 mt-10 mb-12 select-none">
+            {/* Previous Button */}
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1 || isLoading}
-              className="px-4 py-2 rounded-md bg-primary-ui text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Previous page"
+              className={`
+                flex items-center justify-center cursor-pointer w-8 h-8 rounded-full border-2 border-primary-ui
+                text-primary-ui text-xl transition
+                ${currentPage === 1 || isLoading
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:bg-primary-ui/10 active:bg-primary-ui/20'}
+              `}
             >
-              Previous
+              <span className="sr-only">Previous</span>
+              <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
             </button>
-            <span className="text-lg">
-              Page {currentPage} of {pagination.totalPages}
-            </span>
+
+            {/* Page Numbers */}
+            <div className="flex items-center gap-4">
+              {Array.from({ length: pagination.totalPages }).map((_, idx) => {
+                const page = idx + 1;
+                // Show first 3, last, current, and neighbors, with ellipsis
+                if (
+                  page === 1 ||
+                  page === pagination.totalPages ||
+                  (page >= currentPage - 1 && page <= currentPage + 1) ||
+                  (currentPage <= 3 && page <= 5) ||
+                  (currentPage >= pagination.totalPages - 2 && page >= pagination.totalPages - 4)
+                ) {
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      disabled={page === currentPage}
+                      className={`
+                        w-8 h-8 rounded-full cursor-pointer text-xl font-mono font-medium
+                        transition
+                        ${page === currentPage
+                          ? 'bg-primary-ui text-white'
+                          : 'text-[#686151] hover:bg-primary-ui/10 active:bg-primary-ui/20'}
+                        ${page === currentPage ? 'cursor-default' : ''}
+                      `}
+                      aria-current={page === currentPage ? "page" : undefined}
+                    >
+                      {page}
+                    </button>
+                  );
+                }
+                // Ellipsis logic
+                if (
+                  (page === currentPage - 2 && currentPage > 4) ||
+                  (page === currentPage + 2 && currentPage < pagination.totalPages - 3)
+                ) {
+                  return (
+                    <span key={page} className="w-8 h-8 flex items-center justify-center text-xl text-[#686151]">
+                      ...
+                    </span>
+                  );
+                }
+                return null;
+              })}
+            </div>
+
+            {/* Next Button */}
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === pagination.totalPages || isLoading}
-              className="px-4 py-2 rounded-md bg-primary-ui text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Next page"
+              className={`
+                flex items-center justify-center cursor-pointer w-8 h-8 rounded-full border-2 border-primary-ui
+                text-primary-ui text-xl transition
+                ${currentPage === pagination.totalPages || isLoading
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:bg-primary-ui/10 active:bg-primary-ui/20'}
+              `}
             >
-              Next
+              <span className="sr-only">Next</span>
+              <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
             </button>
           </div>
         </>

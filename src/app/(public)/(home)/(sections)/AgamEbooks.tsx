@@ -162,7 +162,7 @@ const AgamEbooks = () => {
 
                 {/* Responsive grid layout */}
                 <div className="md:mt-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-6 md:gap-8 lg:gap-10">
-                    {ebooks.map((ebook, index) => (
+                    {ebooks.slice(0, expanded ? ebooks.length : 8).map((ebook, index) => (
                         <div key={index}>
                             <Link href={ebook.pdf} target='_blank'>
                                 <Image
