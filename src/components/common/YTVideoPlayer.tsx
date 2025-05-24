@@ -23,7 +23,7 @@ export default function YTVideoPlayer({ videoUrl, className }: { videoUrl: strin
                     className="absolute inset-0 cursor-pointer"
                     onClick={() => setShowPlayer(true)}
                 >
-                    {showFallback ? <Image
+                    {!showFallback ? <Image
                         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                         alt="Video thumbnail"
                         fill
@@ -32,6 +32,7 @@ export default function YTVideoPlayer({ videoUrl, className }: { videoUrl: strin
                             // Fallback to default thumbnail if maxresdefault is not available
                             const target = e.target as HTMLImageElement;
                             target.src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+                            setShowFallback(true);
                         }}
                     /> : <Image
                         src={`https://img.youtube.com/vi/${videoId}/0.jpg`}

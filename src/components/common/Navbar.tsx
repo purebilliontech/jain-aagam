@@ -19,7 +19,7 @@ const navLinks = [
         href: "/art-gallery",
     },
     {
-        title: "Articles",
+        title: "Blogs",
         href: "/blogs",
     },
     {

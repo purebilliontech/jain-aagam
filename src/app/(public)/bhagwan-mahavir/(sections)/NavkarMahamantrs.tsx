@@ -57,19 +57,23 @@ const NavkarMahamantrs = () => {
 
                     <div className="md:w-1/3">
                         {mahaMantras.map((mantra, index) => (
-                            <div key={index} onClick={() => setSelectedMeaning(mantra.meaning)}>
-                                <Typography variant='h4' key={index} className={`text-center hover:font-bold font-mono font-semibold  cursor-pointer ${mantra.meaning === selectedMeaning ? "text-primary-ui" : "text-typography"}`}>{mantra.line}</Typography>
+                            // <div key={index} onClick={() => setSelectedMeaning(mantra.meaning)}>
+                            //     <Typography variant='h4' key={index} className={`text-center hover:font-bold font-mono font-semibold  cursor-pointer ${mantra.meaning === selectedMeaning ? "text-primary-ui" : "text-typography"}`}>{mantra.line}</Typography>
+                            // </div> 
+
+                            <div key={index} >
+                                <Typography variant='h4' key={index} className={`text-center  font-mono font-semibold text-typography`}>{mantra.line}</Typography>
                             </div>
                         ))}
                     </div>
 
-                    <div className="md:w-1/3">
+                    {/* <div className="md:w-1/3">
                         <div className="px-6 h-60 flex items-center md:w-60 lg:w-80 md:ml-auto rounded-4xl shadow-xl bg-[#DCD3C2]">
                             <Typography variant='h4' className='font-mono text-typography text-center font-semibold'>
                                 {selectedMeaning}
                             </Typography>
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
                 <Typography variant='p' className='text-justify text-typography my-20'>

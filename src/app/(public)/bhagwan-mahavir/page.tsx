@@ -137,8 +137,13 @@ export default async function Ebooks() {
 
       <PanchMahavrats />
       <Upvasana
-        title="॥ कोहो पीइं पणासेइ, माणो विणय णासणो,
-माया मित्ताणि णासेइ, लोहो सव्व विणासणो ॥"
+        title={
+          <>
+            <span >॥ कोहो पीइं पणासेइ, माणो विणय णासणो,</span>
+            <br />
+            <span >माया मित्ताणि णासेइ, लोहो सव्व विणासणो ॥</span>
+          </>
+        }
         content="Anger destroys our love, ego destroys our respect, 
 Deceit destroys our friendship, and greed destroys everything. "
         reference="Shree Dashvaikalik Sutra, 8th Adhyayan" />

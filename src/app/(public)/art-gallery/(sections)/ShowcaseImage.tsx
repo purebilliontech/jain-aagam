@@ -8,23 +8,41 @@ export default function ShowcaseImage() {
 
             <div className="max-w-7xl mx-auto relative my-10">
 
-                <Image src='/static/art/horizontal.png' alt='Showcase' width={500} height={500} className=' object-contain w-full h-full rounded-xl' />
+                <Image src='/static/art/horizontal2.png' alt='Showcase' width={1000} height={1000} className=' object-contain w-full h-full rounded-xl' />
 
-                <div className="w-full h-full flex absolute top-0 left-0 z-50 bg-black/35 rounded-2xl">
-                    <div className="w-1/3 md:p-5 p-2 border-r-4 border-white flex items-center justify-end">
-                        <Typography variant='h3' className='max-sm:text-sm text-white text-right'>
-                            Historic
-                            Art.
+                <div className="w-full h-full flex absolute top-0 left-0 z-50 bg-black/55 rounded-2xl">
+                    <div className="w-1/3 p-1 border-r-4 border-white flex items-center justify-end">
+                        <Typography variant='h3' className='max-sm:text-sm !text-5xl  text-[#E9E2D2] text-right'>
+                            <span className='italic font-medium mr-3'>
+                                Historic
+                            </span>
+                            <br />
+                            <span className=' font-bold'>
+                                Art.
+                            </span>
                         </Typography>
                     </div>
                     <div className="w-1/3 md:p-5 p-2 border-l-4 border-white border-r-4 flex items-center justify-end">
-                        <Typography variant='h3' className='max-sm:text-sm text-white text-right'>
-                            Compelling Art.
+                        <Typography variant='h3' className='max-sm:text-sm !text-5xl  text-[#E9E2D2] text-right'>
+                            <span className='italic font-medium mr-3'>
+                                Compelling
+                            </span>
+                            <br />
+                            <span className=' font-bold'>
+                                Art.
+                            </span>
                         </Typography>
                     </div>
                     <div className="w-1/3 md:p-5 p-2 border-l-4 border-white flex items-center justify-end">
-                        <Typography variant='h3' className='max-sm:text-sm text-white text-right'>
-                            Eye-opening Masterpieces.
+                        <Typography variant='h3' className='max-sm:text-sm !text-5xl  text-[#E9E2D2] text-right'>
+                            <span className='italic font-medium mr-3'>
+                                Eye-opening
+
+                            </span>
+                            <br />
+                            <span className=' font-bold'>
+                                Masterpieces.
+                            </span>
                         </Typography>
                     </div>
                 </div>

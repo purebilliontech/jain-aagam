@@ -1,23 +1,11 @@
+import InnerBanner from "@/components/common/InnerBanner";
 import type { CoverImageDTO } from "@/schema/pageComponents";
 import Image from "next/image";
 import React from "react";
 
-const TopSection = ({ coverImage }: { coverImage: CoverImageDTO | null }) => {
+const TopSection = () => {
     return (
-        <section className="md:h-[55vh] lg:h-[65vh] xl:h-[90vh] h-[35vh] relative flex flex-col md:flex-row items-center justify-center md:justify-around mx-auto">
-            <Image
-                src={coverImage?.media.url ?? "/static/art/banner.png"}
-                alt={coverImage?.media.alt ?? "Image for presentation"}
-                width={2000}
-                height={2000}
-                className="w-screen h-full  absolute -z-50 top-0 left-0 object-center"
-            />
-            {/* <div className="text-center p-4 md:text-left ">
-                <h2 className="text-primary-ui font-sans text-5xl md:text-8xl font-semibold">
-                    ART GALLERY
-                </h2>
-            </div> */}
-        </section>
+        <InnerBanner image={"/static/art/banner.png"} alt="Image for presentation" />
     );
 };
 

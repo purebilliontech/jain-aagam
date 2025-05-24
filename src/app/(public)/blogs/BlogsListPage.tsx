@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { getBlogsList } from "./actions";
+import InnerBanner from "@/components/common/InnerBanner";
 
 const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPagination }: {
   blogs: BlogWithTagsAndBanner[],
@@ -101,11 +102,13 @@ const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPaginatio
 
   return (
     <>
-      <div className="bg-[url('/static/blog-banner.png')] bg-cover bg-center w-full h-64 md:h-96 flex items-center">
-        <h1 className="max-w-7xl mx-auto text-primary-ui p-4 md:p-20 text-4xl md:text-4xl font-semibold">
-          BLOGS
-        </h1>
-      </div>
+      <InnerBanner image={"/static/blog-banner.png"} alt="Image for presentation" >
+        <div className="text-center p-4 md:text-left absolute top-0 left-0 w-full h-full flex items-center justify-center">
+          <h2 className="max-w-7xl mx-auto text-primary-ui text-center w-full p-4 md:p-20 text-4xl md:text-4xl font-semibold">
+            BLOGS
+          </h2>
+        </div>
+      </InnerBanner>
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row p-5 mt-10">
         <div className="md:w-2/3 flex flex-wrap gap-2 px-4 md:px-8 pb-8">

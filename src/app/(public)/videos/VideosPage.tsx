@@ -1,3 +1,4 @@
+import InnerBanner from "@/components/common/InnerBanner";
 import SectionTitle from "@/components/common/SectionTitle";
 import YTVideoPlayer from "@/components/common/YTVideoPlayer";
 import { FrontendPlaylistDTO } from "@/schema/frontendPlaylist";
@@ -17,11 +18,13 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
 
     return (
         <>
-            <div className="bg-[url('/static/blog-banner.png')] bg-cover bg-center w-full h-64 md:h-96 flex items-center">
-                <h1 className="max-w-7xl mx-auto text-primary-ui p-4 md:p-20 text-4xl md:text-4xl font-semibold">
-                    VIDEOS
-                </h1>
-            </div>
+            <InnerBanner image={"/static/blog-banner.png"} alt="Image for presentation" >
+                <div className="text-center p-4 md:text-left absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                    <h2 className="max-w-7xl mx-auto text-primary-ui text-center w-full p-4 md:p-20 text-4xl md:text-4xl font-semibold">
+                        VIDEOS
+                    </h2>
+                </div>
+            </InnerBanner>
 
             <div className="max-w-7xl mx-auto my-10 p-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

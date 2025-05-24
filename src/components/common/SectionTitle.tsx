@@ -6,9 +6,10 @@ interface SectionTitleProps {
     title: string;
     subtitle: string;
     className?: string; // Optional prop for custom Tailwind CSS classes
+    diffColor?: boolean;
 }
 
-const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, className }) => {
+const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, className, diffColor = false }) => {
     return (
         <>
             <div className={`max-w-7xl mx-auto ${className}`}>
@@ -17,13 +18,13 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, subtitle, className 
 
                 <div className="flex items-center md:flex-row flex-col">
                     <div className="flex-1 max-md:my-3">
-                        <Image src={'/static/title-ornament.png'} width={500} height={30} alt='Image for presentation' />
+                        <Image src={diffColor ? '/static/special-ornament.png' : '/static/title-ornament.png'} width={500} height={30} alt='Image for presentation' />
                     </div>
                     <div className="px-10">
-                        <Typography variant='h2' className="text-primary-ui  text-center">{title}</Typography>
+                        <Typography variant='h2' className={`${diffColor ? 'text-primary-ui' : 'text-secondary-ui'}  text-center`}>{title}</Typography>
                     </div>
                     <div className="flex-1 md:block hidden">
-                        <Image src={'/static/title-ornament.png'} width={500} height={30} alt='Image for presentation' />
+                        <Image src={diffColor ? '/static/special-ornament.png' : '/static/title-ornament.png'} width={500} height={30} alt='Image for presentation' />
                     </div>
                 </div>
 
