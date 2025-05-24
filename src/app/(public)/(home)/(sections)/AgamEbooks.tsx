@@ -11,7 +11,7 @@ const AgamEbooks = () => {
     return (
         <>
             <section className='md:mt-32 mt-10 mb-20 max-w-7xl w-full mx-auto p-5'>
-                <SectionTitle title='Agam Ebooks' subtitle='EXPLORE' />
+                <SectionTitle title='Agam eBooks' subtitle='EXPLORE' />
 
                 {/* Responsive grid layout */}
                 <div className="md:mt-24 mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-6 md:gap-8 lg:gap-10">

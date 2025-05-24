@@ -12,12 +12,12 @@ const MapMarker = ({ className, title, subtitle }: { className: string, title: s
 
   return (
     <div className={`absolute ${className}`} >
-      <div onClick={() => setIsClicked(!isClicked)} className="bg-red-400 w-5 h-5 flex justify-center items-center rounded-full">
-        <div className="bg-red-400 w-5 h-5 md:w-3 md:h-3 rounded-full animate-ping">
+      <div onClick={() => setIsClicked(!isClicked)} className="bg-accent-ui w-5 h-5 flex justify-center items-center rounded-full">
+        <div className="bg-accent-ui w-5 h-5 md:w-3 md:h-3 rounded-full animate-ping">
         </div>
       </div>
       <div className={`absolute top-5 -left-5 min-w-28 sm:left-3 p-3 md:min-w-40  ${isClicked ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 bg-[#D9D2C0] rounded-lg `}>
-        <div className="w-6 h-6 bg-white rounded-full"></div>
+        {/* <div className="w-6 h-6 bg-white rounded-full"></div> */}
         <Typography variant='h4' className='!text-base w-full italic text-typography'>{title}</Typography>
         <Typography variant='h4' className='!text-base italic text-typography/70'>{subtitle}</Typography>
       </div>

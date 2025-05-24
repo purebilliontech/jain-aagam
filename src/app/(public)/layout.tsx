@@ -4,8 +4,8 @@ import { Toaster } from '@/components/ui/sonner'
 
 
 export const metadata: Metadata = {
-  title: "Jain Agam",
-  description: "Explore the timeless wisdom and teachings of Jain Agam, a collection of sacred texts that form the foundation of Jain philosophy and spirituality.",
+  title: "Jain Aagam",
+  description: "Explore the timeless wisdom and teachings of Jain Aagam, a collection of sacred texts that form the foundation of Jain philosophy and spirituality.",
 };
 
 export default function RootLayout({

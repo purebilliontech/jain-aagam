@@ -5,7 +5,7 @@ const AgamSection = ({ title, content }: { title: string, content: string }) => 
     return (
         <div className='mt-5 '>
             <Typography variant='h3' className='text-primary-ui text-justify'>{title}</Typography>
-            <Typography variant='h4' className='text-muted-ui text-justify'>
+            <Typography variant='p' className='text-muted-ui text-justify'>
                 {content}
             </Typography>
         </div>
@@ -25,7 +25,7 @@ const Agams = () => {
         <>
             <section className='relative h-full bg-[url("/static/agams-bg.png")] bg-cover bg-fixed bg-center'>
                 {/* <Image className='-z-10 absolute top-0 left-0 inset-0 object-cover object-center' src={'/static/agams-bg.png'} fill alt='Agams BG' /> */}
-                <div className='z-50 px-5 md:px-10 xl:px-20 py-20 max-w-7xl mx-auto'>
+                <div className='z-50 px-5 py-20 max-w-5xl mx-auto'>
                     {agamData.map((agam, index) => (
                         <AgamSection key={index} title={agam.title} content={agam.content} />
                     ))}

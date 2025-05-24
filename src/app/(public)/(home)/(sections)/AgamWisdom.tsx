@@ -10,7 +10,7 @@ import React from 'react'
 const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos: FrontendPlaylistDTO | null }) => {
     return (
         <section className='mt-32 mb-20 max-w-7xl w-full mx-auto p-5'>
-            <SectionTitle title='Agam Wisdom' subtitle='BLOGS & VIDOS' />
+            <SectionTitle title='Aagam Wisdom' subtitle='BLOGS & VIDEOS' />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-24 ">
                 {blogs.map((blog) => (
                     <BlogCard
@@ -37,6 +37,11 @@ const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos:
                     ))}
                 </div>
             )}
+            <div className="flex justify-center">
+                <Link href={'/videos'}>
+                    <FEButton className='text-center mx-auto mt-20'>VIEW MORE</FEButton>
+                </Link>
+            </div>
 
         </section>
     )
