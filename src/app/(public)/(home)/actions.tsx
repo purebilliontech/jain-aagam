@@ -4,7 +4,7 @@ import { handleServerActionError } from "@/helpers/error";
 import { db } from "@/lib/db";
 import { HomepageDTOSchema } from "@/schema/staticPage";
 import { BlogWithTagsAndBannerSchema } from "@/schema/blog";
-import { EnglishAgamContactForm } from "@/schema/englishAagam";
+import { EnglishAgamContactForm, EnglishAgamContactFormSchema } from "@/schema/englishAagam";
 import { EnglishAgamContactSchema } from "@/schema/englishAagam";
 import { PlaylistSchema } from "@/schema/playlist";
 import { FrontendPlaylistDTOSchema } from "@/schema/frontendPlaylist";
@@ -66,7 +66,7 @@ export const getHomepageContent = async () => {
 export async function submitEnglishAgamContact(formData: EnglishAgamContactForm) {
     try {
         // Double validation on server side for security
-        const validatedData = EnglishAgamContactSchema.parse(formData)
+        const validatedData = EnglishAgamContactFormSchema.parse(formData)
 
         // Additional security: Normalize and sanitize data
         const sanitizedData = {
