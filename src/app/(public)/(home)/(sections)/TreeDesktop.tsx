@@ -93,7 +93,7 @@ export default function AgamTree() {
 
                 <TreeMarker
                     className='sm:top-[70%] top-[67%] left-[50%]'
-                    title="Mul Aagam"
+                    title="Mool Aagam"
                     subtitle='The roots or fundamental basics'
                     isLeft={false}
                     lineClassName='lg:w-60 md:w-28'

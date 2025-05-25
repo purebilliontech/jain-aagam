@@ -13,6 +13,7 @@ import JainAgamMap from "./(sections)/JainAgamMap";
 import AgamTree from "./(sections)/AgamTree";
 import BannerParallex from "./(sections)/BannerParallex";
 import TreeDesktop from "./(sections)/TreeDesktop";
+import ToTopButton from "./(sections)/ToTopButton";
 
 export default async function Home() {
 
@@ -89,7 +90,9 @@ export default async function Home() {
 
         ]} />
       </div>
+      
       <JoinMission />
+      <ToTopButton/>
     </>
   );
 }

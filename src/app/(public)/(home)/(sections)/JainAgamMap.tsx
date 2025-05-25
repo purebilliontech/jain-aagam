@@ -43,7 +43,7 @@ const MapMarker = ({ className, title, subtitle, up = false }: { className: stri
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className={`absolute ${up ? '-left-5 bottom-5' : '-right-5 top-5'} min-w-28 sm:left-3 p-3 md:min-w-40 bg-[#D9D2C0] rounded-lg`}
+            className={`absolute ${up ? '-left-2 bottom-5' : '-right-20 top-5'} min-w-28 sm:left-3 p-3 md:min-w-40 bg-[#D9D2C0] rounded-lg`}
           >
             <Typography variant='h4' className='!text-base w-full italic text-typography'>{title}</Typography>
             <Typography variant='h4' className='!text-base italic text-typography/70'>{subtitle}</Typography>
@@ -57,9 +57,8 @@ const MapMarker = ({ className, title, subtitle, up = false }: { className: stri
 export default function JainAgamMap() {
   return (
     <>
-      <div className="max-w-7xl mx-auto relative my-20">
-        <Image src={'/static/home/map.png'} alt='Jain Agam Map' width={2000} height={1000} />
-
+      <div className=" max-w-7xl mx-auto relative my-20">
+        <Image src={'/static/home/map.png'} alt='Jain Aagam Map' width={2000} height={1000} />
         <MapMarker className='top-[25%] left-[5%]' title='Jain Center' subtitle='North California' up={true} />
         <MapMarker className='top-[29%] left-[8%]' title='Jain Center' subtitle='South California' up={false} />
         <MapMarker className='top-[20%] left-[50%]' title='The British Library' subtitle='London, UK' up={true} />
