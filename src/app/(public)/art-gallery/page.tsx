@@ -8,7 +8,7 @@ import Reservations from './(sections)/Reservations'
 export default function ArtGalleryPage() {
     return (
         <>
-            <TopSection coverImage={null} />
+            <TopSection  />
             <HeroSection />
             <Paintings />
             <ShowcaseImage />

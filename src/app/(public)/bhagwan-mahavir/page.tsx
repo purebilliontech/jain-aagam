@@ -18,7 +18,7 @@ export default async function Ebooks() {
 
   return (
     <>
-      <TopSection coverImage={bhagwanMahavirPage.data?.CoverImage || null} />
+      <TopSection />
       <BhagwanMahavir />
       <Upvasana
         title="॥ विवत्ती अविणीयस्स, संपत्ती विणीयस्स य ॥"

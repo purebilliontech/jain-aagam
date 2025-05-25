@@ -15,7 +15,7 @@ const BlogCard = ({ title, date, tags, image, slug }: { title: string, date: str
                         <h3 className='font-mono text-2xl font-semibold italic !text-[#686151] ' >
                             {title}
                         </h3>
-                        <p className='font-mono text-2xl font-semibold mt-2 text-[#8E8777] italic'>
+                        <p className='font-mono text-lg font-semibold mt-2 text-[#8E8777] italic'>
                             {new Date(date).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'long',

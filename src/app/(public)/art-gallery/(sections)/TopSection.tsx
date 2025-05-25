@@ -1,6 +1,4 @@
 import InnerBanner from "@/components/common/InnerBanner";
-import type { CoverImageDTO } from "@/schema/pageComponents";
-import Image from "next/image";
 import React from "react";
 
 const TopSection = () => {
