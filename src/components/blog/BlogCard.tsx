@@ -12,7 +12,7 @@ const BlogCard = ({ title, date, tags, image, slug }: { title: string, date: str
                         <Image src={image.url} className='h-52 object-cover' width={600} height={500} alt={image.alt} />
                         : <Image src={'/static/placeholder.png'} className='h-52 object-cover' width={600} height={500} alt='Image for presentation' />}
                     <div className="md:p-8 p-5">
-                        <h3 className='font-mono text-3xl font-semibold italic !text-[#686151] ' >
+                        <h3 className='font-mono text-2xl font-semibold italic !text-[#686151] ' >
                             {title}
                         </h3>
                         <p className='font-mono text-2xl font-semibold mt-2 text-[#8E8777] italic'>

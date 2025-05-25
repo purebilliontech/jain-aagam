@@ -4,6 +4,7 @@ import SectionTitle from '@/components/common/SectionTitle'
 import YTVideoPlayer from '@/components/common/YTVideoPlayer'
 import type { BlogWithTagsAndBanner } from '@/schema/blog'
 import { FrontendPlaylistDTO } from '@/schema/frontendPlaylist'
+import moment from 'moment'
 import Link from 'next/link'
 import React from 'react'
 
@@ -17,7 +18,7 @@ const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos:
                         key={blog.id}
                         slug={blog.slug}
                         title={blog.title}
-                        date={blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString() : new Date(blog.createdAt).toLocaleDateString()}
+                        date={moment(blog.publishedAt).format("LL")}
                         tags={blog.blogToTags.map(tag => tag.tag.name)}
                         image={blog.banner}
                     />

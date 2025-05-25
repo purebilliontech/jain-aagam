@@ -19,6 +19,10 @@ const navLinks = [
         href: "/art-gallery",
     },
     {
+        title: "Ebooks",
+        href: "/ebooks",
+    },
+    {
         title: "Blogs",
         href: "/blogs",
     },
@@ -67,8 +71,8 @@ const Navbar = () => {
                         {navLinks.map((link) => (
                             <Link key={link.title} href={link.href} onClick={() => { setToggle(false) }}>
                                 <p
-                                    className={`font-medium ${pathname === link.href ? "text-primary-ui" : "text-heading"
-                                        } hover:text-primary-ui`}
+                                    className={`font-medium ${pathname === link.href ? "text-[#E58834]" : "text-heading"
+                                        } hover:text-[#E58834]`}
                                 >
                                     {link.title}
                                 </p>

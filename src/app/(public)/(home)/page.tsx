@@ -65,7 +65,7 @@ export default async function Home() {
             ),
           },
           {
-            title: "1998",
+            title: "2524",
             subtitle: "Veer Samvat",
             content: (
               <div className="h-[40vh] md:h-[30vh]">
@@ -76,7 +76,7 @@ export default async function Home() {
             ),
           },
           {
-            title: "2024",
+            title: "2550",
             subtitle: "Veer Samvat",
             content: (
               <div className="h-[40vh] md:h-[30vh]">

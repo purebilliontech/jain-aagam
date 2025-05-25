@@ -45,9 +45,9 @@ const IndianIndependence = () => {
 
         {/* Bottom Flex Section */}
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 mt-20">
-          <Image src="/static/indian-independence/a.jpg" alt="Gandhi & Bicharji Swami Painting" className="w-full h-full object-cover rounded-lg" width={700} height={700} />
           <Image src="/static/indian-independence/b.jpg" alt="Gandhi & Bicharji Swami Painting" className="w-full h-full object-cover rounded-lg" width={700} height={700} />
           <Image src="/static/indian-independence/c.jpg" alt="Gandhi & Bicharji Swami Painting" className="w-full h-full object-cover rounded-lg" width={700} height={700} />
+          <Image src="/static/indian-independence/c1.jpg" alt="Gandhi & Bicharji Swami Painting" className="w-full h-full object-cover rounded-lg" width={700} height={700} />
         </div>
 
         <div className="mt-20">

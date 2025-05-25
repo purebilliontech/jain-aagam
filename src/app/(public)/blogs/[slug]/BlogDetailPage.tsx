@@ -25,7 +25,6 @@ const BlogDetailPage = ({
 
   console.log(blog);
 
-  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
 
   const sectionsPriority: Content[] = (
     blog?.contentJson.content as Content[]
@@ -131,7 +130,7 @@ const BlogDetailPage = ({
       />
     );
   };
-
+  console.log(blog);
   return (
     <>
       {!blog ? (
