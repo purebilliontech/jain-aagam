@@ -19,7 +19,7 @@ const BannerParallex = () => {
 
 
     return (
-        <div ref={ref} className='h-screen max-md:h-[80vh] w-screen overflow-hidden relative' >
+        <div ref={ref} className='h-[85vh] md:h-[90vh] w-screen overflow-hidden relative' >
             <motion.div style={{ y: bottom }} className="absolute bottom-0 left-0 w-full">
                 <Image src={'/static/layers/bottom.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50' />
             </motion.div>
