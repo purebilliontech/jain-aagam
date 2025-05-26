@@ -103,7 +103,7 @@ const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPaginatio
 
   return (
     <>
-      <InnerBanner image={"/static/blog-banner.png"} alt="Image for presentation" >
+      <InnerBanner image={"/static/banners/ebooksnew.png"} alt="Image for presentation" >
         <div className="text-center p-4 md:text-left absolute top-0 left-0 w-full h-full flex items-center justify-center">
           <h2 className="max-w-7xl mx-auto text-primary-ui text-center w-full p-4 md:p-20 text-4xl md:text-4xl font-semibold">
             BLOGS

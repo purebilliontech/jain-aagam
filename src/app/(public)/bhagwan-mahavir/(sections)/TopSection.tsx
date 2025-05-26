@@ -7,14 +7,14 @@ const TopSection = () => {
       image={"/static/bhagwan/banner1.jpg"}
       alt="Image for presentation"
     >
-      <div className="absolute top-1/2 right-[5%] translate-y-[-50%] sm:right-[10%]">
+      <div className="absolute top-1/2 right-[5%] translate-y-[-50%] sm:right-[10%] flex flex-col items-end">
         <h1 className="font-semibold text-amber-400 text-4xl sm:text-6xl md:text-8xl font-mono text-right">
           Bhagwan
         </h1>
         <h1 className="font-semibold text-amber-400 text-4xl sm:text-6xl md:text-8xl font-mono text-right">
           Mahavir
         </h1>
-        <h2 className="font-normal text-amber-400 text-lg sm:text-2xl md:text-4xl font-mono text-right  ">
+        <h2 className="font-normal text-amber-400 text-lg sm:text-2xl md:text-4xl font-mono text-right w-[70%] md:w-full self-end">
           The 24th Tirthankar of Jainism
         </h2>
       </div>

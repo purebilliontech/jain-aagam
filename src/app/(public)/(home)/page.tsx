@@ -14,6 +14,7 @@ import AgamTree from "./(sections)/AgamTree";
 import BannerParallex from "./(sections)/BannerParallex";
 import TreeDesktop from "./(sections)/TreeDesktop";
 import ToTopButton from "./(sections)/ToTopButton";
+import ParamGurudev from "./(sections)/ParamGurudev";
 
 export default async function Home() {
 
@@ -37,10 +38,11 @@ export default async function Home() {
         <AgamTree />
       </div>
       <Agams />
-      <AgamEbooks />
+      <AgamEbooks isHomePage={true} />
       <JainAgamMap />
       <EnglishAgam />
       <AgamWisdom blogs={homepageContent.data?.latestBlogs || []} videos={homepageContent.data?.videos || null} />
+      <ParamGurudev/>
       <div className="overflow-hidden">
         <Timeline data={[
           {
@@ -90,6 +92,7 @@ export default async function Home() {
 
         ]} />
       </div>
+      
       
       <JoinMission />
       <ToTopButton/>

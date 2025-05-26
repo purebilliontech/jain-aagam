@@ -148,12 +148,6 @@ const ebooks = [
     category: "UPANG",
   },
 
-
-
-
-
-
-
   // MOOL Sutras (4)
   {
     image: "/static/ebooks/ebook-30.jpg",
@@ -199,8 +193,6 @@ const ebooks = [
   },
 ];
 
-
-
 const categories = [
   { id: "ALL", name: "All", count: ebooks.length },
   {
@@ -230,7 +222,7 @@ const categories = [
   },
 ];
 
-const AgamEbooks = () => {
+const AgamEbooks = ({ isHomePage }:{isHomePage:boolean}) => {
   const [expanded, setExpanded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
 
@@ -246,7 +238,9 @@ const AgamEbooks = () => {
   return (
     <>
       <section className="md:mt-32 mt-10 mb-20 max-w-7xl w-full mx-auto p-5">
-        <SectionTitle title="Aagam eBooks" subtitle="EXPLORE" />
+        {isHomePage && (
+          <SectionTitle title="Aagam eBooks" subtitle="EXPLORE" />
+        )}
 
         {/* Category Filter Buttons */}
         <div className="md:mt-16 mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
