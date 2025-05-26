@@ -3,6 +3,7 @@ import SectionTitle from "@/components/common/SectionTitle";
 import YTVideoPlayer from "@/components/common/YTVideoPlayer";
 import { FrontendPlaylistDTO } from "@/schema/frontendPlaylist";
 import React from "react";
+import ToTopButton from "../(home)/(sections)/ToTopButton";
 
 
 interface VideosPageData {
@@ -72,6 +73,8 @@ export default function VideosPage({ data }: { data: VideosPageData }) {
                     ))}
                 </div>
             </div>
+            <ToTopButton/>
+
         </>
     );
 }

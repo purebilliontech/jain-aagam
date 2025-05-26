@@ -12,6 +12,7 @@ import IndianIndependence from "./(sections)/IndianIndependence";
 import ViewsOnJainism from "./(sections)/ViewsOnJainism";
 import { getBhagwanMahavirPageData } from "./actions";
 import YTVideoPlayer from "@/components/common/YTVideoPlayer";
+import ToTopButton from "../(home)/(sections)/ToTopButton";
 
 export default async function Ebooks() {
   const bhagwanMahavirPage = await getBhagwanMahavirPageData();
@@ -164,6 +165,7 @@ Deceit destroys our friendship, and greed destroys everything. "
       />
 
       <ViewsOnJainism />
+      <ToTopButton/>
     </>
   );
 }

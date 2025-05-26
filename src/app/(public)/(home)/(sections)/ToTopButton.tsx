@@ -23,13 +23,13 @@ function ToTopButton() {
     <Button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={`
-        fixed bottom-12 right-6 z-50 p-6 h-15 w-15 text-white rounded-full shadow-lg 
-        transform transition-all duration-300 ease-in-out bg-primary-foreground-ui hover:bg-primary-foreground-ui
+        fixed bottom-12 right-6 z-50 p-3 h-12 w-12 text-white rounded-full shadow-lg 
+        transform transition-all duration-300 ease-in-out bg-accent-ui hover:bg-primary-foreground-ui
         ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"}
       `}
       aria-label="Move to top"
     >
-      <ArrowUp size={8}/>
+      <ArrowUp size={10}/>
     </Button>
   );
 }

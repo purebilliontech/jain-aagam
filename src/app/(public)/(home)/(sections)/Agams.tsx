@@ -14,7 +14,7 @@ const AgamSection = ({ title, content }: { title: string, content: string }) => 
 
 const Agams = () => {
     const agamData = [
-        { title: 'Ang Sutras:', content: 'These are the core texts, the direct preachings of Parmatma Mahavir that were weaved into scriptures by his chief disciples – the Gandhars. They are also known as the Dwaadshangi Ganipitak or the eternal 12 texts of wisdom. The twelfth sutra has been lost with time; there are 11 Ang Sutras with us today.' },
+        { title: 'Ang Sutras:', content: 'These are the core texts, the direct preachings of Parmatma Mahavir that were weaved into scriptures by his chief disciples – the Gandhars. They are also known as the Dwadashangi Ganipitak or the eternal 12 texts of wisdom. The twelfth sutra has been lost with time; there are 11 Ang Sutras with us today.' },
         { title: 'Upang Sutras:', content: 'These are the subsidiary texts, the scriptures which have been derived from the core Ang Sutras. These scriptures have been created by Acharya Bhagwants, and there are numerous Upaang Sutras, of which 12 texts are with us today. ' },
         { title: 'Mool Sutras:', content: 'These texts reveal the fundamentals of Jainism, just like the roots of a tree. Mool Sutras contain profound insights on life-transforming lessons shared by Bhagwan Mahavir.' },
         { title: 'Chhed Sutras:', content: 'These are distinctive scriptures formulated specially for the conduct of ascetics. While in sadhana, if a seeker commits faults or mistakes, Chhed Sutras throw light on well-defined corrective measures and forms of repentance for self-improvement. ' },

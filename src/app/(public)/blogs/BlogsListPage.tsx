@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { getBlogsList } from "./actions";
 import InnerBanner from "@/components/common/InnerBanner";
+import ToTopButton from "../(home)/(sections)/ToTopButton";
 
 const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPagination }: {
   blogs: BlogWithTagsAndBanner[],
@@ -267,6 +268,8 @@ const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPaginatio
           </button>
         </div>
       )}
+            <ToTopButton/>
+
     </>
   );
 };

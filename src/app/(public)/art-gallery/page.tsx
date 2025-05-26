@@ -4,6 +4,7 @@ import HeroSection from './(sections)/HeroSection'
 import Paintings from './(sections)/Paintings'
 import ShowcaseImage from './(sections)/ShowcaseImage'
 import Reservations from './(sections)/Reservations'
+import ToTopButton from '../(home)/(sections)/ToTopButton'
 
 export default function ArtGalleryPage() {
     return (
@@ -13,6 +14,7 @@ export default function ArtGalleryPage() {
             <Paintings />
             <ShowcaseImage />
             <Reservations />
+            <ToTopButton/>
         </>
     )
 }

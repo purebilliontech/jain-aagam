@@ -105,42 +105,47 @@ const ebooks = [
   {
     image: "/static/ebooks/ebook-32.jpg",
     pdf: "/ebooks/shree-uvavai-sutra.pdf",
-    category: "UPANGA",
+    category: "UPANG",
   },
   {
     image: "/static/ebooks/ebook-21.jpg",
     pdf: "/ebooks/shree-raipaseniya-sutra.pdf",
-    category: "UPANGA",
+    category: "UPANG",
   },
   {
     image: "/static/ebooks/ebook-14.jpg",
     pdf: "/ebooks/shree-jivajivabhigam-sutra.pdf",
-    category: "UPANGA",
+    category: "UPANG",
   },
   {
     image: "/static/ebooks/ebook-17.jpg",
     pdf: "/ebooks/shree-pannavana-sutra-part-1.pdf",
-    category: "UPANGA",
+    category: "UPANG",
   },
   {
     image: "/static/ebooks/ebook-18.jpg",
     pdf: "/ebooks/shree-pannavana-sutra-part-2.pdf",
-    category: "UPANGA",
+    category: "UPANG",
   },
   {
     image: "/static/ebooks/ebook-19.jpg",
     pdf: "/ebooks/shree-pannavana-sutra-part-3.pdf",
-    category: "UPANGA",
+    category: "UPANG",
   },
   {
     image: "/static/ebooks/ebook-13.jpg",
     pdf: "/ebooks/shree-jambudweep-pragnapti-sutra.pdf",
-    category: "UPANGA",
+    category: "UPANG",
   },
   {
     image: "/static/ebooks/ebook-10.jpg",
     pdf: "/ebooks/shree-chandra-surya-pragnapti-sutra.pdf",
-    category: "UPANGA",
+    category: "UPANG",
+  },
+  {
+    image: "/static/ebooks/niryavalika_ebook.png",
+    pdf: "/ebooks/niryavalika_ebook.pdf",
+    category: "UPANG",
   },
 
 
@@ -190,7 +195,7 @@ const ebooks = [
   {
     image: "/static/ebooks/ebook-4.jpg",
     pdf: "/ebooks/shree-avashyak-sutra.pdf",
-    category: "CHHED",
+    category: "AVASHYAK",
   },
 ];
 
@@ -200,23 +205,28 @@ const categories = [
   { id: "ALL", name: "All", count: ebooks.length },
   {
     id: "ANGA",
-    name: "Anga Aagam Sutras",
+    name: "Ang Aagam Sutras",
     count: ebooks.filter((e) => e.category === "ANGA").length,
   },
   {
-    id: "UPANGA",
-    name: "Upanga Aagam Sutras",
-    count: ebooks.filter((e) => e.category === "UPANGA").length,
+    id: "UPANG",
+    name: "Upang Aagam Sutras",
+    count: ebooks.filter((e) => e.category === "UPANG").length,
   },
   {
     id: "MOOL",
-    name: "Mool Sutras",
+    name: "Mool Aagam Sutras",
     count: ebooks.filter((e) => e.category === "MOOL").length,
   },
   {
     id: "CHHED",
-    name: "Chhed Sutras",
+    name: "Chhed Aagam Sutras",
     count: ebooks.filter((e) => e.category === "CHHED").length,
+  },
+  {
+    id: "AVASHYAK",
+    name: "Avashyak Sutra",
+    count: ebooks.filter((e) => e.category === "AVASHYAK").length,
   },
 ];
 
@@ -236,7 +246,7 @@ const AgamEbooks = () => {
   return (
     <>
       <section className="md:mt-32 mt-10 mb-20 max-w-7xl w-full mx-auto p-5">
-        <SectionTitle title="Agam eBooks" subtitle="EXPLORE" />
+        <SectionTitle title="Aagam eBooks" subtitle="EXPLORE" />
 
         {/* Category Filter Buttons */}
         <div className="md:mt-16 mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
@@ -247,7 +257,7 @@ const AgamEbooks = () => {
                 setSelectedCategory(category.id);
                 setExpanded(false);
               }}
-              className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 ${
+              className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300  cursor-pointer ${
                 selectedCategory === category.id
                   ? "bg-primary-ui text-white shadow-lg"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -275,7 +285,7 @@ const AgamEbooks = () => {
                 <div className="relative overflow-hidden rounded-lg border border-gray-200 transition-transform duration-300 group-hover:scale-105 group-hover:shadow-lg">
                   <Image
                     src={ebook.image}
-                    alt="Agam Ebooks"
+                    alt="Aagam Ebooks"
                     key={index}
                     width={300}
                     height={300}

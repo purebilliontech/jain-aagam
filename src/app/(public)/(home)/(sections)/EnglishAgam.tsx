@@ -28,7 +28,7 @@ const EnglishAgam = () => {
             src={"/static/home/english-agam-book.png"}
             width={400}
             height={600}
-            alt="English Agam Book"
+            alt="English Aagam Book"
             className="mx-auto w-full h-fit object-contain drop-shadow-2xl shadow-2xl "
           />
         </div>
