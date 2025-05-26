@@ -5,7 +5,7 @@ import React from "react";
 
 function ParamGurudev() {
   return (
-    <section className="max-w-7xl mx-auto p-5 pb-40 md:px-25 ">
+    <section className="max-w-7xl mx-auto p-5 pb-20 md:pb-40 md:px-25 ">
       <SectionTitle subtitle="THE INSPIRATION" title="Param Gurudev" />
       <div className="md:mt-10 mt-5 flex flex-col items-center justify-center md:flex-row md:justify-between py-10 gap-10 ">
         <Image
