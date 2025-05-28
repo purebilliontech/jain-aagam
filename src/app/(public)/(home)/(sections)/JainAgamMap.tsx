@@ -57,7 +57,7 @@ const MapMarker = ({ className, title, subtitle, up = false }: { className: stri
 export default function JainAgamMap() {
   return (
     <>
-      <div className=" max-w-7xl mx-auto relative my-20">
+      <div className=" max-w-7xl mx-auto relative my-30">
         <Image src={'/static/home/map.png'} alt='Jain Aagam Map' width={2000} height={1000} />
         <MapMarker className='top-[25%] left-[5%]' title='Jain Center' subtitle='North California' up={true} />
         <MapMarker className='top-[29%] left-[8%]' title='Jain Center' subtitle='South California' up={false} />

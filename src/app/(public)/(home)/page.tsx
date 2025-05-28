@@ -22,19 +22,13 @@ export default async function Home() {
 
   return (
     <>
-
-
       <BannerParallex />
       {/* <TopSection coverImage={homepageContent.data?.homepage.CoverImage || null} /> */}
       <WhatAreAgams />
-
       <div className="hidden md:block">
-
         <TreeDesktop />
       </div>
-
       <div className="block md:hidden">
-
         <AgamTree />
       </div>
       <Agams />
@@ -42,7 +36,7 @@ export default async function Home() {
       <JainAgamMap />
       <EnglishAgam />
       <AgamWisdom blogs={homepageContent.data?.latestBlogs || []} videos={homepageContent.data?.videos || null} />
-      <ParamGurudev/>
+      <ParamGurudev />
       <div className="overflow-hidden">
         <Timeline data={[
           {
@@ -92,10 +86,8 @@ export default async function Home() {
 
         ]} />
       </div>
-      
-      
       <JoinMission />
-      <ToTopButton/>
+      <ToTopButton />
     </>
   );
 }

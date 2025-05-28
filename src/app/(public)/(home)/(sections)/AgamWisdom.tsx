@@ -10,9 +10,9 @@ import React from 'react'
 
 const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos: FrontendPlaylistDTO | null }) => {
     return (
-        <section className='mt-32 mb-20 max-w-7xl w-full mx-auto p-5'>
+        <section className='mt-14 mb-20 max-w-7xl w-full mx-auto p-5'>
             <SectionTitle title='Aagam Wisdom' subtitle='BLOGS & VIDEOS' />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-24 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-14 ">
                 {blogs.map((blog) => (
                     <BlogCard
                         key={blog.id}
@@ -26,13 +26,11 @@ const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos:
             </div>
             <div className="flex justify-center">
                 <Link href={'/blogs'}>
-                    <FEButton className='text-center mx-auto mt-20'>READ MORE</FEButton>
+                    <FEButton className='text-center mx-auto mt-14'>READ MORE</FEButton>
                 </Link>
             </div>
-
-
             {videos && videos.videos && (
-                <div className="justify-center mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="justify-center mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {videos.videos.map((video) => (
                         <YTVideoPlayer className='w-full rounded-lg overflow-hidden' key={video} videoUrl={video} />
                     ))}
@@ -40,10 +38,9 @@ const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos:
             )}
             <div className="flex justify-center">
                 <Link href={'/videos'}>
-                    <FEButton className='text-center mx-auto mt-20'>VIEW MORE</FEButton>
+                    <FEButton className='text-center mx-auto mt-14'>VIEW MORE</FEButton>
                 </Link>
             </div>
-
         </section>
     )
 }

@@ -237,29 +237,56 @@ const AgamEbooks = ({ isHomePage }:{isHomePage:boolean}) => {
 
   return (
     <>
-      <section className="md:mt-32 mt-10 mb-20 max-w-7xl w-full mx-auto p-5">
+      <section className="md:mt-10 mt-10 mb-20 max-w-7xl w-full mx-auto p-5">
         {isHomePage && (
-          <SectionTitle title="Aagam eBooks" subtitle="EXPLORE" />
+          <div className="mb-14" >
+            <SectionTitle title="Aagam eBooks" subtitle="EXPLORE" />
+          </div>
         )}
 
         {/* Category Filter Buttons */}
-        <div className="md:mt-16 mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => {
-                setSelectedCategory(category.id);
-                setExpanded(false);
-              }}
-              className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300  cursor-pointer ${
-                selectedCategory === category.id
-                  ? "bg-primary-ui text-white shadow-lg"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {category.name} ({category.count})
-            </button>
-          ))}
+        <div className="md:mt-16 mt-4">
+          {/* Desktop: flex-wrap with justify-center */}
+          <div className="hidden md:flex flex-wrap justify-center gap-3 md:gap-4">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => {
+                  setSelectedCategory(category.id);
+                  setExpanded(false);
+                }}
+                className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 cursor-pointer ${
+                  selectedCategory === category.id
+                    ? "bg-primary-ui text-white shadow-lg"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {category.name} ({category.count})
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile: horizontal scroll */}
+          <div className="md:hidden overflow-x-auto">
+            <div className="flex gap-3 pb-2 px-1" >
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => {
+                    setSelectedCategory(category.id);
+                    setExpanded(false);
+                  }}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${
+                    selectedCategory === category.id
+                      ? "bg-primary-ui text-white "
+                      : "bg-gray-100 text-gray-700"
+                  }`}
+                >
+                  {category.name} ({category.count})
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Selected Category Title */}

@@ -9,7 +9,7 @@ const InnerBanner = ({ image, alt, children }: { image: string, alt: string, chi
                 alt={alt}
                 width={2000}
                 height={2000}
-                className="w-screen h-full  absolute -z-50 top-0 left-0"
+                className="w-screen h-full  absolute -z-50 top-0 left-0 object-fill"
             />
             {children}
         </section>

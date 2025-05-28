@@ -4,6 +4,7 @@ import YTVideoPlayer from "@/components/common/YTVideoPlayer";
 import { FrontendPlaylistDTO } from "@/schema/frontendPlaylist";
 import React from "react";
 import ToTopButton from "../(home)/(sections)/ToTopButton";
+import Image from "next/image";
 
 interface VideosPageData {
   highlights: FrontendPlaylistDTO | null;
@@ -16,16 +17,27 @@ interface VideosPageData {
 export default function VideosPage({ data }: { data: VideosPageData }) {
   return (
     <>
-      <InnerBanner
-        image={"/static/banners/ebooksnew.png"}
-        alt="Image for presentation"
-      >
+      <section className="relative w-screen h-[35vh] sm:h-[40vh] md:h-[44vh]">
+        <Image
+          src={"/static/banners/eBooks.png"}
+          alt={'Videos Banner'}
+          width={2000}
+          height={2000}
+          className="w-screen h-full  absolute -z-50 top-0 left-0 hidden md:block object-cover"
+        />
+        <Image
+          src={"/static/banners/PaperBgMobile.png"}
+          alt={'Videos Banner'}
+          width={2000}
+          height={2000}
+          className="w-screen h-full block md:hidden  absolute -z-50 top-0 left-0 object-cover"
+        />
         <div className="text-center p-4 md:text-left absolute top-0 left-0 w-full h-full flex items-center justify-center">
-          <h2 className="max-w-7xl mx-auto text-primary-ui text-center w-full p-4 md:p-20 text-4xl md:text-4xl font-semibold">
-            VIDEOS
+          <h2 className="max-w-7xl mx-auto text-[#e68c3a] text-center w-full p-4 md:p-20 text-4xl md:text-4xl font-semibold tracking-wider ">
+            AAGAM VIDEOS
           </h2>
         </div>
-      </InnerBanner>
+      </section>
 
       <div className="max-w-7xl mx-auto my-10 p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

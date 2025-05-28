@@ -1,12 +1,23 @@
-import InnerBanner from "@/components/common/InnerBanner";
+import Image from "next/image";
 import React from "react";
 
 const TopSection = () => {
   return (
-    <InnerBanner
-      image={"/static/bhagwan/banner1.jpg"}
-      alt="Image for presentation"
-    >
+    <section className="relative w-screen h-[35vh] sm:h-[40vh] md:h-[70vh]">
+      <Image
+        src={"/static/bhagwan/BhagwanMahavirDesktop.png"}
+        alt={'Art Gallery Banner'}
+        width={2000}
+        height={2000}
+        className="w-screen h-full  absolute -z-50 top-0 left-0 hidden md:block"
+      />
+      <Image
+        src={"/static/bhagwan/BhagwanMahavirMobile.png"}
+        alt={'Art Gallery Banner'}
+        width={2000}
+        height={2000}
+        className="w-screen h-full block md:hidden  absolute -z-50 top-0 left-0"
+      />
       <div className="absolute top-1/2 right-[5%] translate-y-[-50%] sm:right-[10%] flex flex-col items-end">
         <h1 className="font-semibold text-amber-400 text-4xl sm:text-6xl md:text-8xl font-mono text-right">
           Bhagwan
@@ -18,7 +29,7 @@ const TopSection = () => {
           The 24th Tirthankar of Jainism
         </h2>
       </div>
-    </InnerBanner>
+    </section>
   );
 };
 
