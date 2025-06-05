@@ -24,11 +24,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createBlogPost, updateBlogPostById, getTagsList, createTag } from "./actions";
 import { getHTMLFromContentJson } from "@/utils/blog-client";
 import { useAuth } from "@/context/auth-context";
-import { useEffect } from "react";
 import type { BlogTagsDTO } from "@/schema/blogTag";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { TagModal } from "./TagModal";
 
 type BlogPostEditorProps = {
