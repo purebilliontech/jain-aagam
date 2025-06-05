@@ -9,7 +9,7 @@ const BannerParallex = () => {
     const ref = React.useRef(null);
 
     const { scrollY } = useScroll();
-    const s = useTransform(scrollY, [0, 500], [1, 1.4]);
+    const s = useTransform(scrollY, [0, 500], [1.05, 1.4]);
 
     // const book = useTransform(scrollY, [0, 500], [-30, 200]);
 
@@ -19,13 +19,13 @@ const BannerParallex = () => {
 
 
     return (
-        <div ref={ref} className='h-[85vh] md:h-[90vh] w-screen overflow-hidden relative' >
+        <div ref={ref} className='h-[85vh] md:h-[92vh] w-full overflow-hidden relative' >
             <motion.div style={{ y: bottom }} className="absolute bottom-0 left-0 w-full">
-                <Image src={'/static/layers/bottom.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50' />
+                <Image src={'/static/layers/bottom.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50 ' />
             </motion.div>
 
-            <motion.div style={{ scale: s }} className="absolute bottom-5 left-1/2 max-md:scale-150 max-md:bottom-10 -translate-x-1/2 w-full max-w-7xl  sm:px-20 md:px-10 lg:px-40 px-0">
-                <Image src={'/static/layers/book.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50' />
+            <motion.div style={{ scale: s }} className="absolute bottom-0 left-1/2 max-md:scale-150 max-md:bottom-10 -translate-x-1/2 w-full max-w-7xl  sm:px-20 md:px-10 lg:px-40 px-0">
+                <Image src={'/static/layers/book.png'} priority alt='Banner' width={1000} height={1000} className='object-cover w-full z-50' />
             </motion.div>
 
 
@@ -35,7 +35,7 @@ const BannerParallex = () => {
                 transition={{ duration: 1.5, ease: "easeOut" }}
 
                 style={{ scale: mainScale }} className="absolute top-10 left-1/2  -translate-x-1/2 w-full max-w-60 max-md:w-44">
-                <Image src={'/static/layers/main.png'} alt='Banner' width={1000} height={1000} className='object-cover w-full z-50 ' />
+                <Image src={'/static/layers/main.png'} priority alt='Banner' width={1000} height={1000} className='object-cover w-full z-50 ' />
             </motion.div>
 
             <motion.div
@@ -53,7 +53,7 @@ const BannerParallex = () => {
 
 
             <div className="h-screen w-screen relative overflow-hidden">
-                <Image src={'/static/layers/bg.png'} alt='Banner' fill className='object-cover -z-50' />
+                <Image src={'/static/layers/bg.png'} alt='Banner' priority fill className='object-cover w-screen  -z-50' />
             </div>
 
 

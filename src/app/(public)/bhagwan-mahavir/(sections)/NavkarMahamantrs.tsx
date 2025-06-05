@@ -44,7 +44,7 @@ const NavkarMahamantrs = () => {
     <>
       <section className="max-w-7xl mx-auto p-5 my-20">
         <SectionTitle
-          title="Navkar Mahamantras"
+          title="Navkar Mahamantra"
           subtitle="THE UNIVERSAL MANTRA"
         />
         <div className="flex flex-col md:flex-row max-md:gap-10 items-center md:mt-10">
@@ -93,37 +93,20 @@ const NavkarMahamantrs = () => {
                     </div> */}
         </div>
         <Typography variant="p" className="text-justify text-typography my-20">
-          Namaskar Mahamantra is a universal Mantra of peace and Maitri
-          (friendship) towards every living being.
+          Namaskar Mahamantra is a universal Mantra of peace and Maitri (friendship) towards every living being. While most Mantras are dedicated to individuals, Namaskar Mantra is the only mantra that is dedicated to inner qualities.
           <br />
           <br />
-          While most Mantras are dedicated to individuals, Namaskar Mantra is
-          the only mantra that is dedicated to inner qualities.
-          <br />
-          <br />
-          Jain philosophy explains that purity is Godliness. Namaskar Mantra is
-          a tribute of appreciation to all the great souls who have attained
-          this absolute purity in the infinite past, are striving to attain
-          inner purity in the present, or will attain it in the future.
-          <br />
-          <br />
-          Jainism believes that every soul has the potential to be Parmatma, to
-          attain absolute purity. Hence, Namaskar Mantra is respect towards
-          every soul in the world. Namaskar Mantra is a timeless mantra, it has
-          no creator, and no destroyer. Every syllable of this Mantra possesses
-          infinite meanings, infinite potential and infinite energy. Any form of
-          physical illness, mental negativity, critical obstacles can be erased
-          by this selfless mantra, and one can experience a rejuvenation of
-          positivity in life.
-          <br />
-          <br />
-          The way a child can approach his mother at any hour of the day without
-          hesitation, this mantra can also be recited anytime, anywhere and by
-          anyone - to experience peace, positivity and feel absolutely relaxed.
+
+          Jainism believes that every soul has the potential to become God and attain absolute purity. Because purity is Godliness. Hence, in Namaskar Mantra, one bows down to every soul who has achieved purity or is striving to achieve purity. Also known as the Navkar Mantra, this is a timeless mantra which has no creator, and no destroyer. Every syllable of this Mantra possesses infinite meanings, potential and energy. Any form of physical illness, mental negativity, critical obstacles can be erased by this selfless mantra, and one can experience a rejuvenation of positivity in life.
+
+          <br /><br />
+
+          The way a child can approach his mother at any hour of the day without hesitation, this mantra can also be recited anytime, anywhere and by anyone - to experience peace, positivity and feel absolutely relaxed.
+
         </Typography>
 
         <YTVideoPlayer
-          className="max-w-5xl mx-auto rounded-lg overflow-hidden flex flex-col items-center justify-center "
+          className="max-w-4xl mx-auto rounded-lg overflow-hidden flex flex-col items-center justify-center "
           videoUrl={"https://www.youtube.com/watch?v=ia0c2tzXXqE"}
         />
       </section>

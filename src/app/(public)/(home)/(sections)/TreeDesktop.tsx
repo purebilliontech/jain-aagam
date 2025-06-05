@@ -53,7 +53,7 @@ const TreeMarker = ({ className, title, subtitle, isLeft = true, lineClassName =
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                transition={{ duration: 1 }}
+                                transition={{ duration: 0.8 }}
                                 className={`absolute min-w-40 -top-5 border-primary-ui px-2 bg-white/50 ${isLeft ? 'right-24 border-r-8' : 'left-24 border-l-8'}`}
                             >
                                 <Typography variant='h4' className='w-full italic text-typography max-sm:text-sm'>{title}</Typography>

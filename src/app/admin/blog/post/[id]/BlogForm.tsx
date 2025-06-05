@@ -21,12 +21,15 @@ import Link from "next/link";
 import { BlogFormSchema, type BlogDetail, type BlogForm } from "@/schema/blog";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createBlogPost, updateBlogPostById, getTagsList } from "./actions";
+import { createBlogPost, updateBlogPostById, getTagsList, createTag } from "./actions";
 import { getHTMLFromContentJson } from "@/utils/blog-client";
 import { useAuth } from "@/context/auth-context";
 import { useEffect } from "react";
 import type { BlogTagsDTO } from "@/schema/blogTag";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { TagModal } from "./TagModal";
 
 type BlogPostEditorProps = {
     blog: BlogDetail | null;
@@ -37,6 +40,9 @@ const BlogForm = ({ blog, tags }: BlogPostEditorProps) => {
     const router = useRouter();
     const { hasPermissions } = useAuth();
     const [loading, setLoading] = useState<boolean>(false);
+    const [tagsList, setTagsList] = useState<BlogTagsDTO[]>(tags);
+
+    const [showTagModal, setShowTagModal] = useState<boolean>(true);
 
     const form = useForm<BlogForm>({
         resolver: zodResolver(BlogFormSchema) as unknown as Resolver<BlogForm>,
@@ -84,283 +90,299 @@ const BlogForm = ({ blog, tags }: BlogPostEditorProps) => {
 
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(saveBlog)}>
-                <div className="p-4">
-                    <Link href={"/admin/blog/post"}>
-                        <div className="mb-6 flex items-center gap-2">
-                            <ChevronLeft className="h-4 w-4" />
-                            <span className="text-sm text-gray-500">Blog posts</span>
+        <>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(saveBlog)}>
+                    <div className="p-4">
+                        <Link href={"/admin/blog/post"}>
+                            <div className="mb-6 flex items-center gap-2">
+                                <ChevronLeft className="h-4 w-4" />
+                                <span className="text-sm text-gray-500">Blog posts</span>
+                            </div>
+                        </Link>
+                        <div className="flex justify-between">
+                            <h1 className="mb-6 text-2xl font-semibold">Blog posts</h1>
+                            <div className="flex gap-5">
+                                {hasPermissions(["modify:blog"]) &&
+                                    <Button
+                                        type="submit"
+                                        variant={loading ? "outline" : "default"}
+                                        className="px-10"
+                                        disabled={loading}
+                                    >
+                                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                        {loading ? "Saving" : "Save Blog"}
+                                    </Button>}
+                            </div>
                         </div>
-                    </Link>
-                    <div className="flex justify-between">
-                        <h1 className="mb-6 text-2xl font-semibold">Blog posts</h1>
-                        <div className="flex gap-5">
-                            {hasPermissions(["modify:blog"]) &&
-                                <Button
-                                    type="submit"
-                                    variant={loading ? "outline" : "default"}
-                                    className="px-10"
-                                    disabled={loading}
-                                >
-                                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                    {loading ? "Saving" : "Save Blog"}
-                                </Button>}
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        <div className="space-y-6 md:col-span-2">
-                            <Card>
-                                <CardContent className="pt-6 ">
-                                    <FormField
-                                        control={form.control}
-                                        name="title"
-                                        render={({ field }) => (
-                                            <GenericFormField
-                                                formLabel="Title"
-                                                field={field}
-                                                inputEle={
-                                                    <Input type="text" placeholder="Enter Blog Title" />
-                                                }
-                                                divClass="relative mb-5"
-                                                cb={GenericFormInput}
-                                            />
-                                        )}
-                                    />
-
-                                    <FormField
-                                        control={form.control}
-                                        name="contentJson"
-                                        render={({ field }) => (
-                                            <RichTextArea
-                                                value={getHTMLFromContentJson(field.value)}
-                                                onChange={(content, contentJson) => {
-                                                    console.log(contentJson);
-                                                    form.setValue(
-                                                        "contentJson",
-                                                        contentJson as any,
-                                                    );
-                                                }}
-                                                className=""
-                                                buttonClass={"buttonClass"}
-                                                buttonDivClass={"buttonDivClass"}
-                                                editorClass={"h-full"}
-                                                innerDivClass={"innerDivClass"}
-                                                outerDivClass={"outerDivClass"}
-                                            />
-                                        )}
-                                    />
-                                </CardContent>
-                            </Card>
-                        </div>
-
-                        <div className="space-y-6">
-                            <Card>
-                                <CardContent className="pt-6">
-                                    <div className="flex items-center space-x-2">
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                            <div className="space-y-6 md:col-span-2">
+                                <Card>
+                                    <CardContent className="pt-6 ">
                                         <FormField
                                             control={form.control}
-                                            name="slug"
+                                            name="title"
                                             render={({ field }) => (
                                                 <GenericFormField
-                                                    formLabel="Slug"
-                                                    inputEle={
-                                                        <Input type="text" placeholder="Enter Blog Slug" {...field} />
-                                                    }
+                                                    formLabel="Title"
                                                     field={field}
+                                                    inputEle={
+                                                        <Input type="text" placeholder="Enter Blog Title" />
+                                                    }
+                                                    divClass="relative mb-5"
                                                     cb={GenericFormInput}
-                                                    divClass="relative"
-                                                    itemClass="w-full"
+                                                />
+                                            )}
+                                        />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="contentJson"
+                                            render={({ field }) => (
+                                                <RichTextArea
+                                                    value={getHTMLFromContentJson(field.value)}
+                                                    onChange={(content, contentJson) => {
+                                                        console.log(contentJson);
+                                                        form.setValue(
+                                                            "contentJson",
+                                                            contentJson as any,
+                                                        );
+                                                    }}
+                                                    className=""
+                                                    buttonClass={"buttonClass"}
+                                                    buttonDivClass={"buttonDivClass"}
+                                                    editorClass={"h-full"}
+                                                    innerDivClass={"innerDivClass"}
+                                                    outerDivClass={"outerDivClass"}
+                                                />
+                                            )}
+                                        />
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            <div className="space-y-6">
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        <div className="flex items-center space-x-2">
+                                            <FormField
+                                                control={form.control}
+                                                name="slug"
+                                                render={({ field }) => (
+                                                    <GenericFormField
+                                                        formLabel="Slug"
+                                                        inputEle={
+                                                            <Input type="text" placeholder="Enter Blog Slug" {...field} />
+                                                        }
+                                                        field={field}
+                                                        cb={GenericFormInput}
+                                                        divClass="relative"
+                                                        itemClass="w-full"
+                                                        labelClass="text-md"
+                                                    />
+                                                )}
+                                            />
+                                            <Button
+                                                variant="secondary"
+                                                type="button"
+                                                className="mt-5"
+                                                onClick={() => {
+                                                    form.setValue(
+                                                        "slug",
+                                                        slugify(form.getValues("title"), {
+                                                            strict: true,
+                                                            lower: true,
+                                                        }),
+                                                    );
+                                                }}
+                                            >
+                                                Generate Slug
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        <FormField
+                                            control={form.control}
+                                            name="published"
+                                            render={({ field }) => (
+                                                <GenericFormField
+                                                    formLabel="Visibility"
+                                                    field={field}
+                                                    radioButtonLabels={["Visible", "Hidden"]}
+                                                    cb={GenericRadioGroup}
                                                     labelClass="text-md"
                                                 />
                                             )}
                                         />
-                                        <Button
-                                            variant="secondary"
-                                            type="button"
-                                            className="mt-5"
-                                            onClick={() => {
-                                                form.setValue(
-                                                    "slug",
-                                                    slugify(form.getValues("title"), {
-                                                        strict: true,
-                                                        lower: true,
-                                                    }),
-                                                );
-                                            }}
-                                        >
-                                            Generate Slug
-                                        </Button>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardContent className="pt-6">
-                                    <FormField
-                                        control={form.control}
-                                        name="published"
-                                        render={({ field }) => (
-                                            <GenericFormField
-                                                formLabel="Visibility"
-                                                field={field}
-                                                radioButtonLabels={["Visible", "Hidden"]}
-                                                cb={GenericRadioGroup}
-                                                labelClass="text-md"
-                                            />
-                                        )}
-                                    />
-                                </CardContent>
-                            </Card>
+                                    </CardContent>
+                                </Card>
 
-                            <Card>
-                                <CardContent className="pt-6">
-                                    <FormField
-                                        control={form.control}
-                                        name="banner"
-                                        render={({ field }) => (
-                                            <GenericFormField
-                                                formLabel="Featured Image"
-                                                field={field}
-                                                cb={GenericFormImageInput}
-                                            />
-                                        )}
-                                    />
-                                </CardContent>
-                            </Card>
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        <FormField
+                                            control={form.control}
+                                            name="banner"
+                                            render={({ field }) => (
+                                                <GenericFormField
+                                                    formLabel="Featured Image"
+                                                    field={field}
+                                                    cb={GenericFormImageInput}
+                                                />
+                                            )}
+                                        />
+                                    </CardContent>
+                                </Card>
 
-                            <Card>
-                                <CardContent className="pt-6">
-                                    <div className="space-y-4">
-                                        <div>
-                                            <FormField
-                                                control={form.control}
-                                                name="synopsis"
-                                                render={({ field }) => (
-                                                    <GenericFormField
-                                                        formLabel="Synopsis"
-                                                        field={field}
-                                                        inputEle={
-                                                            <Textarea
-                                                                className="border focus-visible:ring-0"
-                                                                rows={4}
-                                                                placeholder="Write a brief synopsis of the blog post"
-                                                            />
-                                                        }
-                                                        cb={GenericFormInput}
-                                                        divClass="relative"
-                                                    />
-                                                )}
-                                            />
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        <div className="space-y-4">
+                                            <div>
+                                                <FormField
+                                                    control={form.control}
+                                                    name="synopsis"
+                                                    render={({ field }) => (
+                                                        <GenericFormField
+                                                            formLabel="Synopsis"
+                                                            field={field}
+                                                            inputEle={
+                                                                <Textarea
+                                                                    className="border focus-visible:ring-0"
+                                                                    rows={4}
+                                                                    placeholder="Write a brief synopsis of the blog post"
+                                                                />
+                                                            }
+                                                            cb={GenericFormInput}
+                                                            divClass="relative"
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                                    </CardContent>
+                                </Card>
 
-                            <Card>
-                                <CardContent className="pt-6">
-                                    <h2 className="mb-4 font-medium">Organization</h2>
-                                    <div className="space-y-4">
-                                        <div>
-                                            <FormField
-                                                control={form.control}
-                                                name="authorName"
-                                                render={({ field }) => (
-                                                    <GenericFormField
-                                                        formLabel="Author Name"
-                                                        field={field}
-                                                        cb={GenericFormInput}
-                                                        inputEle={<Input type="text" placeholder="" />}
-                                                        divClass="relative"
-                                                        itemClass="w-full"
-                                                        labelClass="text-md"
-                                                    />
-                                                )}
-                                            />
-                                        </div>
-                                        <div>
-                                            <FormField
-                                                control={form.control}
-                                                name="readingTimeSeconds"
-                                                render={({ field }) => (
-                                                    <GenericFormField
-                                                        formLabel="Reading Time (seconds)"
-                                                        field={{
-                                                            ...field,
-                                                            value: field.value || 0,
-                                                            onChange: (e) => field.onChange(Number(e.target.value))
-                                                        }}
-                                                        cb={GenericFormInput}
-                                                        inputEle={<Input type="number" min="0" />}
-                                                        divClass="relative"
-                                                        itemClass="w-full"
-                                                        labelClass="text-md"
-                                                    />
-                                                )}
-                                            />
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card>
-                                <CardContent className="pt-6">
-                                    <h2 className="mb-4 font-medium">Tags</h2>
-
-                                    <div className="form-item mb-3">
-                                        <Select
-                                            onValueChange={(selectedTagId) => {
-                                                const currentTags = form.watch("tags");
-                                                if (!currentTags.includes(selectedTagId)) {
-                                                    form.setValue("tags", [...currentTags, selectedTagId]);
-                                                }
-                                            }}
-                                            value=""
-                                            disabled={!hasPermissions(["modify:video"])}
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select a tag" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    {tags.filter(tag => !form.watch("tags").includes(tag.id)).map(tag => (
-                                                        <SelectItem key={tag.id} value={tag.id}>
-                                                            {tag.name}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-2">
-                                        {form.watch("tags").map((tagId) => {
-                                            const tag = tags.find((t) => t.id === tagId);
-                                            return (
-                                                <div key={tagId} className="flex text-xs items-center space-x-2 bg-slate-200 px-2 py-1 rounded">
-                                                    <span>{tag?.name}</span>
-                                                    {hasPermissions(["modify:video"]) &&
-                                                        <button
-                                                            type="button"
-                                                            className="cursor-pointer"
-                                                            onClick={() => {
-                                                                const updatedTags = form.watch("tags").filter((id) => id !== tagId);
-                                                                form.setValue("tags", updatedTags);
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        <h2 className="mb-4 font-medium">Organization</h2>
+                                        <div className="space-y-4">
+                                            <div>
+                                                <FormField
+                                                    control={form.control}
+                                                    name="authorName"
+                                                    render={({ field }) => (
+                                                        <GenericFormField
+                                                            formLabel="Author Name"
+                                                            field={field}
+                                                            cb={GenericFormInput}
+                                                            inputEle={<Input type="text" placeholder="" />}
+                                                            divClass="relative"
+                                                            itemClass="w-full"
+                                                            labelClass="text-md"
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                            <div>
+                                                <FormField
+                                                    control={form.control}
+                                                    name="readingTimeSeconds"
+                                                    render={({ field }) => (
+                                                        <GenericFormField
+                                                            formLabel="Reading Time (seconds)"
+                                                            field={{
+                                                                ...field,
+                                                                value: field.value || 0,
+                                                                onChange: (e) => field.onChange(Number(e.target.value))
                                                             }}
-                                                        >
-                                                            <X className="w-4 h-4" />
-                                                        </button>
+                                                            cb={GenericFormInput}
+                                                            inputEle={<Input type="number" min="0" />}
+                                                            divClass="relative"
+                                                            itemClass="w-full"
+                                                            labelClass="text-md"
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        <div className="flex mb-4 justify-between items-center">
+                                            <h2 className=" font-medium">Tags</h2>
+                                            <Button variant="link" type="button" className="text-primary underline" onClick={() => {
+                                                setShowTagModal(true);
+                                            }}>
+                                                + Create New Tag
+                                            </Button>
+                                        </div>
+
+                                        <div className="form-item mb-3">
+                                            <Select
+                                                onValueChange={(selectedTagId) => {
+                                                    const currentTags = form.watch("tags");
+                                                    if (!currentTags.includes(selectedTagId)) {
+                                                        form.setValue("tags", [...currentTags, selectedTagId]);
                                                     }
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
+                                                }}
+                                                value=""
+                                                disabled={!hasPermissions(["modify:video"])}
+                                            >
+                                                <SelectTrigger className="w-full">
+                                                    <SelectValue placeholder="Select a tag" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        {tagsList.filter(tag => !form.watch("tags").includes(tag.id)).map(tag => (
+                                                            <SelectItem key={tag.id} value={tag.id}>
+                                                                {tag.name}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-2">
+                                            {form.watch("tags").map((tagId) => {
+                                                const tag = tagsList.find((t) => t.id === tagId);
+                                                return (
+                                                    <div key={tagId} className="flex text-xs items-center space-x-2 bg-slate-200 px-2 py-1 rounded">
+                                                        <span>{tag?.name}</span>
+                                                        {hasPermissions(["modify:video"]) &&
+                                                            <button
+                                                                type="button"
+                                                                className="cursor-pointer"
+                                                                onClick={() => {
+                                                                    const updatedTags = form.watch("tags").filter((id) => id !== tagId);
+                                                                    form.setValue("tags", updatedTags);
+                                                                }}
+                                                            >
+                                                                <X className="w-4 h-4" />
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </Form>
+                </form>
+            </Form>
+            <TagModal
+                open={showTagModal}
+                onOpenChange={setShowTagModal}
+                onTagCreated={(tag) => {
+                    setTagsList([tag, ...tagsList]);
+                }}
+            />
+        </>
     );
 };
 
