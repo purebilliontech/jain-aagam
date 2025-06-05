@@ -222,7 +222,7 @@ const categories = [
   },
 ];
 
-const AgamEbooks = ({ isHomePage }:{isHomePage:boolean}) => {
+const AgamEbooks = ({ isHomePage }: { isHomePage: boolean }) => {
   const [expanded, setExpanded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
 
@@ -237,15 +237,15 @@ const AgamEbooks = ({ isHomePage }:{isHomePage:boolean}) => {
 
   return (
     <>
-      <section className="md:mt-10 mt-10 mb-20 max-w-7xl w-full mx-auto p-5">
+      <section className="py-10 pt-20 max-w-7xl w-full mx-auto p-5">
         {isHomePage && (
-          <div className="mb-14" >
+          <div className="pb-10" >
             <SectionTitle title="Aagam eBooks" subtitle="EXPLORE" />
           </div>
         )}
 
         {/* Category Filter Buttons */}
-        <div className="md:mt-16 mt-4">
+        <div className="">
           {/* Desktop: flex-wrap with justify-center */}
           <div className="hidden md:flex flex-wrap justify-center gap-3 md:gap-4">
             {categories.map((category) => (
@@ -255,11 +255,10 @@ const AgamEbooks = ({ isHomePage }:{isHomePage:boolean}) => {
                   setSelectedCategory(category.id);
                   setExpanded(false);
                 }}
-                className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 cursor-pointer ${
-                  selectedCategory === category.id
-                    ? "bg-primary-ui text-white shadow-lg"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+                className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 cursor-pointer ${selectedCategory === category.id
+                  ? "bg-primary-ui text-white shadow-lg"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
               >
                 {category.name} ({category.count})
               </button>
@@ -276,11 +275,10 @@ const AgamEbooks = ({ isHomePage }:{isHomePage:boolean}) => {
                     setSelectedCategory(category.id);
                     setExpanded(false);
                   }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${
-                    selectedCategory === category.id
-                      ? "bg-primary-ui text-white "
-                      : "bg-gray-100 text-gray-700"
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${selectedCategory === category.id
+                    ? "bg-primary-ui text-white "
+                    : "bg-gray-100 text-gray-700"
+                    }`}
                 >
                   {category.name} ({category.count})
                 </button>

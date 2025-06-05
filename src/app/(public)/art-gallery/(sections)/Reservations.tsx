@@ -54,8 +54,8 @@ export default function Reservations() {
     }
 
     return (
-        <section className="md:p-10 p-5 bg-[#E9E2D2]" >
-            <SectionTitle title='Purchase & Reservations ' subtitle='ART GALLERY' diffColor={true} />
+        <section className="p-5 bg-[#E9E2D2] py-10 pt-20" >
+            <SectionTitle title='Purchase & Reservations ' subtitle='ART GALLERY' diffColor={true} className='pb-10' />
 
             <Typography variant='p' className='text-justify text-foreground-ui mt-5 max-w-5xl mx-auto'>
                 If you are interested in in purchasing or making reservations for paintings from the Aaradhya Art Gallery, you can connect with the team and they will get in touch with you soon!

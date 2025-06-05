@@ -70,7 +70,7 @@ const TreeMarker = ({ className, title, subtitle, isLeft = true, lineClassName =
 export default function AgamTree() {
     return (
         <>
-            <div className="max-w-7xl mx-auto relative my-20 md:w-screen aspect-video">
+            <div className="max-w-7xl mx-auto relative py-10 md:w-screen aspect-video">
                 <Image src={'/static/home/tree.png'} alt='Jain Agam Map' className='w-full h-full object-contain max-sm:p-5' width={2000} height={1000} />
 
                 <TreeMarker

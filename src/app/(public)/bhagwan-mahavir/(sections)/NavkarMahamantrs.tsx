@@ -42,12 +42,13 @@ const mahaMantras = [
 const NavkarMahamantrs = () => {
   return (
     <>
-      <section className="max-w-7xl mx-auto p-5 my-20">
+      <section className="max-w-7xl mx-auto p-5 py-10 pt-20">
         <SectionTitle
           title="Navkar Mahamantra"
           subtitle="THE UNIVERSAL MANTRA"
+          className="pb-10"
         />
-        <div className="flex flex-col md:flex-row max-md:gap-10 items-center md:mt-10">
+        <div className="flex flex-col md:flex-row max-md:gap-10 items-center">
           <div className="self-center mx-auto">
             {mahaMantras.map((mantra, index) => (
               // <div key={index} onClick={() => setSelectedMeaning(mantra.meaning)}>

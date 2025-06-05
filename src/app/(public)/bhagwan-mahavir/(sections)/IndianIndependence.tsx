@@ -6,10 +6,10 @@ import React from "react";
 const IndianIndependence = () => {
   return (
     <>
-      <section className="max-w-7xl p-5 mx-auto bg-white py-26">
-        <SectionTitle title="Global Impact" subtitle=" THE INFLUENCE OF AHIMSA" />
+      <section className="max-w-7xl p-5 mx-auto bg-white py-10 pt-20">
+        <SectionTitle title="Global Impact" subtitle=" THE INFLUENCE OF AHIMSA" className="pb-10" />
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
           <Image
             src="/static/indian-independence/1.jpg"
             alt="Gandhi & Bicharji Swami Painting"
@@ -68,9 +68,8 @@ const IndianIndependence = () => {
         </div>
 
         {/* Bottom Flex Section */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 mt-20">
-          <div className="flex flex-col gap-5">
-
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 md:gap-5 gap-10 mt-20">
+          <div className="flex flex-col gap-3">
             <Image
               src="/static/indian-independence/b.jpg"
               alt="Gandhi & Bicharji Swami Painting"
@@ -82,7 +81,7 @@ const IndianIndependence = () => {
               GANDHIJI & BECHARJI SWAMI PAINTING
             </Typography>
           </div>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3">
 
             <Image
               src="/static/indian-independence/c.jpg"
@@ -95,7 +94,7 @@ const IndianIndependence = () => {
               GANDHIJI & UJJWALKUMARIJI MAHASATIJI PHOTO
             </Typography>
           </div>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3">
 
             <Image
               src="/static/indian-independence/c1.JPG"

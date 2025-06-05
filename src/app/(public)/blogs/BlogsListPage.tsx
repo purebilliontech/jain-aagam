@@ -129,21 +129,27 @@ const BlogsListPage = ({ blogs: initialBlogs, tags, pagination: initialPaginatio
         <div className="md:w-2/3 flex flex-wrap gap-2 px-4 md:px-8 pb-8">
           <button
             onClick={() => setSelectedTags([])}
-            className={`cursor-pointer ${selectedTags.length === 0 ? 'border-typography  rounded-full border-2' : ''}`}
+
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${selectedTags.length === 0
+              ? "bg-primary-ui text-white shadow-md "
+              : "bg-gray-100 text-gray-700"
+              }`}
           >
-            <span className="inline-block bg-primary-ui md:px-4 px-2 md:py-1.5 py-1  text-white rounded-full text-sm">
-              All
-            </span>
+            All
+
           </button>
           {tags.map((tag) => (
             <button
               key={tag.id}
               onClick={() => handleTagClick(tag.name)}
-              className={`cursor-pointer ${selectedTags.includes(tag.name) ? 'border-typography  rounded-full border-2' : ''}`}
+              // className={`cursor-pointer ${selectedTags.includes(tag.name) ? 'border-typography  rounded-full border-2' : ''}`}
+              className={`px-4 shadow-md py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer whitespace-nowrap flex-shrink-0 ${selectedTags.includes(tag.name)
+                ? "bg-primary-ui text-white shadow-md "
+                : "bg-gray-100 text-gray-700"
+                }`}
+
             >
-              <span className="inline-block bg-primary-ui md:px-4 px-2 md:py-1.5 py-1  text-white rounded-full text-sm">
-                {tag.name}
-              </span>
+              {tag.name}
             </button>
           ))}
         </div>

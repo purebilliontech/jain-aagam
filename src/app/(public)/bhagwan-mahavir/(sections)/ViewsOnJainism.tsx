@@ -40,8 +40,8 @@ const viewsOnJainism = [
 
 const ViewsOnJainism = () => {
     return (
-        <section className='max-w-7xl mx-auto p-5 my-20'>
-            <SectionTitle title='Views on Jainism' subtitle='WORLD THINKERS & SCIENTISTS' />
+        <section className='max-w-7xl mx-auto p-5 py-10 pt-20'>
+            <SectionTitle title='Views on Jainism' subtitle='WORLD THINKERS & SCIENTISTS' className='pb-10' />
             {viewsOnJainism.map((view, index) => (
                 <div key={index}>
                     <div className="">

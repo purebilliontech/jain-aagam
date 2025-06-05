@@ -6,11 +6,11 @@ import React from "react";
 const WhatAreAgams = () => {
   return (
     <>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-10 mt-10">
         <SectionTitle
           title="What are Aagams?"
           subtitle="THE TIMELESS WISDOM"
-          className="mt-20"
+          className="pb-10"
         />
 
         {/* Description Section */}
