@@ -4,7 +4,7 @@ import React from 'react'
 
 const Painting = ({ title, subtitle, image, content, reverse }: { title: string, subtitle: string, image: string, content: React.ReactNode, reverse: boolean }) => {
     return (
-        <div className={`flex items-center my-20 flex-col lg:flex-row ${reverse ? 'lg:flex-row-reverse' : ''}`}>
+        <div className={`flex items-center py-10 flex-col lg:flex-row ${reverse ? 'lg:flex-row-reverse' : ''}`}>
             <div className="p-5 lg:w-1/2 flex flex-col gap-3 text-center lg:text-left md:max-w-2xl">
                 <Typography variant='h3' className='text-foreground-ui'>{title}</Typography>
                 <Typography variant='h4' className='text-primary-ui '>{subtitle}</Typography>
@@ -22,7 +22,7 @@ const Painting = ({ title, subtitle, image, content, reverse }: { title: string,
 export default function Paintings() {
     return (
         <>
-            <div className="bg-muted-ui md:py-10 py-1">
+            <div className="bg-muted-ui py-10 ">
 
                 <div className="max-w-7xl mx-auto ">
 

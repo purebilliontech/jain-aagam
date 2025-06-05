@@ -108,7 +108,7 @@ const TreeMarkerLeft = ({ className, title, subtitle, number }: { className: str
 export default function AgamTree() {
     return (
         <>
-            <div className="max-w-7xl mx-auto relative my-20 md:h-screen">
+            <div className="max-w-7xl mx-auto relative py-10 md:h-screen">
                 <Image src={'/static/home/tree.png'} alt='Jain Aagam Map' className='w-full h-full object-contain max-sm:p-5' width={2000} height={1000} />
                 <TreeMarker className='top-[30%] left-[55%]' title="Upang Aagam" subtitle='Just like the branches and leaves form a part of the tree' number={3} />
                 <TreeMarkerLeft className='sm:top-[50%] top-[48%] right-[50%]' title="Ang Aagam" subtitle='The core texts like the trunk of a tree' number={1} />

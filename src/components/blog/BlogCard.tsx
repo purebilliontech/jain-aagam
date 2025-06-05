@@ -1,4 +1,5 @@
 import type { MediaDTO } from '@/schema/media'
+import moment from 'moment'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -16,11 +17,7 @@ const BlogCard = ({ title, date, tags, image, slug }: { title: string, date: str
                             {title}
                         </h3>
                         <p className='font-mono text-lg font-semibold mt-2 text-[#8E8777] italic'>
-                            {new Date(date).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric'
-                            })}
+                            {moment(date).format('Do MMMM YYYY')}
                         </p>
                     </div>
                     <div className="flex flex-wrap gap-2 md:px-8 px-5 pb-8">

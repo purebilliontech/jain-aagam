@@ -10,9 +10,9 @@ import React from 'react'
 
 const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos: FrontendPlaylistDTO | null }) => {
     return (
-        <section className='mt-14 mb-20 max-w-7xl w-full mx-auto p-5'>
-            <SectionTitle title='Aagam Wisdom' subtitle='BLOGS & VIDEOS' />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-14 ">
+        <section className=' py-10 pt-20 max-w-7xl w-full mx-auto p-5'>
+            <SectionTitle title='Aagam Wisdom' subtitle='BLOGS & VIDEOS' className='pb-10' />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {blogs.map((blog) => (
                     <BlogCard
                         key={blog.id}
@@ -30,7 +30,7 @@ const AgamWisdom = ({ blogs, videos }: { blogs: BlogWithTagsAndBanner[], videos:
                 </Link>
             </div>
             {videos && videos.videos && (
-                <div className="justify-center mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="justify-center pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                     {videos.videos.map((video) => (
                         <YTVideoPlayer className='w-full rounded-lg overflow-hidden' key={video} videoUrl={video} />
                     ))}

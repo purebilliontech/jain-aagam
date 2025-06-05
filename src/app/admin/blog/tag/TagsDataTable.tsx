@@ -125,6 +125,15 @@ export default function TagsDataTable() {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Slug" />,
     },
     {
+      accessorKey: "active",
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Active" />,
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          <span className="font-medium">{row.getValue("active") ? "Yes" : "No"}</span>
+        </div>
+      ),
+    },
+    {
       accessorKey: "createdAt",
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ row }) => formatDate(row.getValue("createdAt")),

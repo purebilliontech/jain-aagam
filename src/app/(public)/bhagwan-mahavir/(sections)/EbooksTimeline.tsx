@@ -28,7 +28,7 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
       }}
       key={index}
       className={`flex flex-col ${index % 2 === 1 ? "md:flex-row" : "md:flex-row-reverse"
-        } justify-between mb-24 md:mb-48`}
+        } justify-between py-10`}
     >
       {/* Content Section */}
       <motion.div
@@ -37,7 +37,7 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 1 ? -20 : 20 }}
         transition={{ duration: 0.7, delay: 0.2 }}
       >
-        <div className="mb-6 flex flex-col items-center justify-center ">
+        <div className="mb-10 flex flex-col items-center justify-center ">
           <Typography variant='p' className='font-sans font-bold text-xs text-secondary-ui tracking-[4px] text-center mb-1.5'>{item.subtitle}</Typography>
 
           <Typography variant="h2" className="text-primary-ui text-center">
@@ -101,7 +101,7 @@ export const EbooksTimeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full relative bg-white dark:bg-neutral-50 font-serif py-12 md:py-20"
+      className="w-full relative bg-white dark:bg-neutral-50 font-serif pt-10"
       ref={containerRef}
     >
       <div ref={ref} className="relative max-w-7xl mx-auto pb-12 md:pb-20 px-4 md:px-6">

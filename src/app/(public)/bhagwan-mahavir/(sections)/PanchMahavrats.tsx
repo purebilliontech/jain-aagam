@@ -43,7 +43,7 @@ const PanchMahavrats = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-20 bg-white">
+    <div className="max-w-7xl mx-auto px-5 py-10 pt-20 bg-white">
       {/* Header Section */}
       <div className="text-center mb-40">
         <SectionTitle title="Panch Mahavrats" subtitle="THE FIVE GREAT VOWS" />

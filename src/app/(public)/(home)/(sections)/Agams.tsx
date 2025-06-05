@@ -1,5 +1,6 @@
 import Typography from '@/components/common/typography'
 import React from 'react'
+import { bigint } from 'zod'
 
 const AgamSection = ({ title, content }: { title: string, content: string }) => {
     return (
@@ -21,9 +22,11 @@ const Agams = () => {
         { title: 'Avashyak Sutra:', content: 'Avashyak Sutra is an independent Sutra that has been mandated as ‘a must’ for laymen and ascetics alike. It highlights spiritual practices for daily inner cleansing and sadhanas for daily self-purification.' },
     ];
 
+    // /_next/image?url=%2Fstatis%2Fagams-bg.png&w=3840&q=75
+
     return (
         <>
-            <section className='relative h-full bg-[url("/static/agams-bg.png")] bg-cover bg-fixed bg-center'>
+            <section className='relative h-full bg-[url("/_next/image?url=%2Fstatic%2Fagams-bg.png&w=3840&q=100")] bg-cover bg-fixed bg-center'>
                 {/* <Image className='-z-10 absolute top-0 left-0 inset-0 object-cover object-center' src={'/static/agams-bg.png'} fill alt='Agams BG' /> */}
                 <div className='z-50 px-5 py-20 max-w-5xl mx-auto'>
                     {agamData.map((agam, index) => (

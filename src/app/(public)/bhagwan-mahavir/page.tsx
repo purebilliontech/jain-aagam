@@ -124,7 +124,7 @@ export default async function Ebooks() {
       </div> */}
       <div className="p-5">
         <YTVideoPlayer
-          className="max-w-5xl mx-auto  rounded-lg overflow-hidden flex flex-col items-center justify-center mb-20"
+          className="max-w-5xl mx-auto  rounded-lg overflow-hidden flex flex-col items-center justify-center mb-10"
           videoUrl={"https://youtu.be/T-hdL0CpB1k?si=cr35z17eWzjAg6gd"}
         />
       </div>
@@ -165,7 +165,7 @@ Deceit destroys our friendship, and greed destroys everything. "
       />
 
       <ViewsOnJainism />
-      <ToTopButton/>
+      <ToTopButton />
     </>
   );
 }

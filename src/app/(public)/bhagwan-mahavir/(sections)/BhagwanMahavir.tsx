@@ -5,9 +5,9 @@ import React from "react";
 const BhagwanMahavir = () => {
   return (
     <section className="flex flex-col w-full max-w-7xl mx-auto bg-white">
-      <div className="px-4 py-20">
-        <SectionTitle title="Bhagwan Mahavir" subtitle="THE 24TH TIRTHANKAR" />
-        <Typography variant="p" className="mt-14 text-primary-foreground-ui text-justify">
+      <div className="px-4 py-10 pt-20">
+        <SectionTitle title="Bhagwan Mahavir" subtitle="THE 24TH TIRTHANKAR" className="pb-10" />
+        <Typography variant="p" className="text-primary-foreground-ui text-justify">
           Bhagwan Mahavir is the 24th Tirthankar of Jainism. Born as Prince
           Vardhaman to a royal family in Kshatriyakund (present-day Bihar), his
           life is a supreme example of the power of the soul to experience its

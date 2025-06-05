@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { BlogDetailSchema, type BlogForm } from "@/schema/blog";
 import { BlogTagsDTOSchema } from "@/schema/blogTag";
 import { formatContentJson } from "@/utils/blog";
+import slugify from "slugify";
 
 export const getBlogPostById = async (id: string) => {
     try {
@@ -54,6 +55,44 @@ export const getTagsList = async () => {
     } catch (error) {
         handleServerActionError(error);
         return { success: false, data: [] };
+    }
+}
+
+
+export const createTag = async (tag: string) => {
+    try {
+        const user = await authorizeUser(["modify:blog-tag"]);
+        if (!user.success) {
+            throw new Error(user.message);
+        }
+
+        const existingTag = await db.blogTags.findFirst({
+            where: {
+                slug: slugify(tag, { lower: true, strict: true })
+            }
+        });
+
+        if (existingTag) {
+            return {
+                success: true,
+                data: BlogTagsDTOSchema.parse(existingTag),
+            };
+        }
+
+        const newTag = await db.blogTags.create({
+            data: {
+                name: tag,
+                slug: slugify(tag, { lower: true, strict: true })
+            }
+        });
+
+        return {
+            success: true,
+            data: BlogTagsDTOSchema.parse(newTag),
+        };
+    } catch (error) {
+        handleServerActionError(error);
+        return { success: false, data: null };
     }
 }
 
