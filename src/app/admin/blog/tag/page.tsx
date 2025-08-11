@@ -1,13 +1,11 @@
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
-import CategoriesDataTable from "./TagsDataTable";
 import { authorizeUser } from "@/lib/auth";
 import NoPermission from "@/components/common/NoPermission";
 import TagsDataTable from "./TagsDataTable";
 
 export default async function TagsPage() {
 
-  const user = await authorizeUser(["view:blog-category"]);
+  const user = await authorizeUser(["view:blog-tag"]);
 
   if (!user.success) {
     return (

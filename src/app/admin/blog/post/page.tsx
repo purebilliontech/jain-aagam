@@ -5,7 +5,7 @@ import NoPermission from "@/components/common/NoPermission";
 
 export default async function CategoriesPage() {
 
-  const user = await authorizeUser(["view:blog-category"]);
+  const user = await authorizeUser(["view:blog-tag"]);
 
   if (!user.success) {
     return (
