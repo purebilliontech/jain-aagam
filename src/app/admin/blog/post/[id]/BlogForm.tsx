@@ -21,7 +21,7 @@ import Link from "next/link";
 import { BlogFormSchema, type BlogDetail, type BlogForm } from "@/schema/blog";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createBlogPost, updateBlogPostById, getTagsList, createTag } from "./actions";
+import { createBlogPost, updateBlogPostById } from "./actions";
 import { getHTMLFromContentJson } from "@/utils/blog-client";
 import { useAuth } from "@/context/auth-context";
 import type { BlogTagsDTO } from "@/schema/blogTag";
@@ -39,7 +39,7 @@ const BlogForm = ({ blog, tags }: BlogPostEditorProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [tagsList, setTagsList] = useState<BlogTagsDTO[]>(tags);
 
-    const [showTagModal, setShowTagModal] = useState<boolean>(true);
+    const [showTagModal, setShowTagModal] = useState<boolean>(false);
 
     const form = useForm<BlogForm>({
         resolver: zodResolver(BlogFormSchema) as unknown as Resolver<BlogForm>,

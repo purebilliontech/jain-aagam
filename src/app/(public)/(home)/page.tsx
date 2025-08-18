@@ -2,7 +2,7 @@ export const revalidate = 60;
 
 import WhatAreAgams from "./(sections)/WhatAreAgams";
 import Agams from "./(sections)/Agams";
-import AgamEbooks from "./(sections)/AgamEbooks";
+import AgamEbooks from "../ebooks/AgamEbooks";
 import EnglishAgam from "./(sections)/EnglishAgam";
 import AgamWisdom from "./(sections)/AgamWisdom";
 import JoinMission from "./(sections)/JoinMission";
