@@ -12,9 +12,9 @@ export default function ArtGalleryPage() {
         <>
             <TopSection />
             <HeroSection />
+            <TimingsSection />
             <Paintings />
             <ShowcaseImage />
-            <TimingsSection />
             <Reservations />
             <ToTopButton />
         </>
