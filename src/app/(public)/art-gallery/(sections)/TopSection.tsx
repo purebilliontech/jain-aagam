@@ -10,6 +10,7 @@ const TopSection = () => {
         alt={'Art Gallery Banner'}
         width={2000}
         height={2000}
+        unoptimized
         className="w-screen h-full  absolute -z-50 top-0 left-0 hidden md:block"
       />
       <Image
@@ -17,10 +18,11 @@ const TopSection = () => {
         alt={'Art Gallery Banner'}
         width={2000}
         height={2000}
+        unoptimized
         className="w-screen h-full block md:hidden  absolute -z-50 top-0 left-0"
       />
-      <a href="#timings" className="absolute bottom-5 right-[20%] z-50">
-        <Button variant="secondary" className="bg-accent-ui text-white shadow-xs ">
+      <a href="#timings" className="absolute md:bottom-5 sm:right-[20%] md:right-[18%] right-[15%] bottom-2 z-50">
+        <Button variant="secondary" className="bg-accent-ui text-white shadow-xs max-md:h-5 max-md:w-16 max-md:rounded-sm max-md:text-[8px]">
           Timings
         </Button>
       </a>
