@@ -5,16 +5,18 @@ import Paintings from './(sections)/Paintings'
 import ShowcaseImage from './(sections)/ShowcaseImage'
 import Reservations from './(sections)/Reservations'
 import ToTopButton from '../(home)/(sections)/ToTopButton'
+import TimingsSection from './(sections)/Timings'
 
 export default function ArtGalleryPage() {
     return (
         <>
-            <TopSection  />
+            <TopSection />
             <HeroSection />
             <Paintings />
             <ShowcaseImage />
+            <TimingsSection />
             <Reservations />
-            <ToTopButton/>
+            <ToTopButton />
         </>
     )
 }
