@@ -6,7 +6,7 @@ export default function TimingsSection() {
     return (
         <>
             <div className='max-w-7xl mx-auto p-5 py-10 pt-20'>
-                <SectionTitle title='An Immersive Experience' subtitle='EXPOLRE' className='pb-10' />
+                <SectionTitle title='An Immersive Experience' subtitle='EXPLORE' className='pb-10' />
 
                 <Typography variant='p' className='text-justify mx-auto w-fit text-typography '>Visit Parasdham Girnar for an exclusive, experiential display of the Aaradhya Art Gallery </Typography>
 
